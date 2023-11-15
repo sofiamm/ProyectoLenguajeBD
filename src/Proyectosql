@@ -1,0 +1,243 @@
+-- Scrript para creacion de usuario en SQL Plus
+
+Create user Proyecto_Adm IDENTIFIED BY Password1;
+
+GRANT DBA TO Proyecto_Adm;
+
+
+-- Scripts para crear las tablas del proyecto
+
+CREATE TABLE Activos (IdActivo INT NOT NULL, Descripcion varchar2(100), IdLocal INT);
+
+CREATE TABLE EmpleadoCorreo (IdEmpleado INT NOT NULL, Correo varchar2(20));
+
+CREATE TABLE EmpleadoPuesto (IdEmpleado INT NOT NULL, IdPuesto INT NOT NULL);
+
+CREATE TABLE Puesto (IdPuesto INT NOT NULL, Nombre varchar2(30), SalarioMin NUMBER(6,2) NOT NULL, SalarioMax NUMBER(6,2) NOT NULL);
+
+CREATE TABLE Empleado(IdEmpleado INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Alias varchar2(30), IBAN varchar2(30), Salario NUMBER(6,2), Estado Varchar2(15), Password varchar2(30));
+
+CREATE TABLE Transporte(codServicio INT NOT NULL, IdActivo INT NOT NULL);
+
+CREATE TABLE ServicioEmpleados(codServicio INT NOT NULL, IdEmpleado INT NOT NULL);
+
+CREATE TABLE Publicaciones(IdPublicacion INT NOT NULL, Link Varchar2(50), codServicio INT NOT NULL, Fecha DATE);
+
+CREATE TABLE ContactoTelefono(IdContacto INT NOT NULL, Telefono Varchar2(8));
+
+CREATE TABLE ContactoCorreo(IdContacto INT NOT NULL, Correo varchar2(30));
+
+CREATE TABLE Contacto(IdContacto INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Cedula varchar2(9));
+
+CREATE TABLE ServicioMenu(codServicio INT NOT NULL, IdMenu INT NOT NULL);
+
+CREATE TABLE ServicioAgendados(codServicio INT NOT NULL, FechaHora TIMESTAMP, PersonasAAtender INT);
+
+CREATE TABLE ServicioCliente(codServicio INT NOT NULL, IdCliente INT NOT NULL);
+
+CREATE TABLE Cliente(IdCliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(20));
+
+CREATE TABLE ClienteContacto(IdCliente INT NOT NULL, IdContacto INT NOT NULL);
+
+CREATE TABLE MenuDesgloce(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Precio NUMBER(6,2), Personas INT);
+
+CREATE TABLE Menu(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Cantidad INT, Precio NUMBER(6,2));
+
+CREATE TABLE FacturaServicio(numFactura INT NOT NULL, codServicio INT NOT NULL);
+
+CREATE TABLE ClienteDireccion(IdDireccion INT NOT NULL, IdCliente INT NOT NULL, IdProvincia INT NOT NULL, IdCanton INT NOT NULL, IdDistrito INT NOT NULL, Indicaciones varchar2(200));
+
+CREATE TABLE FacturaDetalle(numFactura INT NOT NULL, IdMenu INT NOT NULL, Cantidad INT, Subtotal NUMBER(6,2), Total NUMBER(6,2));
+
+CREATE TABLE Facturacion(numFactura INT NOT NULL, Fecha DATE, MetodoPago Varchar2(20), Total NUMBER(6,2));
+
+CREATE TABLE Provincia(IdProvincia INT NOT NULL, Nombre varchar2(20));
+
+CREATE TABLE Canton(IdProvincia INT NOT NULL, IdCanton INT NOT NULL, Nombre varchar2(20));
+
+CREATE TABLE Distrito(IdProvincia INT NOT NULL, IdCanton INT NOT NULL, IdDistrito INT NOT NULL, Nombre varchar2(20));
+
+CREATE TABLE Producto(IdProducto INT NOT NULL, Nombre varchar2(30), Precio NUMBER(6,2), Descripcion varchar2(100), Imagen varchar2(40));
+
+CREATE TABLE ProductoMateriaPrima(IdProducto INT NOT NULL, IdMateriaPrima INT NOT NULL, CantidadMateriaPrima INT);
+
+CREATE TABLE MateriaPrima(IdMateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(6,2));
+
+CREATE TABLE Locales (IdLocal INT NOT NULL, Nombre varchar2(30), Proposito varchar2(30));
+
+CREATE TABLE LocalUbicacion(IdLocal INT NOT NULL, IdProvincia INT NOT NULL, IdCanton INT NOT NULL, IdDistrito INT NOT NULL, Indicaciones varchar(100));
+
+CREATE TABLE Proveedor(IdProveedor INT NOT NULL, Nombre varchar2(30));
+
+CREATE TABLE MateriaPrimaProveedor(IdMateriaPrima INT NOT NULL, IdProveedor INT NOT NULL, Precio NUMBER(6,2));
+
+CREATE TABLE MateriaPrimaLocal(IdMateriaPrima INT NOT NULL, IdLocal INT NOT NULL);
+
+--Agregar Primary Keys a las tablas
+
+ALTER TABLE Activos ADD CONSTRAINT PK_IdActivo PRIMARY KEY (IdActivo);
+
+ALTER TABLE EmpleadoCorreo ADD CONSTRAINT PK_IdEmpleado PRIMARY KEY (IdEmpleado);
+
+ALTER TABLE EmpleadoPuesto ADD CONSTRAINT PK_IdEmpleado_IdPuesto PRIMARY KEY (IdEmpleado, IdPuesto);
+
+ALTER TABLE Puesto ADD CONSTRAINT PK_IdPuesto PRIMARY KEY (IdPuesto);
+
+ALTER TABLE Empleado ADD CONSTRAINT PK_IdEmpleados PRIMARY KEY (IdEmpleado);
+
+ALTER TABLE ContactoTelefono ADD CONSTRAINT PK_IdCpntacto PRIMARY KEY (IdContacto, Telefono);
+
+ALTER TABLE ContactoCorreo ADD CONSTRAINT PK_IdContacto_Correo PRIMARY KEY (IdContacto, Correo);
+
+ALTER TABLE Transporte ADD CONSTRAINT PK_codservicio_idactivo PRIMARY KEY (codServicio, IdActivo);
+
+ALTER TABLE ServicioEmpleados ADD CONSTRAINT PK_condServicio_IdEmpleado PRIMARY KEY (codservicio, idempleado);
+
+ALTER TABLE Publicaciones ADD CONSTRAINT PK_Idpublicacion PRIMARY KEY (Idpublicacion);
+
+ALTER TABLE Contacto ADD CONSTRAINT PK_Idcontacto PRIMARY KEY (Idcontacto);
+
+ALTER TABLE serviciomenu ADD CONSTRAINT PK_codservicio_idmenu PRIMARY KEY (codservicio, idmenu);
+
+ALTER TABLE ServicioAgendados ADD CONSTRAINT PK_codServicio PRIMARY KEY (CodServicio);
+
+ALTER TABLE ServicioCLiente ADD CONSTRAINT PK_codservicio_idcliente PRIMARY KEY (codservicio, idcliente);
+
+ALTER TABLE Cliente ADD CONSTRAINT PK_IdCliente PRIMARY KEY (IdCliente);
+
+ALTER TABLE ClienteContacto ADD CONSTRAINT PK_Idcliente_idcontacto PRIMARY KEY (IdCliente, IdContacto);
+
+ALTER TABLE MenuDesgloce ADD CONSTRAINT PK_Idmenu_idproducto PRIMARY KEY (IdMenu, IdProducto);
+
+ALTER TABLE FacturaServicio ADD CONSTRAINT PK_numFactura_codservicio PRIMARY KEY (Numfactura, codservicio);
+
+ALTER TABLE ClienteDireccion ADD CONSTRAINT PK_Iddireccion_idcliente PRIMARY KEY (IdDireccion, IdCliente);
+
+ALTER TABLE Menu ADD CONSTRAINT PK_IdMenu_IdProductos PRIMARY KEY (IdMenu, IdProducto);
+
+ALTER TABLE FacturaDetalle ADD CONSTRAINT PK_numfactura_idmenu PRIMARY KEY (numfactura, idmenu);
+
+ALTER TABLE Facturacion ADD CONSTRAINT PK_numfactura PRIMARY KEY (numfactura);
+
+ALTER TABLE provincia ADD CONSTRAINT PK_Idprovincia PRIMARY KEY (IdProvincia);
+
+ALTER TABLE Canton ADD CONSTRAINT PK_IdProvincia_IdCanton PRIMARY KEY (IdProvincia, IdCanton);
+
+ALTER TABLE Distrito ADD CONSTRAINT PK_IdProvincia_IdCanton_IdDistrito PRIMARY KEY (IdProvincia, IdCanton, IdDistrito);
+
+ALTER TABLE provincia ADD CONSTRAINT PK_Idprovincia PRIMARY KEY (IdProvincia);
+
+ALTER TABLE producto ADD CONSTRAINT PK_Idproducto PRIMARY KEY (IdProducto);
+
+ALTER TABLE ProductoMateriaPrima ADD CONSTRAINT PK_IdProducto_idMateriaPrima PRIMARY KEY (IdProducto, IdMateriaPrima);
+
+ALTER TABLE MateriaPrima ADD CONSTRAINT PK_IdMateriaPrima PRIMARY KEY (IdMateriaPrima);
+
+ALTER TABLE Locales ADD CONSTRAINT PK_Idlocal PRIMARY KEY (Idlocal);
+
+ALTER TABLE LocalUbicacion ADD CONSTRAINT PK_Idlocalu PRIMARY KEY (IdLocal);
+
+ALTER TABLE Proveedor ADD CONSTRAINT PK_IdProveedor PRIMARY KEY (IdProveedor);
+
+ALTER TABLE MateriaPrimaProveedor ADD CONSTRAINT PK_IdMateriaPrima_IdProveedor PRIMARY KEY (IdMateriaPrima, IdProveedor);
+
+ALTER TABLE MateriaPrimaLocal ADD CONSTRAINT PK_IdMateriaPrima_idlocal PRIMARY KEY (IdMateriaPrima, IdLocal);
+
+--Agregar los Foreing Keys
+
+ALTER TABLE EmpleadoCorreo ADD CONSTRAINT FK_IdEmpleado_IdEmpleado FOREIGN KEY (IdEmpleado) REFERENCES Empleado (IdEmpleado);
+
+ALTER TABLE EmpleadoPuesto ADD CONSTRAINT FK_IdEmpleado FOREIGN KEY (IdEmpleado) REFERENCES Empleado (IdEmpleado);
+
+ALTER TABLE EmpleadoPuesto ADD CONSTRAINT FK_IdPuesto FOREIGN KEY (Idpuesto) REFERENCES Puesto (IdPuesto);
+
+ALTER TABLE ACTIVOS ADD CONSTRAINT FK_IDLOCAL FOREIGN KEY (IDLocal) REFERENCES Locales (IdLocal);
+
+ALTER TABLE ContactoTelefono ADD CONSTRAINT FK_IDcontacto FOREIGN KEY (IdContacto) REFERENCES Contacto (IdContacto);
+
+ALTER TABLE ContactoCorreo ADD CONSTRAINT FK_IdContactos FOREIGN KEY (IdContacto) REFERENCES Contacto (IdContacto);
+
+ALTER TABLE Transporte ADD CONSTRAINT FK_codservicio FOREIGN KEY (CodServicio) REFERENCES ServicioAgendados (codservicio);
+
+ALTER TABLE transporte ADD CONSTRAINT FK_idActivo Foreign key (idactivo) REFERENCES Activos (idactivo);
+
+ALTER TABLE ServicioEmpleados ADD CONSTRAINT FK_CODSERVICIOS FOREIGN KEY (codservicio) REFERENCES ServicioAgendados (codservicio);
+
+ALTER TABLE ServicioEmpleados ADD CONSTRAINT FK_idempleados FOREIGN KEY (idempleado) REFERENCES empleado (IDempleado);
+
+ALTER TABLE PUBLICACIONES ADD CONSTRAINT FK_codservicioSS FOREIGN KEY (CODSERVICIO) REFERENCES SERVICIOAGENDADOS (CODSERVICIO);
+
+ALTER TABLE SERVICIOMENU ADD CONSTRAINT FK_CODSERVI FOREIGN KEY (CODSERVICIO) REFERENCES SERVICIOAGENDADOS (CODSERVICIO);
+
+ALTER TABLE SERVICIOCLIENTE ADD CONSTRAINT FK_CODSERVIC FOREIGN KEY (CODSERVICIO) REFERENCES SERVICIOAGENDADOS (CODSERVICIO);
+
+ALTER TABLE SERVICIOCLIENTE ADD CONSTRAINT FK_IDCLIENT FOREIGN KEY (idcliente) REFERENCES cliente (idcliente);
+
+ALTER TABLE CLIENTECONTACTO ADD CONSTRAINT FK_IDCLIEN FOREIGN KEY (IDCLIENTE) REFERENCES CLIENTE (IDCLIENTE);
+
+ALTER TABLE CLIENTECONTACTO ADD CONSTRAINT FK_IDCONTACT FOREIGN KEY (IDCONTACTO) REFERENCES CONTACTO (IDCONTACTO);
+
+ALTER TABLE FACTURASERVICIO ADD CONSTRAINT FK_NUMFACTURA FOREIGN KEY (NUMFACTURA) REFERENCES FACTURACION (NUMFACTURA);
+
+ALTER TABLE FACTURASERVICIO ADD CONSTRAINT FK_CODSERVIIC FOREIGN KEY (CODSERVICIO) REFERENCES SERVICIOAGENDADOS (CODSERVICIO);
+
+ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDCLI FOREIGN KEY (IDCLIENTE) REFERENCES CLIENTE (IDCLIENTE);
+
+ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDPROVI FOREIGN KEY (IDPROVINCIA) REFERENCES PROVINCIA (IDPROVINCIA);
+
+ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDCANTON FOREIGN KEY (IDCANTON) REFERENCES CANTON (IDCANTON); -- aqui hay un problema por el tipo de primary key doble o triple
+
+ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDdistrito FOREIGN KEY (IDdistrito) REFERENCES distrito (IDdistrito); -- aqui hay un problema por el tipo de primary key doble o triple
+
+ALTER TABLE FACTURADETALLE ADD CONSTRAINT FK_NUMFACTURAS FOREIGN KEY (NUMFACTURA) REFERENCES FACTURACION (NUMFACTURA);
+
+ALTER TABLE FACTURADETALLE ADD CONSTRAINT FK_MENU FOREIGN KEY (IDMENU) REFERENCES MENU (IDMENU);
+
+ALTER TABLE CANTON ADD CONSTRAINT FK_PRVINCIA FOREIGN KEY (IDPROVINCIA) REFERENCES PROVINCIA (IDPROVINCIA);
+
+ALTER TABLE DISTRITO ADD CONSTRAINT FK_DISTRITO FOREIGN KEY (IDPROVINCIA) REFERENCES PROVINCIA (IDPROVINCIA);
+
+ALTER TABLE DISTRITO ADD CONSTRAINT FK_CANTON FOREIGN KEY (IDCANTON) REFERENCES CANTON (IDCANTON);
+
+ALTER TABLE PRODUCTOMATERIAPRIMA ADD CONSTRAINT FK_IDPRODUCT FOREIGN KEY (IDPRODUCTO) REFERENCES PRODUCTO (IDPRODUCTO);
+
+ALTER TABLE PRODUCTOMATERIAPRIMA ADD CONSTRAINT FK_IDMATERIAPRIMA FOREIGN KEY (IDMATERIAPRIMA) REFERENCES MATERIAPRIMA (IDMATERIAPRIMA);
+
+ALTER TABLE LOCALUBICACION ADD CONSTRAINT FK_idLOCALs FOREIGN KEY (idlocal) REFERENCES locales (idlocal);
+
+ALTER TABLE MATERIAPRIMAPROVEEDOR ADD CONSTRAINT fk_idmateriapri FOREIGN KEY (idmateriaprima) REFERENCES materiaprima (idmateriaprima);
+
+ALTER TABLE MATERIAPRIMAPROVEEDOR ADD CONSTRAINT fk_provee FOREIGN KEY (idproveedor) REFERENCES proveedor (idproveedor);
+
+ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDMATERIPRIMA FOREIGN KEY (IDMATERIAPRIMA) REFERENCES MATERIAPRIMA (idmateriaprima);
+
+ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDLOCA FOREIGN KEY (IDLOCAL) REFERENCES LOCALES (IDLOCAL);
+
+
+-- Crear la tabla de auditoria para la tabla Activos
+
+CREATE TABLE AudActivos (IdActivo INT NOT NULL, Descripcion varchar2(100), IdLocal INT, tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
+
+-- Crear los triggers para la tabla de auditoria
+
+CREATE OR REPLACE TRIGGER TGR_INSERT_AUDACTIVOS
+BEFORE INSERT ON ACTIVOS
+FOR EACH ROW
+BEGIN
+INSERT INTO AudActivos (IdActivo, DESCRIPCION, IDLOCAL, tipoMovimiento, fechaMovimiento, usuariomovimiento)
+VALUES (:new.IdActivo, :new.descripcion, :new.idlocal, 'Insercion', SYSDATE, user);
+END;
+
+CREATE OR REPLACE TRIGGER TGR_INSERT_AUDACTIVOS
+BEFORE DELETE ON ACTIVOS
+FOR EACH ROW
+BEGIN
+INSERT INTO AudActivos (IdActivo, DESCRIPCION, IDLOCAL, tipoMovimiento, fechaMovimiento, usuariomovimiento)
+VALUES (:old.IdActivo, :old.descripcion, :old.idlocal, 'ELIMINADO', SYSDATE, user);
+END;
+
+INSERT INTO ACTIVOS (idactivo, descripcion, idlocal) VALUES (400, 'test2', 30);
+
+DELETE FROM ACTIVOS WHERE IDACTIVO = 400;
+
+Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pruebas');
