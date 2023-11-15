@@ -255,6 +255,12 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
        WHERE IdEmpleado = IdEmpleado;
        RETURN InfoEmpleado;
     END;
+    -- Ejemplo:
+    INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
+    VALUES (10, 'Juan', 'Perez', 'Gomez', 'JP', 'Mo34', 5000, 'Activo', 'psswd');
+    
+    SELECT InfoEmpleado(30) AS "Información del Empleado"
+    FROM dual; --Tabla default para ejemplo
     
     -- 2. Lista de empleados por puesto:
     CREATE OR REPLACE FUNCTION ListaEmpleadosPuesto(IdPuesto INT)
@@ -270,6 +276,21 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
           
        RETURN CursorList;
     END;
+    -- Ejemplo:
+    INSERT INTO Puesto (IdPuesto, Nombre, SalarioMin, SalarioMax)
+    VALUES (1, 'Desarrollador', 5000, 8000);
+    
+    INSERT INTO EmpleadoPuesto (IdEmpleado, IdPuesto)
+    VALUES (10, 1);
+    
+    INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
+    VALUES (20, 'Sofía', 'Mora', 'Muñoz', 'SOF', 'Ra24', 6000, 'Activo', 'contra');
+    
+    INSERT INTO EmpleadoPuesto (IdEmpleado, IdPuesto)
+    VALUES (20, 1);
+    
+    SELECT ListaEmpleadosPuesto(1) AS "Lista Empleados"
+    FROM dual;
     
     -- 3.Calcular el total de una factura:
     CREATE OR REPLACE FUNCTION TotalFactura(NumFactura INT)
@@ -284,7 +305,19 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     
        RETURN Total;
     END;
-
+    -- Ejemplo:
+    INSERT INTO Facturacion (numFactura, Fecha, MetodoPago, Total)
+    VALUES (1, TO_DATE('2023-11-15', 'YYYY-MM-DD'), 'Tarjeta', 1000.00);
+    
+    INSERT INTO FacturaDetalle (numFactura, IdMenu, Cantidad, Subtotal, Total)
+    VALUES (1, 1, 2, 50.00, 100.00);
+    
+    INSERT INTO FacturaDetalle (numFactura, IdMenu, Cantidad, Subtotal, Total)
+    VALUES (1, 2, 1, 30.00, 30.00);
+    
+    SELECT TotalFactura(1) AS "Monto total"
+    FROM dual;
+    
 -- 4. Obtener nombre del cliente por la factura:
     CREATE OR REPLACE FUNCTION NomClienteFact(NumFactura INT)
     RETURN VARCHAR2
@@ -300,6 +333,27 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     
        RETURN NombreCliente;
     END;
+    -- Ejemplo:
+    INSERT INTO Cliente (IdCliente, Nombre, Tipo)
+    VALUES (1, 'Valeria', 'Frecuente');
+    
+    INSERT INTO Provincia (IdProvincia, Nombre) VALUES (1, 'San Jose');
+    
+    INSERT INTO Canton (IdProvincia, IdCanton, Nombre) VALUES (1, 1, 'Desamparados');
+    
+    INSERT INTO Distrito (IdProvincia, IdCanton, IdDistrito, Nombre) VALUES (1, 1, 1, 'San Miguel');
+
+    INSERT INTO ClienteDireccion (IdDireccion, IdCliente, IdProvincia, IdCanton, IdDistrito, Indicaciones)
+    VALUES (1, 1, 1, 1, 1, 'Indicaciones adicionales');
+    
+    INSERT INTO SERVICIOAGENDADOS (CODSERVICIO, FechaHora, PersonasAAtender)
+    VALUES (1, SYSTIMESTAMP, 10);
+
+    INSERT INTO FacturaServicio (numFactura, codServicio)
+    VALUES (1, 1);
+    
+    SELECT NomClienteFact(1) AS "Nombre del cliente"
+    FROM dual;
     
     -- 5. Lista de productos de un menú:
     CREATE OR REPLACE FUNCTION ListaProdMenu(IdMenu INT)
@@ -315,6 +369,21 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     
        RETURN CursorList;
     END;
+    -- Ejemplo:
+    INSERT INTO Producto (IdProducto, Nombre, Precio, Descripcion, Imagen)
+    VALUES (1, 'Hamburguesa', 10.00, 'Torta de carne', 'imagen1.jpg');
+    
+    INSERT INTO Producto (IdProducto, Nombre, Precio, Descripcion, Imagen)
+    VALUES (2, 'Batido', 15.00, 'Sabor de fresa', 'imagen2.jpg');
+    
+    INSERT INTO Menu (IdMenu, IdProducto, Cantidad, Precio)
+    VALUES (1, 1, 2, 20.00);
+    
+    INSERT INTO Menu (IdMenu, IdProducto, Cantidad, Precio)
+    VALUES (1, 2, 1, 15.00);
+
+    SELECT ListaProdMenu(1) AS "Lista de productos"
+    FROM dual;
     
     -- 6. Obtener proveedores de una materia prima:
     CREATE OR REPLACE FUNCTION ProveedorMateriaPrima(IdMateriaPrima INT)
@@ -330,6 +399,24 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     
        RETURN CursorList;
     END;
+    -- Ejemplo:
+    INSERT INTO Proveedor (IdProveedor, Nombre)
+    VALUES (1, 'Charlie');
+    
+    INSERT INTO Proveedor (IdProveedor, Nombre)
+    VALUES (2, 'Pedro');
+    
+    INSERT INTO MateriaPrima (IdMateriaPrima, Nombre, UnidadDeMedicion)
+    VALUES (1, 'Papa', 'Unit');
+    
+    INSERT INTO MateriaPrimaProveedor (IdMateriaPrima, IdProveedor, Precio)
+    VALUES (1, 1, 10.00);
+    
+    INSERT INTO MateriaPrimaProveedor (IdMateriaPrima, IdProveedor, Precio)
+    VALUES (1, 2, 15.00);
+
+    SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
+    FROM dual;
         
     -- 7. Obtener el nombre y el propósito de local por ID:
     CREATE OR REPLACE FUNCTION InfoLocal(IdLocal INT)
@@ -344,3 +431,6 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     
        RETURN InfoLocal;
     END;
+    -- Ejemplo:
+    SELECT InfoLocal(1) AS "Lista de productos"
+    FROM dual;
