@@ -1,4 +1,4 @@
--- Scrript para creacion de usuario en SQL Plus
+-- Script para creacion de usuario en SQL Plus
 
 Create user Proyecto_Adm IDENTIFIED BY Password1;
 
@@ -213,7 +213,6 @@ ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDMATERIPRIMA FOREIGN KEY (IDMAT
 
 ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDLOCA FOREIGN KEY (IDLOCAL) REFERENCES LOCALES (IDLOCAL);
 
-
 -- Crear la tabla de auditoria para la tabla Activos
 
 CREATE TABLE AudActivos (IdActivo INT NOT NULL, Descripcion varchar2(100), IdLocal INT, tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
@@ -241,3 +240,107 @@ INSERT INTO ACTIVOS (idactivo, descripcion, idlocal) VALUES (400, 'test2', 30);
 DELETE FROM ACTIVOS WHERE IDACTIVO = 400;
 
 Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pruebas');
+
+
+-- FUNCIONES --
+    -- 1. Obtener información de un empleado:
+    CREATE OR REPLACE FUNCTION InfoEmpleado(IdEmpleado INT)
+    RETURN VARCHAR2
+    IS
+       InfoEmpleado VARCHAR2(500);
+    BEGIN
+       SELECT Nombre || ' ' || Apellido1 || ' ' || Apellido2 || ' | AKA: ' || Alias || ' | IBAN: ' || IBAN
+       INTO InfoEmpleado
+       FROM Empleado
+       WHERE IdEmpleado = IdEmpleado;
+       RETURN InfoEmpleado;
+    END;
+    
+    -- 2. Lista de empleados por puesto:
+    CREATE OR REPLACE FUNCTION ListaEmpleadosPuesto(IdPuesto INT)
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT e.Nombre, e.Apellido1, e.Apellido2
+          FROM Empleado e
+          JOIN EmpleadoPuesto ep ON e.IdEmpleado = ep.IdEmpleado
+          WHERE ep.IdPuesto = IdPuesto;
+          
+       RETURN CursorList;
+    END;
+    
+    -- 3.Calcular el total de una factura:
+    CREATE OR REPLACE FUNCTION TotalFactura(NumFactura INT)
+    RETURN NUMBER
+    IS
+       Total NUMBER(6,2);
+    BEGIN
+       SELECT SUM(fd.Total)
+       INTO Total
+       FROM FacturaDetalle fd
+       WHERE fd.NumFactura = NumFactura;
+    
+       RETURN Total;
+    END;
+
+-- 4. Obtener nombre del cliente por la factura:
+    CREATE OR REPLACE FUNCTION NomClienteFact(NumFactura INT)
+    RETURN VARCHAR2
+    IS
+       NombreCliente VARCHAR2(100);
+    BEGIN
+       SELECT c.Nombre
+       INTO NombreCliente
+       FROM Cliente c
+       JOIN ClienteDireccion cd ON c.IdCliente = cd.IdCliente
+       JOIN FacturaDetalle fd ON cd.IdDireccion = fd.IdMenu
+       WHERE fd.NumFactura = NumFactura;
+    
+       RETURN NombreCliente;
+    END;
+    
+    -- 5. Lista de productos de un menú:
+    CREATE OR REPLACE FUNCTION ListaProdMenu(IdMenu INT)
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT p.Nombre, p.Precio
+          FROM Producto p
+          JOIN Menu m ON p.IdProducto = m.IdProducto
+          WHERE m.IdMenu = IdMenu;
+    
+       RETURN CursorList;
+    END;
+    
+    -- 6. Obtener proveedores de una materia prima:
+    CREATE OR REPLACE FUNCTION ProveedorMateriaPrima(IdMateriaPrima INT)
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT pr.Nombre, mp.Precio
+          FROM MateriaPrimaProveedor mp
+          JOIN Proveedor pr ON mp.IdProveedor = pr.IdProveedor
+          WHERE mp.IdMateriaPrima = IdMateriaPrima;
+    
+       RETURN CursorList;
+    END;
+        
+    -- 7. Obtener el nombre y el propósito de local por ID:
+    CREATE OR REPLACE FUNCTION InfoLocal(IdLocal INT)
+    RETURN VARCHAR2
+    IS
+       InfoLocal VARCHAR2(100);
+    BEGIN
+       SELECT Nombre || ': ' || Proposito
+       INTO InfoLocal
+       FROM Locales
+       WHERE IdLocal = IdLocal;
+    
+       RETURN InfoLocal;
+    END;
