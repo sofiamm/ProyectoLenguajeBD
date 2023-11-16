@@ -243,7 +243,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
 
 
 -- FUNCIONES --
-    -- 1. Obtener información de un empleado:
+    -- 1. Obtener informaciï¿½n de un empleado:
     CREATE OR REPLACE FUNCTION InfoEmpleado(IdEmpleado INT)
     RETURN VARCHAR2
     IS
@@ -259,7 +259,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
     VALUES (10, 'Juan', 'Perez', 'Gomez', 'JP', 'Mo34', 5000, 'Activo', 'psswd');
     
-    SELECT InfoEmpleado(30) AS "Información del Empleado"
+    SELECT InfoEmpleado(30) AS "Informaciï¿½n del Empleado"
     FROM dual; --Tabla default para ejemplo
     
     -- 2. Lista de empleados por puesto:
@@ -284,7 +284,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     VALUES (10, 1);
     
     INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
-    VALUES (20, 'Sofía', 'Mora', 'Muñoz', 'SOF', 'Ra24', 6000, 'Activo', 'contra');
+    VALUES (20, 'Sofï¿½a', 'Mora', 'Muï¿½oz', 'SOF', 'Ra24', 6000, 'Activo', 'contra');
     
     INSERT INTO EmpleadoPuesto (IdEmpleado, IdPuesto)
     VALUES (20, 1);
@@ -355,7 +355,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     SELECT NomClienteFact(1) AS "Nombre del cliente"
     FROM dual;
     
-    -- 5. Lista de productos de un menú:
+    -- 5. Lista de productos de un menï¿½:
     CREATE OR REPLACE FUNCTION ListaProdMenu(IdMenu INT)
     RETURN SYS_REFCURSOR
     IS
@@ -418,7 +418,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
     FROM dual;
         
-    -- 7. Obtener el nombre y el propósito de local por ID:
+    -- 7. Obtener el nombre y el propï¿½sito de local por ID:
     CREATE OR REPLACE FUNCTION InfoLocal(IdLocal INT)
     RETURN VARCHAR2
     IS
@@ -435,7 +435,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     SELECT InfoLocal(1) AS "Lista de productos"
     FROM dual;
     
-    -- 8. Lista de Clientes con Detalles de Dirección:
+    -- 8. Lista de Clientes con Detalles de Direcciï¿½n:
     CREATE OR REPLACE FUNCTION ListaClientesDireccion
     RETURN SYS_REFCURSOR
     IS
@@ -469,7 +469,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
         -- Llamar a la vista:
         SELECT * FROM VistaServiciosAgendados;
        
-    -- 3. Vista de Detalles de Factura con Información de Producto:
+    -- 3. Vista de Detalles de Factura con Informaciï¿½n de Producto:
     CREATE OR REPLACE VIEW VistaDetallesFactura AS
        SELECT fd.NumFactura, fd.IdMenu, fd.Cantidad, fd.Subtotal, fd.Total,
               p.Nombre AS NombreProducto
@@ -487,3 +487,99 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
        JOIN Puesto p ON ep.IdPuesto = p.IdPuesto;
        -- Llamar a la vista:
         SELECT * FROM VistaEmpleadosPuesto;
+
+--Procedimientos almacenados
+--verificar la tabla de Empleado ya que tiene un fallo
+CREATE OR REPLACE PROCEDURE IngresarEmpleado(
+    p_IdEmpleado INT,
+    p_Nombre VARCHAR2,
+    p_Apellido1 VARCHAR2,
+    p_Apellido2 VARCHAR2,
+    p_Alias VARCHAR2,
+    p_IBAN VARCHAR2,
+    p_Salario NUMBER,
+    p_Estado VARCHAR2,
+    p_Password VARCHAR2) AS
+BEGIN
+    INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, "Password")
+    VALUES (p_IdEmpleado, p_Nombre, p_Apellido1, p_Apellido2, p_Alias, p_IBAN, p_Salario, p_Estado, p_Password);
+END;
+
+CREATE PROCEDURE IngresarCliente(
+    p_IdCliente INT,
+    p_Nombre VARCHAR2,
+    p_Tipo VARCHAR2) AS
+BEGIN
+    INSERT INTO Cliente VALUES (p_IdCliente, p_Nombre, p_Tipo);
+END;
+
+CREATE PROCEDURE IngresarProducto(
+    p_IdProducto INT,
+    p_Nombre VARCHAR2,
+    p_Precio NUMBER,
+    p_Descripcion VARCHAR2,
+    p_Imagen VARCHAR2) AS
+BEGIN
+    INSERT INTO Producto VALUES (p_IdProducto, p_Nombre, p_Precio, p_Descripcion, p_Imagen);
+END;
+
+CREATE PROCEDURE IngresarProvincia(
+    p_IdProvincia INT,
+    p_Nombre VARCHAR2) AS
+BEGIN
+    INSERT INTO Provincia VALUES (p_IdProvincia, p_Nombre);
+END;
+
+CREATE PROCEDURE IngresarLocal(
+    p_IdLocal INT,
+    p_Nombre VARCHAR2,
+    p_Proposito VARCHAR2) AS
+BEGIN
+    INSERT INTO Locales VALUES (p_IdLocal, p_Nombre, p_Proposito);
+END;
+CREATE PROCEDURE IngresarFacturacion(
+    p_NumFactura INT,
+    p_Fecha DATE,
+    p_MetodoPago VARCHAR2,
+    p_Total NUMBER) AS
+BEGIN
+    INSERT INTO Facturacion VALUES (p_NumFactura, p_Fecha, p_MetodoPago, p_Total);
+END;
+
+
+CREATE PROCEDURE BorrarEmpleado(
+    p_IdEmpleado INT) AS
+BEGIN
+    DELETE FROM Empleado WHERE IdEmpleado = p_IdEmpleado;
+END;
+
+
+CREATE PROCEDURE BorrarCliente(
+    p_IdCliente INT) AS
+BEGIN
+    DELETE FROM Cliente WHERE IdCliente = p_IdCliente;
+END;
+
+CREATE PROCEDURE BorrarProducto(
+    p_IdProducto INT) AS
+BEGIN
+    DELETE FROM Producto WHERE IdProducto = p_IdProducto;
+END;
+
+CREATE PROCEDURE BorrarProvincia(
+    p_IdProvincia INT) AS
+BEGIN
+    DELETE FROM Provincia WHERE IdProvincia = p_IdProvincia;
+END;
+
+CREATE PROCEDURE BorrarLocal(
+    p_IdLocal INT) AS
+BEGIN
+    DELETE FROM Locales WHERE IdLocal = p_IdLocal;
+END;
+
+CREATE PROCEDURE BorrarFacturacion(
+    p_NumFactura INT) AS
+BEGIN
+    DELETE FROM Facturacion WHERE NumFactura = p_NumFactura;
+END;
