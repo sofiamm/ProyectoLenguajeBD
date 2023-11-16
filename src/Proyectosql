@@ -435,6 +435,23 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     SELECT InfoLocal(1) AS "Lista de productos"
     FROM dual;
     
+    -- 8. Lista de Clientes con Detalles de Dirección:
+    CREATE OR REPLACE FUNCTION ListaClientesDireccion
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT c.*, d.*
+          FROM Cliente c
+          JOIN ClienteDireccion cd ON c.IdCliente = cd.IdCliente
+          JOIN Provincia p ON cd.IdProvincia = p.IdProvincia
+          JOIN Canton cn ON cd.IdCanton = cn.IdCanton
+          JOIN Distrito dt ON cd.IdDistrito = dt.IdDistrito;
+    
+       RETURN CursorList;
+    END;
+    
 -- VISTAS --
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW VistaEmpleadosActivos AS
