@@ -434,3 +434,39 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     -- Ejemplo:
     SELECT InfoLocal(1) AS "Lista de productos"
     FROM dual;
+    
+-- VISTAS --
+    -- 1. Vista de Empleados Activos:
+    CREATE OR REPLACE VIEW VistaEmpleadosActivos AS
+       SELECT *
+       FROM Empleado
+       WHERE Estado = 'Activo';
+       -- Llamar a la vista:
+        SELECT * FROM VistaEmpleadosActivos;
+
+    -- 2. Vista de Servicios Agendados hoy:
+    CREATE OR REPLACE VIEW VistaServiciosAgendados AS
+       SELECT *
+       FROM ServicioAgendados
+       WHERE TRUNC(FechaHora) = TRUNC(SYSDATE);
+        -- Llamar a la vista:
+        SELECT * FROM VistaServiciosAgendados;
+       
+    -- 3. Vista de Detalles de Factura con Información de Producto:
+    CREATE OR REPLACE VIEW VistaDetallesFactura AS
+       SELECT fd.NumFactura, fd.IdMenu, fd.Cantidad, fd.Subtotal, fd.Total,
+              p.Nombre AS NombreProducto
+       FROM FacturaDetalle fd
+       JOIN Menu m ON fd.IdMenu = m.IdMenu
+       JOIN Producto p ON m.IdProducto = p.IdProducto;
+       -- Llamar a la vista:
+        SELECT * FROM VistaDetallesFactura;
+
+       -- 4. Vista de Empleados con Detalles de Puesto:
+    CREATE OR REPLACE VIEW VistaEmpleadosPuesto AS
+       SELECT e.*, ep.IdPuesto, p.Nombre AS NombrePuesto, p.SalarioMin, p.SalarioMax
+       FROM Empleado e
+       JOIN EmpleadoPuesto ep ON e.IdEmpleado = ep.IdEmpleado
+       JOIN Puesto p ON ep.IdPuesto = p.IdPuesto;
+       -- Llamar a la vista:
+        SELECT * FROM VistaEmpleadosPuesto;
