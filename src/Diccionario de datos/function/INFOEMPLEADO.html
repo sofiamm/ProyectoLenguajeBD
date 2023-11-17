@@ -1,0 +1,593 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=Cp1252" />
+<script src="INFOEMPLEADO/report.js" type="text/javascript"></script>
+<link href="INFOEMPLEADO/report.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="banner">
+<table width="98%"><tr>
+<td><h2 class="banner">INFOEMPLEADO</h2></td>
+</tr></table></div>
+<div id="maintabs">
+<div class="currentmaintab" onclick="onSelectMainTab(this, 0)">
+<div>
+<p>Doc</p>
+</div>
+</div>
+<div class="maintab" onclick="onSelectMainTab(this, 1)">
+<div>
+<p>Details</p>
+</div>
+</div>
+<div class="maintab" onclick="onSelectMainTab(this, 2)">
+<div>
+<p>Grants</p>
+</div>
+</div>
+<div class="maintab" onclick="onSelectMainTab(this, 3)">
+<div>
+<p>References</p>
+</div>
+</div>
+<div class="maintab" onclick="onSelectMainTab(this, 4)">
+<div>
+<p>Dependencies</p>
+</div>
+</div>
+<div class="maintab" onclick="onSelectMainTab(this, 5)">
+<div>
+<p>Code</p>
+</div>
+</div>
+</div>
+<br/>
+<div id="masterreports">
+<div id="Master.0">
+<div class="currentmasterreport">
+<TABLE CELLSPACING="0" CELLPADDING="1" WIDTH="100%" BORDER="0">
+<TR><TD CLASS="NavBarRow3" VALIGN="top"><FONT SIZE="-2">      SUMMARY:  <A HREF="#field_summary">FIELD</A> | <A HREF="#type_summary">TYPE</A> | <A HREF="#method_summary">METHOD</A></FONT></TD><TD CLASS="NavBarRow3" VALIGN="top"><FONT SIZE="-2"></TR></TABLE><HR><P></P><HR><P></P><A NAME="method_summary"></A><TABLE WIDTH="100%" CELLSPACING="0" CELLPADDING="3" BORDER="1"><TR CLASS="TableHeadingColor"><TD COLSPAN="2"><FONT SIZE="+2"><B>Method Summary</B></FONT></TD><TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#BorrarCliente">BorrarCliente</A></B>( p_IdCliente INT ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#BorrarEmpleado">BorrarEmpleado</A></B>( p_IdEmpleado INT ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#BorrarFacturacion">BorrarFacturacion</A></B>( p_NumFactura INT ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#BorrarLocal">BorrarLocal</A></B>( p_IdLocal INT ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#BorrarProducto">BorrarProducto</A></B>( p_IdProducto INT ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#BorrarProvincia">BorrarProvincia</A></B>( p_IdProvincia INT ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#InfoEmpleado">InfoEmpleado</A></B>( IdEmpleado INT ) RETURN VARCHAR2 </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#InfoLocal">InfoLocal</A></B>( IdLocal INT ) RETURN VARCHAR2 </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7. Obtener el nombre y el prop�sito de local por ID:</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#IngresarCliente">IngresarCliente</A></B>( p_IdCliente INT , p_Nombre VARCHAR2 , p_Tipo VARCHAR2 ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#IngresarEmpleado">IngresarEmpleado</A></B>( p_IdEmpleado INT , p_Nombre VARCHAR2 , p_Apellido1 VARCHAR2 , p_Apellido2 VARCHAR2 , p_Alias VARCHAR2 , p_IBAN VARCHAR2 , p_Salario NUMBER , p_Estado VARCHAR2 , p_Password VARCHAR2 ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verificar la tabla de Empleado ya que tiene un fallo</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#IngresarFacturacion">IngresarFacturacion</A></B>( p_NumFactura INT , p_Fecha DATE , p_MetodoPago VARCHAR2 , p_Total NUMBER ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#IngresarLocal">IngresarLocal</A></B>( p_IdLocal INT , p_Nombre VARCHAR2 , p_Proposito VARCHAR2 ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#IngresarProducto">IngresarProducto</A></B>( p_IdProducto INT , p_Nombre VARCHAR2 , p_Precio NUMBER , p_Descripcion VARCHAR2 , p_Imagen VARCHAR2 ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#IngresarProvincia">IngresarProvincia</A></B>( p_IdProvincia INT , p_Nombre VARCHAR2 ) </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#ListaClientesDireccion">ListaClientesDireccion</A></B></CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8. Lista de Clientes con Detalles de Direcci�n:</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#ListaEmpleadosPuesto">ListaEmpleadosPuesto</A></B>( IdPuesto INT ) RETURN SYS_REFCURSOR </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Lista de empleados por puesto:</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#ListaProdMenu">ListaProdMenu</A></B>( IdMenu INT ) RETURN SYS_REFCURSOR </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5. Lista de productos de un men�:</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#NomClienteFact">NomClienteFact</A></B>( NumFactura INT ) RETURN VARCHAR2 </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. Obtener nombre del cliente por la factura:</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#ProveedorMateriaPrima">ProveedorMateriaPrima</A></B>( IdMateriaPrima INT ) RETURN SYS_REFCURSOR </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6. Obtener proveedores de una materia prima:</TD></TR>
+<TR CLASS="TableRowColor"><TD WIDTH="1%" VALIGN="top" ALIGN="right"><FONT SIZE="-1"><CODE>&nbsp;</CODE></FONT></TD><TD><CODE><B><A HREF="#TotalFactura">TotalFactura</A></B>( NumFactura INT ) RETURN NUMBER </CODE><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.Calcular el total de una factura:</TD></TR>
+</TABLE>
+<P></P><A NAME="method_detail"></A><TABLE WIDTH="100%" CELLSPACING="0" CELLPADDING="3" BORDER="1"><TR CLASS="TableHeadingColor"><TD COLSPAN="2"><FONT SIZE="+2"><B>Method Detail</B></FONT></TD></TABLE><A NAME="BorrarCliente"></A>
+<H3>BorrarCliente</H3><PRE>          <B>BorrarCliente</B>( p_IdCliente INT ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="BorrarEmpleado"></A>
+<H3>BorrarEmpleado</H3><PRE>          <B>BorrarEmpleado</B>( p_IdEmpleado INT ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="BorrarFacturacion"></A>
+<H3>BorrarFacturacion</H3><PRE>          <B>BorrarFacturacion</B>( p_NumFactura INT ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="BorrarLocal"></A>
+<H3>BorrarLocal</H3><PRE>          <B>BorrarLocal</B>( p_IdLocal INT ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="BorrarProducto"></A>
+<H3>BorrarProducto</H3><PRE>          <B>BorrarProducto</B>( p_IdProducto INT ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="BorrarProvincia"></A>
+<H3>BorrarProvincia</H3><PRE>          <B>BorrarProvincia</B>( p_IdProvincia INT ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="InfoEmpleado"></A>
+<H3>InfoEmpleado</H3><PRE>          <B>InfoEmpleado</B>( IdEmpleado INT ) RETURN VARCHAR2 </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="InfoLocal"></A>
+<H3>InfoLocal</H3><PRE>          <B>InfoLocal</B>( IdLocal INT ) RETURN VARCHAR2 </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7. Obtener el nombre y el prop�sito de local por ID:<DD><DL></DL></DD></DL><HR><A NAME="IngresarCliente"></A>
+<H3>IngresarCliente</H3><PRE>          <B>IngresarCliente</B>( p_IdCliente INT , p_Nombre VARCHAR2 , p_Tipo VARCHAR2 ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="IngresarEmpleado"></A>
+<H3>IngresarEmpleado</H3><PRE>          <B>IngresarEmpleado</B>( p_IdEmpleado INT , p_Nombre VARCHAR2 , p_Apellido1 VARCHAR2 , p_Apellido2 VARCHAR2 , p_Alias VARCHAR2 , p_IBAN VARCHAR2 , p_Salario NUMBER , p_Estado VARCHAR2 , p_Password VARCHAR2 ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verificar la tabla de Empleado ya que tiene un fallo<DD><DL></DL></DD></DL><HR><A NAME="IngresarFacturacion"></A>
+<H3>IngresarFacturacion</H3><PRE>          <B>IngresarFacturacion</B>( p_NumFactura INT , p_Fecha DATE , p_MetodoPago VARCHAR2 , p_Total NUMBER ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="IngresarLocal"></A>
+<H3>IngresarLocal</H3><PRE>          <B>IngresarLocal</B>( p_IdLocal INT , p_Nombre VARCHAR2 , p_Proposito VARCHAR2 ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="IngresarProducto"></A>
+<H3>IngresarProducto</H3><PRE>          <B>IngresarProducto</B>( p_IdProducto INT , p_Nombre VARCHAR2 , p_Precio NUMBER , p_Descripcion VARCHAR2 , p_Imagen VARCHAR2 ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="IngresarProvincia"></A>
+<H3>IngresarProvincia</H3><PRE>          <B>IngresarProvincia</B>( p_IdProvincia INT , p_Nombre VARCHAR2 ) </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<DD><DL></DL></DD></DL><HR><A NAME="ListaClientesDireccion"></A>
+<H3>ListaClientesDireccion</H3><PRE>          <B>ListaClientesDireccion</B></PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8. Lista de Clientes con Detalles de Direcci�n:<DD><DL></DL></DD></DL><HR><A NAME="ListaEmpleadosPuesto"></A>
+<H3>ListaEmpleadosPuesto</H3><PRE>          <B>ListaEmpleadosPuesto</B>( IdPuesto INT ) RETURN SYS_REFCURSOR </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Lista de empleados por puesto:<DD><DL></DL></DD></DL><HR><A NAME="ListaProdMenu"></A>
+<H3>ListaProdMenu</H3><PRE>          <B>ListaProdMenu</B>( IdMenu INT ) RETURN SYS_REFCURSOR </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5. Lista de productos de un men�:<DD><DL></DL></DD></DL><HR><A NAME="NomClienteFact"></A>
+<H3>NomClienteFact</H3><PRE>          <B>NomClienteFact</B>( NumFactura INT ) RETURN VARCHAR2 </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. Obtener nombre del cliente por la factura:<DD><DL></DL></DD></DL><HR><A NAME="ProveedorMateriaPrima"></A>
+<H3>ProveedorMateriaPrima</H3><PRE>          <B>ProveedorMateriaPrima</B>( IdMateriaPrima INT ) RETURN SYS_REFCURSOR </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6. Obtener proveedores de una materia prima:<DD><DL></DL></DD></DL><HR><A NAME="TotalFactura"></A>
+<H3>TotalFactura</H3><PRE>          <B>TotalFactura</B>( NumFactura INT ) RETURN NUMBER </PRE><DL>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.Calcular el total de una factura:<DD><DL></DL></DD></DL><HR><TABLE CELLSPACING="0" CELLPADDING="1" WIDTH="100%" BORDER="0">
+<TR><TD CLASS="NavBarRow3" VALIGN="top"><FONT SIZE="-2">      SUMMARY:  <A HREF="#field_summary">FIELD</A> | <A HREF="#type_summary">TYPE</A> | <A HREF="#method_summary">METHOD</A></FONT></TD><TD CLASS="NavBarRow3" VALIGN="top"><FONT SIZE="-2"></TR></TABLE></div>
+</div>
+<div id="Master.1">
+<div class="masterreport">
+<table id="Table.0" cellpadding="0" cellspacing="0" summary="">
+<th>NAME</th>
+<th>VALUE</th>
+</tr>
+<tr>
+<td>OWNER</td>
+<td>PROYECTO_ADM</td>
+</tr>
+<tr>
+<td>OBJECT_NAME</td>
+<td>INFOEMPLEADO</td>
+</tr>
+<tr>
+<td>SUBOBJECT_NAME</td>
+<td>null</td>
+</tr>
+<tr>
+<td>OBJECT_ID</td>
+<td>73364</td>
+</tr>
+<tr>
+<td>DATA_OBJECT_ID</td>
+<td>null</td>
+</tr>
+<tr>
+<td>OBJECT_TYPE</td>
+<td>FUNCTION</td>
+</tr>
+<tr>
+<td>CREATED</td>
+<td>16-NOV-23</td>
+</tr>
+<tr>
+<td>LAST_DDL_TIME</td>
+<td>16-NOV-23</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>2023-11-16:19:45:51</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>INVALID</td>
+</tr>
+<tr>
+<td>TEMPORARY</td>
+<td>N</td>
+</tr>
+<tr>
+<td>GENERATED</td>
+<td>N</td>
+</tr>
+<tr>
+<td>SECONDARY</td>
+<td>N</td>
+</tr>
+<tr>
+<td>NAMESPACE</td>
+<td>1</td>
+</tr>
+<tr>
+<td>EDITION_NAME</td>
+<td>null</td>
+</tr>
+<tr>
+<td>SHARING</td>
+<td>NONE</td>
+</tr>
+<tr>
+<td>EDITIONABLE</td>
+<td>N</td>
+</tr>
+<tr>
+<td>ORACLE_MAINTAINED</td>
+<td>N</td>
+</tr>
+<tr>
+<td>APPLICATION</td>
+<td>N</td>
+</tr>
+<tr>
+<td>DEFAULT_COLLATION</td>
+<td>USING_NLS_COMP</td>
+</tr>
+<tr>
+<td>DUPLICATED</td>
+<td>N</td>
+</tr>
+<tr>
+<td>SHARDED</td>
+<td>N</td>
+</tr>
+<tr>
+<td>CREATED_APPID</td>
+<td>null</td>
+</tr>
+<tr>
+<td>CREATED_VSNID</td>
+<td>null</td>
+</tr>
+<tr>
+<td>MODIFIED_APPID</td>
+<td>null</td>
+</tr>
+<tr>
+<td>MODIFIED_VSNID</td>
+<td>null</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="Master.2">
+<div class="masterreport">
+<table id="Table.1" cellpadding="0" cellspacing="0" summary="">
+<tr>
+<th>PRIVILEGE</th>
+<th>GRANTEE</th>
+<th>GRANTABLE</th>
+<th>GRANTOR</th>
+<th>OBJECT_NAME</th>
+</tr>
+</table>
+</div>
+</div>
+<div id="Master.3">
+<div class="masterreport">
+<table id="Table.2" cellpadding="0" cellspacing="0" summary="">
+<tr>
+<th>NAME</th>
+<th>OWNER</th>
+<th>TYPE</th>
+<th>OBJECT_ID</th>
+<th>STATUS</th>
+<th>TYPE_LINK</th>
+</tr>
+</table>
+</div>
+</div>
+<div id="Master.4">
+<div class="masterreport">
+<table id="Table.3" cellpadding="0" cellspacing="0" summary="">
+<tr>
+<th>NAME</th>
+<th>OWNER</th>
+<th>TYPE</th>
+<th>OBJECT_ID</th>
+<th>STATUS</th>
+<th>TYPE_LINK</th>
+</tr>
+</table>
+</div>
+</div>
+<div id="Master.5">
+<div class="masterreport">
+<pre>
+FUNCTION InfoEmpleado(IdEmpleado INT)
+    RETURN VARCHAR2
+    IS
+       InfoEmpleado VARCHAR2(500);
+    BEGIN
+       SELECT Nombre || ' ' || Apellido1 || ' ' || Apellido2 || ' | AKA: ' || Alias || ' | IBAN: ' || IBAN
+       INTO InfoEmpleado
+       FROM Empleado
+       WHERE IdEmpleado = IdEmpleado;
+       RETURN InfoEmpleado;
+    END;
+    -- Ejemplo:
+    INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
+    VALUES (10, 'Juan', 'Perez', 'Gomez', 'JP', 'Mo34', 5000, 'Activo', 'psswd');
+
+    SELECT InfoEmpleado(30) AS "Informaci�n del Empleado"
+    FROM dual; --Tabla default para ejemplo
+
+    -- 2. Lista de empleados por puesto:
+    CREATE OR REPLACE FUNCTION ListaEmpleadosPuesto(IdPuesto INT)
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT e.Nombre, e.Apellido1, e.Apellido2
+          FROM Empleado e
+          JOIN EmpleadoPuesto ep ON e.IdEmpleado = ep.IdEmpleado
+          WHERE ep.IdPuesto = IdPuesto;
+
+       RETURN CursorList;
+    END;
+    -- Ejemplo:
+    INSERT INTO Puesto (IdPuesto, Nombre, SalarioMin, SalarioMax)
+    VALUES (1, 'Desarrollador', 5000, 8000);
+
+    INSERT INTO EmpleadoPuesto (IdEmpleado, IdPuesto)
+    VALUES (10, 1);
+
+    INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
+    VALUES (20, 'Sof�a', 'Mora', 'Mu�oz', 'SOF', 'Ra24', 6000, 'Activo', 'contra');
+
+    INSERT INTO EmpleadoPuesto (IdEmpleado, IdPuesto)
+    VALUES (20, 1);
+
+    SELECT ListaEmpleadosPuesto(1) AS "Lista Empleados"
+    FROM dual;
+
+    -- 3.Calcular el total de una factura:
+    CREATE OR REPLACE FUNCTION TotalFactura(NumFactura INT)
+    RETURN NUMBER
+    IS
+       Total NUMBER(6,2);
+    BEGIN
+       SELECT SUM(fd.Total)
+       INTO Total
+       FROM FacturaDetalle fd
+       WHERE fd.NumFactura = NumFactura;
+
+       RETURN Total;
+    END;
+    -- Ejemplo:
+    INSERT INTO Facturacion (numFactura, Fecha, MetodoPago, Total)
+    VALUES (1, TO_DATE('2023-11-15', 'YYYY-MM-DD'), 'Tarjeta', 1000.00);
+
+    INSERT INTO FacturaDetalle (numFactura, IdMenu, Cantidad, Subtotal, Total)
+    VALUES (1, 1, 2, 50.00, 100.00);
+
+    INSERT INTO FacturaDetalle (numFactura, IdMenu, Cantidad, Subtotal, Total)
+    VALUES (1, 2, 1, 30.00, 30.00);
+
+    SELECT TotalFactura(1) AS "Monto total"
+    FROM dual;
+
+-- 4. Obtener nombre del cliente por la factura:
+    CREATE OR REPLACE FUNCTION NomClienteFact(NumFactura INT)
+    RETURN VARCHAR2
+    IS
+       NombreCliente VARCHAR2(100);
+    BEGIN
+       SELECT c.Nombre
+       INTO NombreCliente
+       FROM Cliente c
+       JOIN ClienteDireccion cd ON c.IdCliente = cd.IdCliente
+       JOIN FacturaDetalle fd ON cd.IdDireccion = fd.IdMenu
+       WHERE fd.NumFactura = NumFactura;
+
+       RETURN NombreCliente;
+    END;
+    -- Ejemplo:
+    INSERT INTO Cliente (IdCliente, Nombre, Tipo)
+    VALUES (1, 'Valeria', 'Frecuente');
+
+    INSERT INTO Provincia (IdProvincia, Nombre) VALUES (1, 'San Jose');
+
+    INSERT INTO Canton (IdProvincia, IdCanton, Nombre) VALUES (1, 1, 'Desamparados');
+
+    INSERT INTO Distrito (IdProvincia, IdCanton, IdDistrito, Nombre) VALUES (1, 1, 1, 'San Miguel');
+
+    INSERT INTO ClienteDireccion (IdDireccion, IdCliente, IdProvincia, IdCanton, IdDistrito, Indicaciones)
+    VALUES (1, 1, 1, 1, 1, 'Indicaciones adicionales');
+
+    INSERT INTO SERVICIOAGENDADOS (CODSERVICIO, FechaHora, PersonasAAtender)
+    VALUES (1, SYSTIMESTAMP, 10);
+
+    INSERT INTO FacturaServicio (numFactura, codServicio)
+    VALUES (1, 1);
+
+    SELECT NomClienteFact(1) AS "Nombre del cliente"
+    FROM dual;
+
+    -- 5. Lista de productos de un men�:
+    CREATE OR REPLACE FUNCTION ListaProdMenu(IdMenu INT)
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT p.Nombre, p.Precio
+          FROM Producto p
+          JOIN Menu m ON p.IdProducto = m.IdProducto
+          WHERE m.IdMenu = IdMenu;
+
+       RETURN CursorList;
+    END;
+    -- Ejemplo:
+    INSERT INTO Producto (IdProducto, Nombre, Precio, Descripcion, Imagen)
+    VALUES (1, 'Hamburguesa', 10.00, 'Torta de carne', 'imagen1.jpg');
+
+    INSERT INTO Producto (IdProducto, Nombre, Precio, Descripcion, Imagen)
+    VALUES (2, 'Batido', 15.00, 'Sabor de fresa', 'imagen2.jpg');
+
+    INSERT INTO Menu (IdMenu, IdProducto, Cantidad, Precio)
+    VALUES (1, 1, 2, 20.00);
+
+    INSERT INTO Menu (IdMenu, IdProducto, Cantidad, Precio)
+    VALUES (1, 2, 1, 15.00);
+
+    SELECT ListaProdMenu(1) AS "Lista de productos"
+    FROM dual;
+
+    -- 6. Obtener proveedores de una materia prima:
+    CREATE OR REPLACE FUNCTION ProveedorMateriaPrima(IdMateriaPrima INT)
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT pr.Nombre, mp.Precio
+          FROM MateriaPrimaProveedor mp
+          JOIN Proveedor pr ON mp.IdProveedor = pr.IdProveedor
+          WHERE mp.IdMateriaPrima = IdMateriaPrima;
+
+       RETURN CursorList;
+    END;
+    -- Ejemplo:
+    INSERT INTO Proveedor (IdProveedor, Nombre)
+    VALUES (1, 'Charlie');
+
+    INSERT INTO Proveedor (IdProveedor, Nombre)
+    VALUES (2, 'Pedro');
+
+    INSERT INTO MateriaPrima (IdMateriaPrima, Nombre, UnidadDeMedicion)
+    VALUES (1, 'Papa', 'Unit');
+
+    INSERT INTO MateriaPrimaProveedor (IdMateriaPrima, IdProveedor, Precio)
+    VALUES (1, 1, 10.00);
+
+    INSERT INTO MateriaPrimaProveedor (IdMateriaPrima, IdProveedor, Precio)
+    VALUES (1, 2, 15.00);
+
+    SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
+    FROM dual;
+
+    -- 7. Obtener el nombre y el prop�sito de local por ID:
+    CREATE OR REPLACE FUNCTION InfoLocal(IdLocal INT)
+    RETURN VARCHAR2
+    IS
+       InfoLocal VARCHAR2(100);
+    BEGIN
+       SELECT Nombre || ': ' || Proposito
+       INTO InfoLocal
+       FROM Locales
+       WHERE IdLocal = IdLocal;
+
+       RETURN InfoLocal;
+    END;
+    -- Ejemplo:
+    SELECT InfoLocal(1) AS "Lista de productos"
+    FROM dual;
+
+    -- 8. Lista de Clientes con Detalles de Direcci�n:
+    CREATE OR REPLACE FUNCTION ListaClientesDireccion
+    RETURN SYS_REFCURSOR
+    IS
+       CursorList SYS_REFCURSOR;
+    BEGIN
+       OPEN CursorList FOR
+          SELECT c.*, d.*
+          FROM Cliente c
+          JOIN ClienteDireccion cd ON c.IdCliente = cd.IdCliente
+          JOIN Provincia p ON cd.IdProvincia = p.IdProvincia
+          JOIN Canton cn ON cd.IdCanton = cn.IdCanton
+          JOIN Distrito dt ON cd.IdDistrito = dt.IdDistrito;
+
+       RETURN CursorList;
+    END;
+
+-- VISTAS --
+    -- 1. Vista de Empleados Activos:
+    CREATE OR REPLACE VIEW VistaEmpleadosActivos AS
+       SELECT *
+       FROM Empleado
+       WHERE Estado = 'Activo';
+       -- Llamar a la vista:
+        SELECT * FROM VistaEmpleadosActivos;
+
+    -- 2. Vista de Servicios Agendados hoy:
+    CREATE OR REPLACE VIEW VistaServiciosAgendados AS
+       SELECT *
+       FROM ServicioAgendados
+       WHERE TRUNC(FechaHora) = TRUNC(SYSDATE);
+        -- Llamar a la vista:
+        SELECT * FROM VistaServiciosAgendados;
+
+    -- 3. Vista de Detalles de Factura con Informaci�n de Producto:
+    CREATE OR REPLACE VIEW VistaDetallesFactura AS
+       SELECT fd.NumFactura, fd.IdMenu, fd.Cantidad, fd.Subtotal, fd.Total,
+              p.Nombre AS NombreProducto
+       FROM FacturaDetalle fd
+       JOIN Menu m ON fd.IdMenu = m.IdMenu
+       JOIN Producto p ON m.IdProducto = p.IdProducto;
+       -- Llamar a la vista:
+        SELECT * FROM VistaDetallesFactura;
+
+       -- 4. Vista de Empleados con Detalles de Puesto:
+    CREATE OR REPLACE VIEW VistaEmpleadosPuesto AS
+       SELECT e.*, ep.IdPuesto, p.Nombre AS NombrePuesto, p.SalarioMin, p.SalarioMax
+       FROM Empleado e
+       JOIN EmpleadoPuesto ep ON e.IdEmpleado = ep.IdEmpleado
+       JOIN Puesto p ON ep.IdPuesto = p.IdPuesto;
+       -- Llamar a la vista:
+        SELECT * FROM VistaEmpleadosPuesto;
+
+--Procedimientos almacenados
+--verificar la tabla de Empleado ya que tiene un fallo
+CREATE OR REPLACE PROCEDURE IngresarEmpleado(
+    p_IdEmpleado INT,
+    p_Nombre VARCHAR2,
+    p_Apellido1 VARCHAR2,
+    p_Apellido2 VARCHAR2,
+    p_Alias VARCHAR2,
+    p_IBAN VARCHAR2,
+    p_Salario NUMBER,
+    p_Estado VARCHAR2,
+    p_Password VARCHAR2) AS
+BEGIN
+    INSERT INTO Empleado (IdEmpleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, "Password")
+    VALUES (p_IdEmpleado, p_Nombre, p_Apellido1, p_Apellido2, p_Alias, p_IBAN, p_Salario, p_Estado, p_Password);
+END;
+
+CREATE PROCEDURE IngresarCliente(
+    p_IdCliente INT,
+    p_Nombre VARCHAR2,
+    p_Tipo VARCHAR2) AS
+BEGIN
+    INSERT INTO Cliente VALUES (p_IdCliente, p_Nombre, p_Tipo);
+END;
+
+CREATE PROCEDURE IngresarProducto(
+    p_IdProducto INT,
+    p_Nombre VARCHAR2,
+    p_Precio NUMBER,
+    p_Descripcion VARCHAR2,
+    p_Imagen VARCHAR2) AS
+BEGIN
+    INSERT INTO Producto VALUES (p_IdProducto, p_Nombre, p_Precio, p_Descripcion, p_Imagen);
+END;
+
+CREATE PROCEDURE IngresarProvincia(
+    p_IdProvincia INT,
+    p_Nombre VARCHAR2) AS
+BEGIN
+    INSERT INTO Provincia VALUES (p_IdProvincia, p_Nombre);
+END;
+
+CREATE PROCEDURE IngresarLocal(
+    p_IdLocal INT,
+    p_Nombre VARCHAR2,
+    p_Proposito VARCHAR2) AS
+BEGIN
+    INSERT INTO Locales VALUES (p_IdLocal, p_Nombre, p_Proposito);
+END;
+CREATE PROCEDURE IngresarFacturacion(
+    p_NumFactura INT,
+    p_Fecha DATE,
+    p_MetodoPago VARCHAR2,
+    p_Total NUMBER) AS
+BEGIN
+    INSERT INTO Facturacion VALUES (p_NumFactura, p_Fecha, p_MetodoPago, p_Total);
+END;
+
+
+CREATE PROCEDURE BorrarEmpleado(
+    p_IdEmpleado INT) AS
+BEGIN
+    DELETE FROM Empleado WHERE IdEmpleado = p_IdEmpleado;
+END;
+
+
+CREATE PROCEDURE BorrarCliente(
+    p_IdCliente INT) AS
+BEGIN
+    DELETE FROM Cliente WHERE IdCliente = p_IdCliente;
+END;
+
+CREATE PROCEDURE BorrarProducto(
+    p_IdProducto INT) AS
+BEGIN
+    DELETE FROM Producto WHERE IdProducto = p_IdProducto;
+END;
+
+CREATE PROCEDURE BorrarProvincia(
+    p_IdProvincia INT) AS
+BEGIN
+    DELETE FROM Provincia WHERE IdProvincia = p_IdProvincia;
+END;
+
+CREATE PROCEDURE BorrarLocal(
+    p_IdLocal INT) AS
+BEGIN
+    DELETE FROM Locales WHERE IdLocal = p_IdLocal;
+END;
+
+CREATE PROCEDURE BorrarFacturacion(
+    p_NumFactura INT) AS
+BEGIN
+    DELETE FROM Facturacion WHERE NumFactura = p_NumFactura;
+END;</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

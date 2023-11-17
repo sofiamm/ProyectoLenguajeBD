@@ -16,19 +16,19 @@ public class ProyectoLenguajesDB {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-                    String url = "jdbc:oracle:thin:@10.0.0.4:1521:orcl";
+            String url = "jdbc:oracle:thin:@10.0.0.4:1521:orcl";
             String user = "Proyecto_Adm";
             String pass = "Password1";
             int empId;
-            Connection conn;
+            Connection conn = null;
 
             try {
                 Connection connection = DriverManager.getConnection(url, user, pass);
                 System.out.println("Conexión exitosa");
                 String sql = "SELECT idactivo FROM Proyecto_adm.activos WHERE descripcion = 'test'";
-                Statement stmt = conn.createStatement(sql);
+                Statement stmt = connection.createStatement(sql);
 
-                ResultSet resultSet = Statement.executeQuery();
+                ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     int idActivo = resultSet.getInt("idactivo");
                     System.out.println("ID del activo: " + idActivo);
