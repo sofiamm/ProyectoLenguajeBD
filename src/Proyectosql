@@ -39,9 +39,9 @@ CREATE TABLE Cliente(IdCliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(
 
 CREATE TABLE ClienteContacto(IdCliente INT NOT NULL, IdContacto INT NOT NULL);
 
-CREATE TABLE MenuDesgloce(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Precio NUMBER(6,2), Personas INT);
+CREATE TABLE MenuDesglose(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Precio NUMBER(6,2), Personas INT);
 
-CREATE TABLE Menu(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Cantidad INT, Precio NUMBER(6,2));
+CREATE TABLE Menu(IdMenu INT NOT NULL, Precio NUMBER(6,2), Personas INT);
 
 CREATE TABLE FacturaServicio(numFactura INT NOT NULL, codServicio INT NOT NULL);
 
@@ -107,13 +107,13 @@ ALTER TABLE Cliente ADD CONSTRAINT PK_IdCliente PRIMARY KEY (IdCliente);
 
 ALTER TABLE ClienteContacto ADD CONSTRAINT PK_Idcliente_idcontacto PRIMARY KEY (IdCliente, IdContacto);
 
-ALTER TABLE MenuDesgloce ADD CONSTRAINT PK_Idmenu_idproducto PRIMARY KEY (IdMenu, IdProducto);
+ALTER TABLE MenuDesglose ADD CONSTRAINT PK_Idmenu_idproducto PRIMARY KEY (IdMenu, IdProducto);
 
 ALTER TABLE FacturaServicio ADD CONSTRAINT PK_numFactura_codservicio PRIMARY KEY (Numfactura, codservicio);
 
 ALTER TABLE ClienteDireccion ADD CONSTRAINT PK_Iddireccion_idcliente PRIMARY KEY (IdDireccion, IdCliente);
 
-ALTER TABLE Menu ADD CONSTRAINT PK_IdMenu_IdProductos PRIMARY KEY (IdMenu, IdProducto);
+ALTER TABLE Menu ADD CONSTRAINT PK_IdMenul PRIMARY KEY (IdMenu);
 
 ALTER TABLE FacturaDetalle ADD CONSTRAINT PK_numfactura_idmenu PRIMARY KEY (numfactura, idmenu);
 
