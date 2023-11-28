@@ -5,7 +5,7 @@ Create user Proyecto_Adm IDENTIFIED BY Password1;
 GRANT DBA TO Proyecto_Adm;
 
 
--- Scripts para crear las tablas del proyecto
+-- Crear las tablas iniciales
 
 CREATE TABLE Activos (IdActivo INT NOT NULL, Descripcion varchar2(100), IdLocal INT);
 
@@ -39,9 +39,9 @@ CREATE TABLE Cliente(IdCliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(
 
 CREATE TABLE ClienteContacto(IdCliente INT NOT NULL, IdContacto INT NOT NULL);
 
-CREATE TABLE MenuDesgloce(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Precio NUMBER(6,2), Personas INT);
+CREATE TABLE MenuDesglose(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Precio NUMBER(6,2), Personas INT);
 
-CREATE TABLE Menu(IdMenu INT NOT NULL, IdProducto INT NOT NULL, Cantidad INT, Precio NUMBER(6,2));
+CREATE TABLE Menu(IdMenu INT NOT NULL, Precio NUMBER(6,2), Personas INT);
 
 CREATE TABLE FacturaServicio(numFactura INT NOT NULL, codServicio INT NOT NULL);
 
@@ -73,51 +73,31 @@ CREATE TABLE MateriaPrimaProveedor(IdMateriaPrima INT NOT NULL, IdProveedor INT 
 
 CREATE TABLE MateriaPrimaLocal(IdMateriaPrima INT NOT NULL, IdLocal INT NOT NULL);
 
---Agregar Primary Keys a las tablas
+-- Primary keys iniciales
+
+ALTER TABLE Menu ADD CONSTRAINT PK_IdMenul PRIMARY KEY (IdMenu);
+
+ALTER TABLE ProductoMateriaPrima ADD CONSTRAINT PK_IdProducto_idMateriaPrima PRIMARY KEY (IdProducto, IdMateriaPrima);
+
+ALTER TABLE producto ADD CONSTRAINT PK_Idproducto PRIMARY KEY (IdProducto);
 
 ALTER TABLE Activos ADD CONSTRAINT PK_IdActivo PRIMARY KEY (IdActivo);
 
-ALTER TABLE EmpleadoCorreo ADD CONSTRAINT PK_IdEmpleado PRIMARY KEY (IdEmpleado);
-
-ALTER TABLE EmpleadoPuesto ADD CONSTRAINT PK_IdEmpleado_IdPuesto PRIMARY KEY (IdEmpleado, IdPuesto);
-
-ALTER TABLE Puesto ADD CONSTRAINT PK_IdPuesto PRIMARY KEY (IdPuesto);
-
-ALTER TABLE Empleado ADD CONSTRAINT PK_IdEmpleados PRIMARY KEY (IdEmpleado);
-
-ALTER TABLE ContactoTelefono ADD CONSTRAINT PK_IdCpntacto PRIMARY KEY (IdContacto, Telefono);
-
-ALTER TABLE ContactoCorreo ADD CONSTRAINT PK_IdContacto_Correo PRIMARY KEY (IdContacto, Correo);
-
-ALTER TABLE Transporte ADD CONSTRAINT PK_codservicio_idactivo PRIMARY KEY (codServicio, IdActivo);
-
-ALTER TABLE ServicioEmpleados ADD CONSTRAINT PK_condServicio_IdEmpleado PRIMARY KEY (codservicio, idempleado);
-
-ALTER TABLE Publicaciones ADD CONSTRAINT PK_Idpublicacion PRIMARY KEY (Idpublicacion);
-
-ALTER TABLE Contacto ADD CONSTRAINT PK_Idcontacto PRIMARY KEY (Idcontacto);
-
-ALTER TABLE serviciomenu ADD CONSTRAINT PK_codservicio_idmenu PRIMARY KEY (codservicio, idmenu);
-
 ALTER TABLE ServicioAgendados ADD CONSTRAINT PK_codServicio PRIMARY KEY (CodServicio);
 
-ALTER TABLE ServicioCLiente ADD CONSTRAINT PK_codservicio_idcliente PRIMARY KEY (codservicio, idcliente);
+ALTER TABLE Facturacion ADD CONSTRAINT PK_numfactura PRIMARY KEY (numfactura);
 
 ALTER TABLE Cliente ADD CONSTRAINT PK_IdCliente PRIMARY KEY (IdCliente);
 
-ALTER TABLE ClienteContacto ADD CONSTRAINT PK_Idcliente_idcontacto PRIMARY KEY (IdCliente, IdContacto);
+ALTER TABLE Contacto ADD CONSTRAINT PK_Idcontacto PRIMARY KEY (Idcontacto);
 
-ALTER TABLE MenuDesgloce ADD CONSTRAINT PK_Idmenu_idproducto PRIMARY KEY (IdMenu, IdProducto);
+ALTER TABLE Proveedor ADD CONSTRAINT PK_IdProveedor PRIMARY KEY (IdProveedor);
 
-ALTER TABLE FacturaServicio ADD CONSTRAINT PK_numFactura_codservicio PRIMARY KEY (Numfactura, codservicio);
+ALTER TABLE Locales ADD CONSTRAINT PK_Idlocal PRIMARY KEY (Idlocal);
 
-ALTER TABLE ClienteDireccion ADD CONSTRAINT PK_Iddireccion_idcliente PRIMARY KEY (IdDireccion, IdCliente);
+ALTER TABLE Empleado ADD CONSTRAINT PK_IdEmpleados PRIMARY KEY (IdEmpleado);
 
-ALTER TABLE Menu ADD CONSTRAINT PK_IdMenu_IdProductos PRIMARY KEY (IdMenu, IdProducto);
-
-ALTER TABLE FacturaDetalle ADD CONSTRAINT PK_numfactura_idmenu PRIMARY KEY (numfactura, idmenu);
-
-ALTER TABLE Facturacion ADD CONSTRAINT PK_numfactura PRIMARY KEY (numfactura);
+ALTER TABLE Puesto ADD CONSTRAINT PK_IdPuesto PRIMARY KEY (IdPuesto);
 
 ALTER TABLE provincia ADD CONSTRAINT PK_Idprovincia PRIMARY KEY (IdProvincia);
 
@@ -125,25 +105,9 @@ ALTER TABLE Canton ADD CONSTRAINT PK_IdProvincia_IdCanton PRIMARY KEY (IdProvinc
 
 ALTER TABLE Distrito ADD CONSTRAINT PK_IdProvincia_IdCanton_IdDistrito PRIMARY KEY (IdProvincia, IdCanton, IdDistrito);
 
-ALTER TABLE provincia ADD CONSTRAINT PK_Idprovincia PRIMARY KEY (IdProvincia);
+ALTER TABLE Publicaciones ADD CONSTRAINT PK_Idpublicacion PRIMARY KEY (Idpublicacion);
 
-ALTER TABLE producto ADD CONSTRAINT PK_Idproducto PRIMARY KEY (IdProducto);
-
-ALTER TABLE ProductoMateriaPrima ADD CONSTRAINT PK_IdProducto_idMateriaPrima PRIMARY KEY (IdProducto, IdMateriaPrima);
-
-ALTER TABLE MateriaPrima ADD CONSTRAINT PK_IdMateriaPrima PRIMARY KEY (IdMateriaPrima);
-
-ALTER TABLE Locales ADD CONSTRAINT PK_Idlocal PRIMARY KEY (Idlocal);
-
-ALTER TABLE LocalUbicacion ADD CONSTRAINT PK_Idlocalu PRIMARY KEY (IdLocal);
-
-ALTER TABLE Proveedor ADD CONSTRAINT PK_IdProveedor PRIMARY KEY (IdProveedor);
-
-ALTER TABLE MateriaPrimaProveedor ADD CONSTRAINT PK_IdMateriaPrima_IdProveedor PRIMARY KEY (IdMateriaPrima, IdProveedor);
-
-ALTER TABLE MateriaPrimaLocal ADD CONSTRAINT PK_IdMateriaPrima_idlocal PRIMARY KEY (IdMateriaPrima, IdLocal);
-
---Agregar los Foreing Keys
+-- Foreign keys
 
 ALTER TABLE EmpleadoCorreo ADD CONSTRAINT FK_IdEmpleado_IdEmpleado FOREIGN KEY (IdEmpleado) REFERENCES Empleado (IdEmpleado);
 
@@ -183,11 +147,7 @@ ALTER TABLE FACTURASERVICIO ADD CONSTRAINT FK_CODSERVIIC FOREIGN KEY (CODSERVICI
 
 ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDCLI FOREIGN KEY (IDCLIENTE) REFERENCES CLIENTE (IDCLIENTE);
 
-ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDPROVI FOREIGN KEY (IDPROVINCIA) REFERENCES PROVINCIA (IDPROVINCIA);
-
-ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDCANTON FOREIGN KEY (IDCANTON) REFERENCES CANTON (IDCANTON); -- aqui hay un problema por el tipo de primary key doble o triple
-
-ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDdistrito FOREIGN KEY (IDdistrito) REFERENCES distrito (IDdistrito); -- aqui hay un problema por el tipo de primary key doble o triple
+ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDdistrito FOREIGN KEY (idprovincia, idcanton, IDdistrito) REFERENCES distrito (idprovincia, idcanton, IDdistrito); -- aqui hay un problema por el tipo de primary key doble o triple
 
 ALTER TABLE FACTURADETALLE ADD CONSTRAINT FK_NUMFACTURAS FOREIGN KEY (NUMFACTURA) REFERENCES FACTURACION (NUMFACTURA);
 
@@ -213,11 +173,55 @@ ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDMATERIPRIMA FOREIGN KEY (IDMAT
 
 ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDLOCA FOREIGN KEY (IDLOCAL) REFERENCES LOCALES (IDLOCAL);
 
--- Crear la tabla de auditoria para la tabla Activos
+-- Los primary keys que quedan
+
+ALTER TABLE EmpleadoCorreo ADD CONSTRAINT PK_IdEmpleado PRIMARY KEY (IdEmpleado);
+
+ALTER TABLE EmpleadoPuesto ADD CONSTRAINT PK_IdEmpleado_IdPuesto PRIMARY KEY (IdEmpleado, IdPuesto);
+
+ALTER TABLE ContactoTelefono ADD CONSTRAINT PK_IdCpntacto PRIMARY KEY (IdContacto, Telefono);
+
+ALTER TABLE ContactoCorreo ADD CONSTRAINT PK_IdContacto_Correo PRIMARY KEY (IdContacto, Correo);
+
+ALTER TABLE Transporte ADD CONSTRAINT PK_codservicio_idactivo PRIMARY KEY (codServicio, IdActivo);
+
+ALTER TABLE ServicioEmpleados ADD CONSTRAINT PK_condServicio_IdEmpleado PRIMARY KEY (codservicio, idempleado);
+
+ALTER TABLE serviciomenu ADD CONSTRAINT PK_codservicio_idmenu PRIMARY KEY (codservicio, idmenu);
+
+ALTER TABLE ServicioCLiente ADD CONSTRAINT PK_codservicio_idcliente PRIMARY KEY (codservicio, idcliente);
+
+ALTER TABLE ClienteContacto ADD CONSTRAINT PK_Idcliente_idcontacto PRIMARY KEY (IdCliente, IdContacto);
+
+ALTER TABLE MenuDesglose ADD CONSTRAINT PK_Idmenu_idproducto PRIMARY KEY (IdMenu, IdProducto);
+
+ALTER TABLE FacturaServicio ADD CONSTRAINT PK_numFactura_codservicio PRIMARY KEY (Numfactura, codservicio);
+
+ALTER TABLE ClienteDireccion ADD CONSTRAINT PK_Iddireccion_idcliente PRIMARY KEY (IdDireccion, IdCliente);
+
+ALTER TABLE FacturaDetalle ADD CONSTRAINT PK_numfactura_idmenu PRIMARY KEY (numfactura, idmenu);
+
+ALTER TABLE MateriaPrima ADD CONSTRAINT PK_IdMateriaPrima PRIMARY KEY (IdMateriaPrima);
+
+ALTER TABLE LocalUbicacion ADD CONSTRAINT PK_Idlocalu PRIMARY KEY (IdLocal);
+
+ALTER TABLE MateriaPrimaProveedor ADD CONSTRAINT PK_IdMateriaPrima_IdProveedor PRIMARY KEY (IdMateriaPrima, IdProveedor);
+
+ALTER TABLE MateriaPrimaLocal ADD CONSTRAINT PK_IdMateriaPrima_idlocal PRIMARY KEY (IdMateriaPrima, IdLocal);
+
+
+-- Crear la tabla de auditoria para las tablas Activos, Clientes, ServicioEmpleados,  MateriaPrima
+
+CREATE TABLE AudClientes (IdCliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(20), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
 
 CREATE TABLE AudActivos (IdActivo INT NOT NULL, Descripcion varchar2(100), IdLocal INT, tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
 
--- Crear los triggers para la tabla de auditoria
+CREATE TABLE AudServicioEmpleados (codServicio INT NOT NULL, IdEmpleado INT NOT NULL, tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
+
+CREATE TABLE AudMateriaPrima (IdMateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(6,2), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
+
+
+-- Crear los triggers para las tablas de auditorias
 
 CREATE OR REPLACE TRIGGER TGR_INSERT_AUDACTIVOS
 BEFORE INSERT ON ACTIVOS
@@ -227,7 +231,7 @@ INSERT INTO AudActivos (IdActivo, DESCRIPCION, IDLOCAL, tipoMovimiento, fechaMov
 VALUES (:new.IdActivo, :new.descripcion, :new.idlocal, 'Insercion', SYSDATE, user);
 END;
 
-CREATE OR REPLACE TRIGGER TGR_INSERT_AUDACTIVOS
+CREATE OR REPLACE TRIGGER TGR_DELETE_AUDACTIVOS
 BEFORE DELETE ON ACTIVOS
 FOR EACH ROW
 BEGIN
@@ -235,11 +239,53 @@ INSERT INTO AudActivos (IdActivo, DESCRIPCION, IDLOCAL, tipoMovimiento, fechaMov
 VALUES (:old.IdActivo, :old.descripcion, :old.idlocal, 'ELIMINADO', SYSDATE, user);
 END;
 
-INSERT INTO ACTIVOS (idactivo, descripcion, idlocal) VALUES (400, 'test2', 30);
+CREATE OR REPLACE TRIGGER TGR_INSERT_AUDClientes
+BEFORE INSERT ON Cliente
+FOR EACH ROW
+BEGIN
+INSERT INTO AudClientes (IdCliente, Nombre, Tipo, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:new.Idcliente, :new.nombre, :new.tipo, 'Insercion', SYSDATE, user);
+END;
 
-DELETE FROM ACTIVOS WHERE IDACTIVO = 400;
+CREATE OR REPLACE TRIGGER TGR_DELETE_AUDClientes
+BEFORE DELETE ON Cliente
+FOR EACH ROW
+BEGIN
+INSERT INTO AudClientes (IdCliente, Nombre, Tipo, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:old.Idcliente, :old.nombre, :old.tipo, 'Insercion', SYSDATE, user);
+END;
 
-Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pruebas');
+CREATE OR REPLACE TRIGGER TGR_INSERT_AUDServicioEmpleados
+BEFORE INSERT ON ServicioEmpleados
+FOR EACH ROW
+BEGIN
+INSERT INTO AUDServicioEmpleados (codServicio, IdEmpleado, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:new.CodServicio, :new.IdEmpleado, 'Insercion', SYSDATE, user);
+END;
+
+CREATE OR REPLACE TRIGGER TGR_DELETE_AUDServicioEmpleados
+BEFORE DELETE ON ServicioEmpleados
+FOR EACH ROW
+BEGIN
+INSERT INTO AUDServicioEmpleados (codServicio, IdEmpleado, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:old.CodServicio, :old.IdEmpleado, 'Insercion', SYSDATE, user);
+END;
+
+CREATE OR REPLACE TRIGGER TGR_INSERT_AUDMateriaPrima
+BEFORE INSERT ON MateriaPrima
+FOR EACH ROW
+BEGIN
+INSERT INTO AUDMateriaPrima (IdMateriaPrima, Nombre, Reservas, UnidadDeMedicion, Marca, CostoPorUnidad, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:new.IdMateriaPrima, :new.Nombre, :new.Reservas, :new.unidaddemedicion, :new.marca, :new.costoporunidad, 'Insercion', SYSDATE, user);
+END;
+
+CREATE OR REPLACE TRIGGER TGR_DELETE_AUDMateriaPrima
+BEFORE DELETE ON MateriaPrima
+FOR EACH ROW
+BEGIN
+INSERT INTO AUDMateriaPrima (IdMateriaPrima, Nombre, Reservas, UnidadDeMedicion, Marca, CostoPorUnidad, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:old.IdMateriaPrima, :old.Nombre, :old.Reservas, :old.unidaddemedicion, :old.marca, :old.costoporunidad, 'Insercion', SYSDATE, user);
+END;
 
 
 -- FUNCIONES --
@@ -355,7 +401,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     SELECT NomClienteFact(1) AS "Nombre del cliente"
     FROM dual;
     
-    -- 5. Lista de productos de un men�:
+    -- 5. Lista de productos de un menu: Este tiene un error a la hora de correrlo, ya le hice los cambios de la tabla menu
     CREATE OR REPLACE FUNCTION ListaProdMenu(IdMenu INT)
     RETURN SYS_REFCURSOR
     IS
@@ -376,11 +422,11 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     INSERT INTO Producto (IdProducto, Nombre, Precio, Descripcion, Imagen)
     VALUES (2, 'Batido', 15.00, 'Sabor de fresa', 'imagen2.jpg');
     
-    INSERT INTO Menu (IdMenu, IdProducto, Cantidad, Precio)
-    VALUES (1, 1, 2, 20.00);
+    INSERT INTO Menu (IdMenu, precio, personas)
+    VALUES (1, 10.00, 2);
     
-    INSERT INTO Menu (IdMenu, IdProducto, Cantidad, Precio)
-    VALUES (1, 2, 1, 15.00);
+    INSERT INTO Menu (IdMenu, precio, personas)
+    VALUES (2, 25.00, 1);
 
     SELECT ListaProdMenu(1) AS "Lista de productos"
     FROM dual;
@@ -435,7 +481,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
     SELECT InfoLocal(1) AS "Lista de productos"
     FROM dual;
     
-    -- 8. Lista de Clientes con Detalles de Direcci�n:
+    -- 8. Lista de Clientes con Detalles de Direcci�n: este otro tambien tiene un error
     CREATE OR REPLACE FUNCTION ListaClientesDireccion
     RETURN SYS_REFCURSOR
     IS
@@ -469,7 +515,7 @@ Insert into locales (IdLocal, Nombre, Proposito) VALUES (30, 'test local2', 'pru
         -- Llamar a la vista:
         SELECT * FROM VistaServiciosAgendados;
        
-    -- 3. Vista de Detalles de Factura con Informaci�n de Producto:
+    -- 3. Vista de Detalles de Factura con Informaci�n de Producto: este otro tiene un error
     CREATE OR REPLACE VIEW VistaDetallesFactura AS
        SELECT fd.NumFactura, fd.IdMenu, fd.Cantidad, fd.Subtotal, fd.Total,
               p.Nombre AS NombreProducto
