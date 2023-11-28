@@ -6,12 +6,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Empleado")
+@Table(name = "Empleado",schema="PROYECTO_ADM")
 public class Empleado implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdEmpleado")
+    @Column(name = "Id_Empleado")
     private long idEmpleado;
     private String nombre;
     private String apellido1;
@@ -20,12 +20,12 @@ public class Empleado implements Serializable {
     private String iban;
     private long salario;
     private String estado;
-    private String varchar2;
+    private String password;
 
     public Empleado() {
     }
 
-    public Empleado(long idEmpleado, String nombre, String apellido1, String apellido2, String alias, String iban, long salario, String estado, String varchar2) {
+    public Empleado(long idEmpleado, String nombre, String apellido1, String apellido2, String alias, String iban, long salario, String estado, String password) {
         this.idEmpleado = idEmpleado;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -34,7 +34,7 @@ public class Empleado implements Serializable {
         this.iban = iban;
         this.salario = salario;
         this.estado = estado;
-        this.varchar2 = varchar2;
+        this.password = password;
     }
     
     

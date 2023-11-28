@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "MateriaPrimaLocal")
+@Table(name = "Materiaprimalocal",schema="PROYECTO_ADM")
 @IdClass(MateriaPrimaLocalPK.class)
 public class MateriaPrimaLocal {
 

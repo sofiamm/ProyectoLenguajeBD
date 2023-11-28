@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Cliente")
+@Table(name = "Cliente",schema="PROYECTO_ADM")
 public class Cliente implements Serializable {
 
     @Id

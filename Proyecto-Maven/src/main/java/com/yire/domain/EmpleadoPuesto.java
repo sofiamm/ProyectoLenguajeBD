@@ -1,5 +1,6 @@
 package com.yire.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
@@ -8,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="EmpleadoPuesto")
+@Table(name="Empleadopuesto",schema="PROYECTO_ADM")
 @IdClass(EmpleadoPuestoPK.class)
 public class EmpleadoPuesto{
     

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Facturacion")
+@Table(name = "Facturacion",schema="PROYECTO_ADM")
 public class Facturacion implements Serializable {
 
     @Id

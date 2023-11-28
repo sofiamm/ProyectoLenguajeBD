@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Publicaciones")
+@Table(name = "Publicaciones",schema="PROYECTO_ADM")
 public class Publicaciones implements Serializable {
 
     @Id

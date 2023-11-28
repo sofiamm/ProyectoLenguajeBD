@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Puesto")
+@Table(name = "Puesto",schema="PROYECTO_ADM")
 public class Puesto implements Serializable{
     
     @Id
@@ -14,8 +14,8 @@ public class Puesto implements Serializable{
     @Column(name = "idPuesto")
     private long idPuesto;
     private String nombre;
-    private long salarioMin;
-    private long salarioMax;
+    private long salariomin;
+    private long salariomax;
 
     public Puesto() {
     }
@@ -23,8 +23,8 @@ public class Puesto implements Serializable{
     public Puesto(long idPuesto, String nombre, long salarioMin, long salarioMax) {
         this.idPuesto = idPuesto;
         this.nombre = nombre;
-        this.salarioMin = salarioMin;
-        this.salarioMax = salarioMax;
+        this.salariomin = salarioMin;
+        this.salariomax = salarioMax;
     }
     
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "MenuDesglose")
+@Table(name = "Menudesglose",schema="PROYECTO_ADM")
 @IdClass(MenuDesglosePK.class)
 public class MenuDesglose {
 

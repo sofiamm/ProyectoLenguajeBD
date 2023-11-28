@@ -1,6 +1,9 @@
 package com.yire.domain;
 
 import java.io.Serializable;
+import lombok.Data;
+
+@Data
 
 public class ServicioEmpleadosPK implements Serializable{
 

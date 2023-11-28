@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ServicioMenu")
+@Table(name = "Serviciomenu",schema="PROYECTO_ADM")
 @IdClass(ServicioMenuPK.class)
 public class ServicioMenu {
 

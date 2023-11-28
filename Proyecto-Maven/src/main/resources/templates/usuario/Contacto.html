@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head th:replace="layout/plantilla :: head">
+        <title>Contacto</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"/>
+        <section id="contenido">
+            <br>
+            <h2 class="text-center"> <i class="fas fa-hand-point-right"></i> Pongase en contacto con nosotros</h2>
+            <br>
+            <form th:action="@{/usuario/contacto}">
+                <div class="form-floating mb-3 text-center container">
+                    <input type="email" class="form-control container" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Correo Electronico</label>
+                    <div id="email" class="form-text text-center">Su informacion solo sera usada exclusivamente para contactarlo y no sera compartida con terceros</div>
+                </div>
+                <div class="form-floating mb-3 text-center container-md">
+                    <input type="Nombre" class="form-control container-md" id="floatingInput" placeholder="Jhon Doe">
+                    <label for="floatingInput">Nombre y Apellidos</label>
+                </div>
+                <div class="form-floating container-md">
+                    <textarea class="form-control container-md" placeholder="Deje sus comentarios aca" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Comentarios</label>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary" style="margin-left: 17%" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Enviar
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Mensaje enviado!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Su mensaje ha sido enviado con exito! Pronto nos comunicaremos con usted.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-secondary" th:action="@{/usuario/contacto}">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </body>
+    <footer th:replace="layout/plantilla :: footer" />
+</html>

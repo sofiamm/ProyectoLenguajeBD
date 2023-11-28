@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ServiciosAgendados")
+@Table(name = "Serviciosagendados",schema="PROYECTO_ADM")
 public class ServiciosAgendados implements Serializable {
 
     @Id
