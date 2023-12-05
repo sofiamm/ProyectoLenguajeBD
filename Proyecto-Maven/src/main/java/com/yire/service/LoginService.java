@@ -44,14 +44,6 @@ public class LoginService implements UserDetailsService {
         
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(puesto.getNombre()));
-        
-        if (puesto.getNombre().equals("ROLE_ADMIN") || puesto.getNombre().equals("ROLE_VENDEDOR")) {
-            roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-        
-        if (puesto.getNombre().equals("ROLE_ADMIN")) {
-            roles.add(new SimpleGrantedAuthority("ROLE_VENDEDOR"));
-        }
         UserDetails userDet = new User(us.getAlias(), "{noop}" + us.getPassword(), roles);
         return userDet;
     }

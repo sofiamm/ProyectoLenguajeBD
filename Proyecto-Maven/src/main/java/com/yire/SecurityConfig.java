@@ -22,13 +22,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override    
     protected void configure(HttpSecurity http)throws Exception {
         http.authorizeRequests()
+                //IMPORTANTE: Todos los roles en la base de datos necesitan estar en mayusculas completamente
+                //Si uno de los roles se llama "cocinero", en la base de datos se necesita llamar "ROLE_COCINERO"
+                //ASD es un rol temporal, creado con la intension de probar la funcionalidad del WebSecurityConfigurerAdapter
+                //
+                //Para cada una de las vistas, como por ejemplo "/" para index, es necesario configurar los roles que los pueden ver
+                //Si un grupo de vistas comparten el mismo set de permisos requeridos, se pueden juntar en un solo andMatchers
+                //
+                //Si varios roles pueden acceder una vista especifica, se pueden añadir dentro del mismo hasAnyRole,
+                //luego del antMatchers que contenga a la vista en cuestion
                 .antMatchers(//mappings like "/articulo/nuevo",          "/articulo/guardar",
-                             )
-                       .hasRole("ADMIN")
+                             "/")
+                       .hasRole("ASD")
                 .antMatchers("/articulo/listado",        "/cliente/listado",
                              "/categoria/listado")
                        .hasAnyRole("ADMIN", "VENDEDOR")
-                .antMatchers("/")
+                .antMatchers(//"/"
+                        "/articulo/listado"
+                )
                        .hasAnyRole("ADMIN", "VENDEDOR", "USER")
                 .and()
                     .formLogin()
