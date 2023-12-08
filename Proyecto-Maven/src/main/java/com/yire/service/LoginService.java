@@ -17,19 +17,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class LoginService implements UserDetailsService {
-    
+
     @Autowired
     private EmpleadoDao EmpleadoDao;
-    
+
     @Autowired
-    private EmpleadoPuestoDao EmpleadoPuestoDao; 
-    
+    private EmpleadoPuestoDao EmpleadoPuestoDao;
+
     @Autowired
-    private PuestoDao puestoDao;    
-    
+    private PuestoDao puestoDao;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println(username);
@@ -37,12 +36,17 @@ public class LoginService implements UserDetailsService {
         System.out.println(us.getAlias());
         System.out.println(us.getIban());
         System.out.println(us.getIdEmpleado());
-        EmpleadoPuesto ep= EmpleadoPuestoDao.findByIdEmpleado(us.getIdEmpleado());
+        EmpleadoPuesto ep = EmpleadoPuestoDao.findByIdEmpleado(us.getIdEmpleado());
         System.out.println(ep.getIdPuesto());
         Puesto puesto = puestoDao.findByIdPuesto(ep.getIdPuesto());
         System.out.println(puesto.getNombre());
-        
+
         List<GrantedAuthority> roles = new ArrayList<>();
+
+        if (puesto.getNombre().equals("ROLE_ASD")) {
+            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+
         if (puesto.getNombre().equals("ROLE_ASD") || puesto.getNombre().equals("ROLE_ADMIN")) {
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
@@ -50,5 +54,5 @@ public class LoginService implements UserDetailsService {
         UserDetails userDet = new User(us.getAlias(), "{noop}" + us.getPassword(), roles);
         return userDet;
     }
-    
+
 }

@@ -25,4 +25,9 @@ public class PuestoServiceImpl implements PuestoService{
         }
         return listaFinal;
     }
+    
+    @Override
+    public void save(Puesto puesto){
+        puestoDao.save(puesto);
+    }
 }

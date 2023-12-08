@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head th:replace="layout/plantilla :: head">
-        <title>Clientes</title>
+        <title>Puestos</title>
     </head>
     <body>
         <header th:replace="layout/plantilla :: header"/>
@@ -16,7 +16,7 @@
                                 type="button" 
                                 class="btn btn-primary btn-block" 
                                 data-bs-toggle="modal" 
-                                data-bs-target="#agregarCliente">
+                                data-bs-target="#agregarPuesto">
                                 <i class="fas fa-plus"></i> [[#{accion.agregar}]]
                             </button>
                         </div>
@@ -30,15 +30,15 @@
                 <div class="col-md-15">
                     <div class="card">
                         <div class="card-header">
-                            <h4>[[#{cliente.titulo}]]</h4>
+                            <h4>[[#{puesto.titulo}]]</h4>
                         </div>
                         <div th:if="${puestos != null and !puestos.empty}">
                             <table class="table table-stryped">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Username</th>
-                                        <th th:text="#{cliente.nombre}"></th>
-                                        <th th:text="#{cliente.apellido}"></th>
+                                        <th th:text="#{puesto.nombre}"></th>
+                                        <th th:text="#{puesto.apellido}"></th>
                                         <th>Correo</th>
                                         <th>Direccion</th>
                                         <th>Telefono</th>
@@ -52,13 +52,13 @@
                                         <td>[[${puesto.salariomax}]]</td>
 
                                         <td>
-                                            <a sec:authorize="hasRole('ROLE_ASD')" th:href="@{/cliente/eliminar/}+${puesto.idPuesto}"
+                                            <a sec:authorize="hasRole('ROLE_ASD')" th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
                                                class="btn btn-danger">
                                                 <i class="fas fa-angle-double-right"></i> [[#{accion.eliminar}]]
                                             </a>
                                         </td>
                                         <td>
-                                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cliente/modificar/}+${puesto.idPuesto}"
+                                            <a sec:authorize="hasRole('ROLE_ASD')" th:href="@{/puesto/modificar/}+${puesto.idPuesto}"
                                                class="btn btn-success">
                                                 <i class="fas fa-angle-double-right"></i> [[#{accion.actualizar}]]
                                             </a>
@@ -67,8 +67,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="text-center p-2" th:if="${clientes == null or clientes.empty}">
-                            <span th:text="#{cliente.no_mostrar}">Lista vacía</span>
+                        <div class="text-center p-2" th:if="${puestos == null or puestos.empty}">
+                            <span th:text="#{puesto.no_mostrar}">Lista vacía</span>
                         </div>
                     </div>
                 </div>
@@ -76,43 +76,43 @@
         </div>
     </div>
 
-    <section th:fragment="agregarCliente">
-        <div id="agregarCliente" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <section th:fragment="agregarPuesto">
+        <div id="agregarPuesto" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-info text-white">
-                        <h5 class="modal-title" >Agregar Cliente</h5>
+                        <h5 class="modal-title" >Agregar Puesto</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div> 
-                    <form th:action="@{/cliente/guardar}" th:object="${cliente}"
+                    <form th:action="@{/puesto/guardar}" th:object="${puesto}"
                           method="POST" class="was-validated">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="nombre" th:text="#{cliente.nombre}">Nombre</label>
+                                <label for="nombre" th:text="#{puesto.nombre}">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" required="true">
                             </div>
                             <div class="form-group">
-                                <label for="apellido" th:text="#{cliente.apellido}">apellido</label>
+                                <label for="apellido" th:text="#{puesto.apellido}">apellido</label>
                                 <input type="text" class="form-control" name="apellido" required="true">
                             </div>
                             <div class="form-group">
-                                <label for="correo" th:text="#{cliente.correo}">correo</label>
+                                <label for="correo" th:text="#{puesto.correo}">correo</label>
                                 <input type="text" class="form-control" name="correo" required="true">
                             </div>
                             <div class="form-group">
-                                <label for="direccion" th:text="#{cliente.direccion}">direccion</label>
+                                <label for="direccion" th:text="#{puesto.direccion}">direccion</label>
                                 <input type="text" class="form-control" name="direccion" required="true">
                             </div>
                             <div class="form-group">
-                                <label for="telefono" th:text="#{cliente.telefono}">telefono</label>
+                                <label for="telefono" th:text="#{puesto.telefono}">telefono</label>
                                 <input type="number" class="form-control" name="telefono" required="true" step="any">
                             </div>
                             <div class="form-group">
-                                <label for="username" th:text="#{cliente.username}">username</label>
+                                <label for="username" th:text="#{puesto.username}">username</label>
                                 <input type="text" class="form-control" name="username" required="true">
                             </div>
                             <div class="form-group">
-                                <label for="password" th:text="#{cliente.password}">password</label>
+                                <label for="password" th:text="#{puesto.password}">password</label>
                                 <input type="password" class="form-control" name="password" required="true">
                             </div>
                         </div>

@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <h4>[[#{cliente.titulo}]]</h4>
                         </div>
-                        <div th:if="${clientes != null and !clientes.empty}">
+                        <div th:if="${puestos != null and !puestos.empty}">
                             <table class="table table-stryped">
                                 <thead class="thead-dark">
                                     <tr>
@@ -45,21 +45,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="cliente : ${clientes}">
-                                        <td>[[${cliente.username}]]</td>
-                                        <td>[[${cliente.cliente.nombre}]]</td>
-                                        <td>[[${cliente.cliente.apellido}]]</td>
-                                        <td>[[${cliente.cliente.correo}]]</td>
-                                        <td>[[${cliente.cliente.direccion}]]</td>
-                                        <td>[[${cliente.cliente.telefono}]]</td>
+                                    <tr th:each="puesto : ${puestos}">
+                                        <td>[[${puesto.idPuesto}]]</td>
+                                        <td>[[${puesto.nombre}]]</td>
+                                        <td>[[${puesto.salariomin}]]</td>
+                                        <td>[[${puesto.salariomax}]]</td>
+
                                         <td>
-                                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cliente/eliminar/}+${cliente.idUsuario}"
+                                            <a sec:authorize="hasRole('ROLE_ASD')" th:href="@{/cliente/eliminar/}+${puesto.idPuesto}"
                                                class="btn btn-danger">
                                                 <i class="fas fa-angle-double-right"></i> [[#{accion.eliminar}]]
                                             </a>
                                         </td>
                                         <td>
-                                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cliente/modificar/}+${cliente.idUsuario}"
+                                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cliente/modificar/}+${puesto.idPuesto}"
                                                class="btn btn-success">
                                                 <i class="fas fa-angle-double-right"></i> [[#{accion.actualizar}]]
                                             </a>
