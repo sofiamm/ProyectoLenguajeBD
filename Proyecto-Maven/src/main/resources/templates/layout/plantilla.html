@@ -14,7 +14,11 @@
         <header class="header" th:fragment="header" >
             <nav class="navbar navbar-expand-sm navbar-dark p-0 bg-info">
                 <div class="container">
+<<<<<<< Updated upstream
                     <a th:href="@{/}" class="navbar-brand text-white"><i class="fas fa-store"></i>Yireh</a>
+=======
+                    <a th:href="@{/}" class="navbar-brand text-white"><i class="fas fa-store"></i> Yireh</a>
+>>>>>>> Stashed changes
                     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -29,6 +33,7 @@
                             </li>
                             <li class="nav-item px-2">
                                 <a class="nav-menu-link nav-link text-white" th:href="@{/usuario/contacto}"
+<<<<<<< Updated upstream
                                    th:text="#{plantilla.contacto}">Clientes</a>
                             </li>
                             <li class="nav-item px-2">
@@ -42,6 +47,21 @@
                             <li class="nav-item px-2" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a class="nav-menu-link nav-link text-white" th:href="@{/producto/lista}"
                                    th:text="#{plantilla.inventario}">Pending</a>
+=======
+                                   th:text="#{plantilla.contacto}">Empleados</a>
+                            </li>
+                            <li class="nav-item px-2">
+                                <a class="nav-menu-link nav-link text-white" th:href="@{/carrito/listado}"
+                                   th:text="#{plantilla.carrito}">Puestos</a>
+                            </li>
+                            <li class="nav-item px-2 text-white" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="nav-menu-link nav-link text-white" th:href="@{/usuario/lista}"
+                                   th:text="#{plantilla.usuarios}">Clientes</a>
+                            </li>
+                            <li class="nav-item px-2" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="nav-menu-link nav-link text-white" th:href="@{/producto/lista}"
+                                   th:text="#{plantilla.inventario}">Servicios</a>
+>>>>>>> Stashed changes
                             </li>
                         </ul>
                         <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto text-white">

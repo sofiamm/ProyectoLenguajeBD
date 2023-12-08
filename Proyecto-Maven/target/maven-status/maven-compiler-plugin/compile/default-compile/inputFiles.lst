@@ -20,7 +20,10 @@ C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\j
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MateriaPrima.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ActivosDao.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\LocalUbicacion.java
+<<<<<<< Updated upstream
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\PuestoController.java
+=======
+>>>>>>> Stashed changes
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\FacturaServicioDao.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MateriaPrimaProveedorPK.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ProductoDao.java
@@ -79,7 +82,10 @@ C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\j
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoServiceImpl.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ClienteDao.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\LocalesDao.java
+<<<<<<< Updated upstream
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\PuestoServiceImpl.java
+=======
+>>>>>>> Stashed changes
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\MenuDao.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\TemplateResolverConfiguration.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ProvinciaDao.java
@@ -88,5 +94,8 @@ C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\j
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ContactoTelefonoDao.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ClienteContacto.java
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoService.java
+<<<<<<< Updated upstream
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\PuestoService.java
+=======
+>>>>>>> Stashed changes
 C:\Users\dcascante\Documents\GitHub\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\EmpleadoPuesto.java
