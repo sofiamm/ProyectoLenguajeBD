@@ -14,29 +14,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PuestoController {
 
     @Autowired
-    private PuestoService usuarioService;
+    private PuestoService puestoService;
 
-    @GetMapping("/usuario/informacion")
+    @GetMapping("/puesto/informacion")
     public String mostrarInformacion(Model model) {
-        return "/usuario/informacion";
+        return "/puesto/informacion";
     }
 
-    @GetMapping("/usuario/contacto")
+    @GetMapping("/puesto/contacto")
     public String mostrarContacto(Model model) {
-        return "/usuario/contacto";
+        return "/puesto/contacto";
     }
 
-    @GetMapping("/usuario/lista")
-    public String mostrarClientes(Model model) {
-        var clientes = usuarioService.getPuestos();
+    @GetMapping("/puesto/lista")
+    public String mostrarPuestos(Model model) {
+        var puestos = puestoService.getPuestos();
 
-        model.addAttribute("clientes", clientes);
-        return "/usuario/lista";
+        model.addAttribute("puestos", puestos);
+        return "/puesto/lista";
     }
 
-    @PostMapping("/cliente/guardar")
-    public String guardarUsuario(Puesto usuario) {
-//        usuarioService.save(usuario);
-        return "redirect:/usuario/lista";
+    @PostMapping("/puesto/guardar")
+    public String guardarUsuario(Puesto puesto) {
+        puestoService.save(puesto);
+        return "redirect:/puesto/lista";
     }
 }

@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface PuestoService {
     public List<Puesto> getPuestos();
+    public void save(Puesto puesto);
 }
