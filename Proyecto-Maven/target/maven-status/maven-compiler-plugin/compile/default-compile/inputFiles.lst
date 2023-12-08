@@ -37,6 +37,7 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\da
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ServicioMenu.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MateriaPrimaLocalPK.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MenuDesglose.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\PuestoServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ServicioEmpleadosPK.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ServicioClienteDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\FacturaServicioDao.java
@@ -77,11 +78,13 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\do
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\EmpleadoDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ContactoTelefonoPK.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\FacturaDetalle.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\PuestoController.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\Locales.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\ProyectoMaven.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\LocalesDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ProductoMateriaPrima.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\EmpleadoPuesto.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\PuestoService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ClienteDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ClienteDireccionDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ServicioEmpleados.java

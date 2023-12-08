@@ -22,23 +22,23 @@ public class IndexController {
 //    @Autowired
 //    private UsuarioDao usuarioDao;
 //
-//    @GetMapping("/")
-//    public String inicio(Model model,HttpServletRequest request) {
-//        // Obtener el usuario llegado
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        UserDetails user = null;
-//        if (principal instanceof UserDetails) {
-//            user = (UserDetails) principal;
-//        }
-//        // Validar si es usuario de un cliente
-//        boolean esCliente = false;
-//        if (user.getAuthorities().size() == 1) {
-//            for (var rol : user.getAuthorities()) {
-//                if (rol.getAuthority().equals("ROLE_USER")) {
-//                    esCliente = true;
-//                }
-//            }
-//        }
+    @GetMapping("/")
+    public String inicio(Model model,HttpServletRequest request) {
+        // Obtener el usuario llegado
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails user = null;
+        if (principal instanceof UserDetails) {
+            user = (UserDetails) principal;
+        }
+        // Validar si es usuario de un cliente
+        boolean esCliente = false;
+        if (user.getAuthorities().size() == 1) {
+            for (var rol : user.getAuthorities()) {
+                if (rol.getAuthority().equals("ROLE_USER")) {
+                    esCliente = true;
+                }
+            }
+        }
 //        if (esCliente) {
 //            Usuario usuario = usuarioDao.findByUsername(user.getUsername());
 //            Carrito carrito = carritoService.getCarritoCliente(usuario.cliente.getIdCliente());
@@ -52,6 +52,6 @@ public class IndexController {
 //        var productos = productoService.getProductos(true);
 //        model.addAttribute("productos", productos);
 //        model.addAttribute("esCliente", esCliente);
-//        return "index";
-//    }
+        return "index";
+    }
 }

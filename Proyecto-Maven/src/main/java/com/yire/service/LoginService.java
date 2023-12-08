@@ -43,6 +43,9 @@ public class LoginService implements UserDetailsService {
         System.out.println(puesto.getNombre());
         
         List<GrantedAuthority> roles = new ArrayList<>();
+        if (puesto.getNombre().equals("ROLE_ASD") || puesto.getNombre().equals("ROLE_ADMIN")) {
+            roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
         roles.add(new SimpleGrantedAuthority(puesto.getNombre()));
         UserDetails userDet = new User(us.getAlias(), "{noop}" + us.getPassword(), roles);
         return userDet;
