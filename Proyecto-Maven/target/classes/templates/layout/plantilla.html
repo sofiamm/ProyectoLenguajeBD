@@ -14,54 +14,50 @@
         <header class="header" th:fragment="header" >
             <nav class="navbar navbar-expand-sm navbar-dark p-0 bg-info">
                 <div class="container">
-                    <a th:href="@{/}" class="navbar-brand text-white"><i class="fas fa-store"></i>Yireh</a>
-                    <a th:href="@{/}" class="navbar-brand text-white"><i class="fas fa-store"></i> Yireh</a>
+                    <a th:href="@{/}" class="navbar-brand text-white pl-1"><i class="fas fa-store"></i> Yireh</a>
                     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav" sec:authorize="hasRole('ROLE_USER')">
-                            <li class="nav-item px-3">
-                                <a th:href="@{/}" class="nav-menu-link nav-link text-white"th:text="#{plantilla.titulo}">Titulo</a>
+                            <li class="nav-item px-2">
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/usuario/informacion}">Menu</a>
                             </li>
                             <li class="nav-item px-2">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/usuario/informacion}"
-                                   th:text="#{plantilla.informacion}">Menu</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/usuario/contacto}">Clientes</a>
                             </li>
                             <li class="nav-item px-2">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/usuario/contacto}"
-                                   th:text="#{plantilla.contacto}">Clientes</a>
-                            </li>
-                            <li class="nav-item px-2">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/carrito/listado}"
-                                   th:text="#{plantilla.carrito}">Productos</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/carrito/listado}">Productos</a>
                             </li>
                             <li class="nav-item px-2 text-white" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/usuario/lista}"
-                                   th:text="#{plantilla.usuarios}">Servicios</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/usuario/lista}">Servicios</a>
                             </li>
                             <li class="nav-item px-2" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/producto/lista}"
-                                   th:text="#{plantilla.inventario}">Pending</a>
-                                   <a th:text="#{plantilla.contacto}">Empleados</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/producto/lista}">Pending</a>
                             </li>
                             <li class="nav-item px-2">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/puesto/lista}">Puestos</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/puesto/lista}">Puestos</a>
                             </li>
                             <li class="nav-item px-2 text-white" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/usuario/lista}"
-                                   th:text="#{plantilla.usuarios}">Clientes</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/usuario/lista}">Clientes</a>
                             </li>
                             <li class="nav-item px-2" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a class="nav-menu-link nav-link text-white" th:href="@{/producto/lista}"
-                                   th:text="#{plantilla.inventario}">Servicios</a>
+                                <a class="nav-menu-link nav-link text-white" 
+                                th:href="@{/producto/lista}">Servicios</a>
                             </li>
                         </ul>
                         <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto text-white">
                             <li class="nav-item mr-3">
                                 <a href="#" class="nav-link text-white">
                                     <i class="fas fa-user text-white"></i>
-                                    <span th:text="#{plantilla.bienvenido}">Bievenido:</span>
+                                    <span>Bievenido:</span>
                                     <span sec:authentication="name">Usuario</span>
                                 </a>
                             </li>
@@ -81,9 +77,7 @@
             <div class="container">
                 <div class="col">
                     <p class="lead text-center">
-                        &COPY [[#{plantilla.derechos}]]
-                        <a th:href="@{/(lang=es)}">ES</a> | 
-                        <a th:href="@{/(lang=en)}">EN</a>
+                        &COPY Derechos Reservados | Noviembre 2023 | Proyecto final - Universidad Fidelitas
                     </p>
                 </div>
             </div>
