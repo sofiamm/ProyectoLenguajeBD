@@ -31,26 +31,18 @@ public class LoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         Empleado us = EmpleadoDao.findByAlias(username);
-        System.out.println(us.getAlias());
-        System.out.println(us.getIban());
-        System.out.println(us.getIdEmpleado());
         EmpleadoPuesto ep = EmpleadoPuestoDao.findByIdEmpleado(us.getIdEmpleado());
-        System.out.println(ep.getIdPuesto());
         Puesto puesto = puestoDao.findByIdPuesto(ep.getIdPuesto());
         System.out.println(puesto.getNombre());
 
         List<GrantedAuthority> roles = new ArrayList<>();
 
-        if (puesto.getNombre().equals("ROLE_ASD")) {
-            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-
-        if (puesto.getNombre().equals("ROLE_ASD") || puesto.getNombre().equals("ROLE_ADMIN")) {
+        if (puesto.getNombre().equals("ROLE_ADMIN")) {
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
         roles.add(new SimpleGrantedAuthority(puesto.getNombre()));
+        System.out.println(roles.toString());
         UserDetails userDet = new User(us.getAlias(), "{noop}" + us.getPassword(), roles);
         return userDet;
     }

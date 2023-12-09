@@ -16,16 +16,6 @@ public class PuestoController {
     @Autowired
     private PuestoService puestoService;
 
-    @GetMapping("/puesto/informacion")
-    public String mostrarInformacion(Model model) {
-        return "/puesto/informacion";
-    }
-
-    @GetMapping("/puesto/contacto")
-    public String mostrarContacto(Model model) {
-        return "/puesto/contacto";
-    }
-
     @GetMapping("/puesto/lista")
     public String mostrarPuestos(Model model) {
         var puestos = puestoService.getPuestos();
@@ -33,10 +23,29 @@ public class PuestoController {
         model.addAttribute("puestos", puestos);
         return "/puesto/lista";
     }
-
+    
+    @GetMapping("/puesto/nuevo")
+    public String nuevoPuesto(Puesto puesto, Model model) {
+        return "/puesto/modificar";
+    }
+    
     @PostMapping("/puesto/guardar")
-    public String guardarUsuario(Puesto puesto) {
+    public String guardarPuesto(Puesto puesto) {
+        puesto.setNombre("ROLE_"+puesto.getNombre().toUpperCase());
         puestoService.save(puesto);
+        return "redirect:/puesto/lista";
+    }
+
+    @GetMapping("/puesto/modificar/{idPuesto}")
+    public String modificarPuesto(Puesto puesto, Model model) {
+        puesto = puestoService.getPuesto(puesto);
+        model.addAttribute("puesto", puesto);
+        return "/puesto/modificar";
+    }
+
+    @GetMapping("/puesto/eliminar/{idPuesto}")
+    public String eliminarPuesto(Puesto puesto) {
+        puestoService.delete(puesto);
         return "redirect:/puesto/lista";
     }
 }

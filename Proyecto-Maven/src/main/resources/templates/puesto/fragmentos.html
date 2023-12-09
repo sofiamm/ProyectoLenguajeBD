@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="layout/plantilla :: head">
+        <title>Inicio</title>
+    </head>
+    <body>
+        <section th:fragment="botonesAgregar" class="py-4 mb-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3" sec:authorize="hasRole('ROLE_ADMIN')">   
+                        <button 
+                            type="button" 
+                            class="btn btn-primary btn-block" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#agregar">
+                            <i class="fas fa-plus"></i> Nuevo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section th:fragment="listado" id="puestos">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Puestos</h4>
+                            </div>
+                            <div th:if="${puestos != null and !puestos.empty}">
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Salario minimo</th>
+                                            <th>Salario maximo</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="puesto, contador : ${puestos}">
+                                            <td>[[${contador.count}]]</td>
+                                            <td>[[${puesto.nombre}]]</td>
+                                            <td>[[${puesto.salariomin}]]</td>
+                                            <td>[[${puesto.salariomax}]]</td>
+                                            <td>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
+                                                   class="btn btn-danger">
+                                                    <i class="fas fa-angle-double-right"></i> Eliminar
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/puesto/modificar/}+${puesto.idPuesto}"
+                                                   class="btn btn-success">
+                                                    <i class="fas fa-angle-double-right"></i> Actualizar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${puestos == null or puestos.empty}">
+                                <span>Lista vacía</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center bg-danger text-white mb-3">
+                            <div class="card-body">
+                                <h3>Límite Total</h3>
+                                <h4 class="display-4">
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="card text-center bg-success text-white mb-3">
+                            <div class="card-body">
+                                <h3>Total Puestos</h3>
+                                <h4 class="display-4">
+                                    <i class="fas fa-users"></i>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section th:fragment="agregar">
+            <div id="agregar" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title">Agregar Puesto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div> 
+                        <form th:action="@{/puesto/guardar}" th:object="${puesto}"
+                              method="POST" class="was-validated">
+                            <div class="modal-body">
+                                <section th:replace="puesto/fragmentos :: camposForm"/>    
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section th:fragment="camposForm">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" required="true">
+            </div>
+            <div class="form-group">
+                <label for="salariomin">Salario minimo</label>
+                <input type="number" class="form-control" name="salariomin" required="true">
+            </div>
+            <div class="form-group">
+                <label for="salariomax">Salario maximo</label>
+                <input type="number" class="form-control" name="salariomax" required="true">
+            </div>
+        </section>
+
+        <section th:fragment="editar">            
+            <form method="POST"
+                  th:action="@{/puesto/guardar}"
+                  th:object="${puesto}"
+                  class="was-validated">
+                <input type="hidden" name="idPuesto" th:field="*{idPuesto}"/>
+                <section th:replace="puesto/fragmentos :: botonesEditar"/> 
+                <div id="details">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Actualizar</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <section th:replace="puesto/fragmentos :: camposForm"/>         
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section th:fragment="botonesEditar">
+            <div id="actions" class="py-4 mb-4 bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a th:href="@{/puesto/lista}" class="btn btn-ligth btn-block">
+                                <i class="fas fa-arrow-left"></i>Regresar
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-success btn-block">
+                                <i class="fas fa-check"></i>Guardar
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <a th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
+                               class="btn btn-danger btn-block">
+                                <i class="fas fa-trash"></i>Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

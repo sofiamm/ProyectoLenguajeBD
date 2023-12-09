@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //luego del antMatchers que contenga a la vista en cuestion
                 .antMatchers(//mappings like "/articulo/nuevo",          "/articulo/guardar",
                              "/")
-                       .hasRole("ASD")
+                       .hasRole("ADMIN")
                 .antMatchers("/articulo/listado",        "/cliente/listado",
                              "/categoria/listado")
                        .hasAnyRole("ADMIN", "VENDEDOR")

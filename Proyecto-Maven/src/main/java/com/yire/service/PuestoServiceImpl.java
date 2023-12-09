@@ -30,4 +30,14 @@ public class PuestoServiceImpl implements PuestoService{
     public void save(Puesto puesto){
         puestoDao.save(puesto);
     }
+    
+    @Override
+    public Puesto getPuesto(Puesto puesto){
+        return puestoDao.findById(puesto.getIdPuesto()).orElse(null);
+    }
+    
+    @Override
+    public void delete(Puesto puesto){
+        puestoDao.delete(puesto);
+    }
 }

@@ -13,21 +13,21 @@
                             type="button" 
                             class="btn btn-primary btn-block" 
                             data-bs-toggle="modal" 
-                            data-bs-target="#agregarPuesto">
-                            <i class="fas fa-plus"></i> [[#{accion.agregar}]]
+                            data-bs-target="#agregar">
+                            <i class="fas fa-plus"></i> Nuevo
                         </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section th:fragment="listadoPuestos" id="puestos">
+        <section th:fragment="listado" id="puestos">
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4>[[#{puesto.titulo}]]</h4>
+                                <h4>Puestos</h4>
                             </div>
                             <div th:if="${puestos != null and !puestos.empty}">
                                 <table class="table table-stryped">
@@ -44,19 +44,19 @@
                                     <tbody>
                                         <tr th:each="puesto, contador : ${puestos}">
                                             <td>[[${contador.count}]]</td>
-                                            <td>[[${puesto.nombre}}]]</td>
+                                            <td>[[${puesto.nombre}]]</td>
                                             <td>[[${puesto.salariomin}]]</td>
                                             <td>[[${puesto.salariomax}]]</td>
                                             <td>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
                                                    class="btn btn-danger">
-                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.eliminar}]]
+                                                    <i class="fas fa-angle-double-right"></i> Eliminar
                                                 </a>
                                             </td>
                                             <td>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/puesto/modificar/}+${puesto.idPuesto}"
                                                    class="btn btn-success">
-                                                    <i class="fas fa-angle-double-right"></i> [[#{accion.actualizar}]]
+                                                    <i class="fas fa-angle-double-right"></i> Actualizar
                                                 </a>
                                             </td>
                                         </tr>
@@ -64,25 +64,24 @@
                                 </table>
                             </div>
                             <div class="text-center p-2" th:if="${puestos == null or puestos.empty}">
-                                <span th:text="#{puesto.no_mostrar}">Lista vacía</span>
+                                <span>Lista vacía</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card text-center bg-danger text-white mb-3">
                             <div class="card-body">
-                                <h3 th:text="#{puesto.limiteTotal}">Límite Total</h3>
+                                <h3>Límite Total</h3>
                                 <h4 class="display-4">
-                                    [[${new java.text.DecimalFormat('$#,##0.00').format(limiteTotal)}]]
                                 </h4>
                             </div>
                         </div>
 
                         <div class="card text-center bg-success text-white mb-3">
                             <div class="card-body">
-                                <h3 th:text="#{puesto.totalPuestos}">Total Puestos</h3>
+                                <h3>Total Puestos</h3>
                                 <h4 class="display-4">
-                                    <i class="fas fa-users"></i> [[${totalPuestos}]]
+                                    <i class="fas fa-users"></i>
                                 </h4>
                             </div>
                         </div>
@@ -91,40 +90,21 @@
             </div>
         </section>
 
-        <section th:fragment="agregarPuesto">
-            <div id="agregarPuesto" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <section th:fragment="agregar">
+            <div id="agregar" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header bg-info text-white">
-                            <h5 class="modal-title" th:text="#{accion.agregar}">Agregar Puesto</h5>
+                            <h5 class="modal-title">Agregar Puesto</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div> 
                         <form th:action="@{/puesto/guardar}" th:object="${puesto}"
                               method="POST" class="was-validated">
                             <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="nombre" th:text="#{puesto.nombre}">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" required="true">
-                                </div>
-                                <div class="form-group">
-                                    <label for="apellidos" th:text="#{puesto.apellidos}">Apellidos</label>
-                                    <input type="text" class="form-control" name="apellidos" required="true">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" th:text="#{puesto.correo}">Correo</label>
-                                    <input type="email" class="form-control" name="correo" required="true">
-                                </div>
-                                <div class="form-group">
-                                    <label for="telefono" th:text="#{puesto.telefono}">Teléfono</label>
-                                    <input type="tel" class="form-control" name="telefono">
-                                </div>
-                                <div class="form-group">
-                                    <label for="limite" th:text="#{puesto.limite}">Límite</label>
-                                    <input type="number" class="form-control" name="credito.limite" required="true" step="any">
-                                </div>
+                                <section th:replace="puesto/fragmentos :: camposForm"/>    
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-primary" type="submit" th:text="#{accion.guardar}">Guardar</button>
+                                <button class="btn btn-primary" type="submit">Guardar</button>
                             </div>
                         </form>
                     </div>
@@ -132,42 +112,38 @@
             </div>
         </section>
 
-        <section th:fragment="editarPuesto">            
+        <section th:fragment="camposForm">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" required="true">
+            </div>
+            <div class="form-group">
+                <label for="salariomin">Salario minimo</label>
+                <input type="number" class="form-control" name="salariomin" required="true">
+            </div>
+            <div class="form-group">
+                <label for="salariomax">Salario maximo</label>
+                <input type="number" class="form-control" name="salariomax" required="true">
+            </div>
+        </section>
+
+        <section th:fragment="editar">            
             <form method="POST"
                   th:action="@{/puesto/guardar}"
                   th:object="${puesto}"
                   class="was-validated">
                 <input type="hidden" name="idPuesto" th:field="*{idPuesto}"/>
-                <section th:replace="puesto/fragmentosPuesto :: botonesEditar"/> 
+                <section th:replace="puesto/fragmentos :: botonesEditar"/> 
                 <div id="details">
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>[[#{accion.actualizar}]]</h4>
+                                        <h4>Actualizar</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="nombre" th:text="#{puesto.nombre}">Nombre: </label>
-                                            <input type="text" class="form-control" name="nombre" th:field="*{nombre}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="apellidos" th:text="#{puesto.apellidos}">Apellidos: </label>
-                                            <input type="text"  class="form-control" name="apellidos" th:field="*{apellidos}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="correo" th:text="#{puesto.correo}">Correo: </label>
-                                            <input type="email"  class="form-control" name="correo" th:field="*{correo}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="telefono" th:text="#{puesto.telefono}">Teléfono: </label>
-                                            <input type="tel"  class="form-control" name="telefono" th:field="*{telefono}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="limite" th:text="#{puesto.limite}">Limite: </label>
-                                            <input type="number"  class="form-control" name="limite" th:field="*{credito.limite}"/>
-                                        </div>                    
+                                        <section th:replace="puesto/fragmentos :: camposForm"/>         
                                     </div>
                                 </div>
                             </div>
@@ -182,19 +158,19 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3">
-                            <a th:href="@{/puesto/listado}" class="btn btn-ligth btn-block">
-                                <i class="fas fa-arrow-left"></i> [[#{accion.regresar}]]
+                            <a th:href="@{/puesto/lista}" class="btn btn-ligth btn-block">
+                                <i class="fas fa-arrow-left"></i>Regresar
                             </a>
                         </div>
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-success btn-block">
-                                <i class="fas fa-check"></i> [[#{accion.guardar}]]
+                                <i class="fas fa-check"></i>Guardar
                             </button>
                         </div>
                         <div class="col-md-3">
                             <a th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
                                class="btn btn-danger btn-block">
-                                <i class="fas fa-trash"></i> [[#{accion.eliminar}]]
+                                <i class="fas fa-trash"></i>Eliminar
                             </a>
                         </div>
                     </div>
