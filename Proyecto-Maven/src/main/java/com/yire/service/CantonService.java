@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface CantonService {
     public List<Canton> getCantones();
-    public List<Canton> getCantones2();
+    public List<List<Canton>> getCantones2();
 }

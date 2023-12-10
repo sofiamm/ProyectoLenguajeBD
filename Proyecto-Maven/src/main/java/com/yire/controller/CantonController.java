@@ -1,8 +1,10 @@
 package com.yire.controller;
 
+import com.yire.Json;
 import com.yire.domain.Canton;
 import com.yire.service.CantonService;
 import com.yire.service.ProvinciaService;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,17 @@ public class CantonController {
 
     @GetMapping("/canton/lista")
     public String mostrarCantones(Model model) {
-        var cantones = cantonService.getCantones2();
+        List<List<Canton>> cantones = cantonService.getCantones2();
         var provincias= provinciaService.getProvincias();
+        String cantonessan=Json.Json(cantones.get(0));
 
-        model.addAttribute("cantones", cantones);
+        model.addAttribute("cantonessan", cantonessan);
+        model.addAttribute("cantonesala", cantones.get(1));
+        model.addAttribute("cantonescar", cantones.get(2));
+        model.addAttribute("cantonesher", cantones.get(3));
+        model.addAttribute("cantonesgua", cantones.get(4));
+        model.addAttribute("cantonespun", cantones.get(5));
+        model.addAttribute("cantoneslim", cantones.get(6));
         model.addAttribute("provincias", provincias);
         return "/canton/lista";
     }

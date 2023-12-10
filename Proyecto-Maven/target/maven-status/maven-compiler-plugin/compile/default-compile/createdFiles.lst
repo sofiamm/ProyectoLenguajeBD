@@ -16,6 +16,7 @@ com\yire\domain\MateriaPrima.class
 com\yire\service\PuestoService.class
 com\yire\dao\ServicioClienteDao.class
 com\yire\dao\DistritoDao.class
+com\yire\Json.class
 com\yire\domain\FacturaDetalle.class
 com\yire\domain\TransportePK.class
 com\yire\dao\MateriaPrimaProveedorDao.class

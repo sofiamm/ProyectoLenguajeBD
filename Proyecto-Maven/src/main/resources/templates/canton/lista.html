@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head th:replace="layout/plantilla :: head">
-        <title>Cantones</title>
+<head>
+        <title>Yireh </title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
     </head>
     <body>
         <header th:replace="layout/plantilla :: header"/>
@@ -13,6 +20,59 @@
         </br>
         </br>
         </br>
+        <script type="text/javascript">
+
+            var i=1;
+            var stringsan=document.getElementById("cantonessan").value;
+            var cantonesala="${cantonesala}";
+            var cantonescar="${cantonescar}";
+            var cantonesher="${cantonesher}";
+            var cantonesgua="${cantonesgua}";
+            var cantonespun="${cantonespun}";
+            var cantoneslim="${cantoneslim}";
+            console.log("StringSan::::::::::::::::");
+            console.log(stringsan);
+            console.log(stringsan.ge)
+            // Replace HTML-encoded entities with double quotes
+            var unescapedString = stringsan.replace(/&quot;/g, '"');
+
+            // Parse the resulting string as JSON
+            var jsonArray = JSON.parse(unescapedString);
+
+            // Create a 2-level array
+            var cantonessan = [];
+
+            // Iterate through the JSON array
+            for (var i = 0; i < jsonArray.length; i++) {
+                var cantonObject = jsonArray[i];
+                var cantonArray = [];
+
+                // Extract the required properties
+                cantonArray.push(cantonObject.idProvincia);
+                cantonArray.push(cantonObject.idCanton);
+                cantonArray.push(cantonObject.nombre);
+
+                // Add the array to the two-level array
+                cantonessan.push(cantonArray);
+            }
+
+
+
+            function cambiarProvincia(value) {
+                if (value.length == 0) document.getElementById("category").innerHTML = "<option></option>";
+                else {
+                    switch (value){
+                    case "San Jose":
+                        var cantones = "";
+                        for (canton in cantonessan) {
+                            cantones += "<option>" + canton[2] + "</option>";
+                        }
+                        document.getElementById("category").innerHTML = cantones;
+                        break;
+                    }
+                }
+            }
+        </script>
     </div>
 </body>
 <footer th:replace="layout/plantilla :: footer"/>
