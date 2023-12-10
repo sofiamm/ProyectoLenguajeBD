@@ -63,10 +63,17 @@
                 else {
                     switch (value){
                     case "San Jose":
+                        console.log("Seleccion: "+value);
                         var cantones = "";
-                        for (canton in cantonessan) {
+                        for (var i = 0; i < Object.keys(cantonessan).length;i++) {
+                            console.log("cantonessan");
+                            console.log(cantonessan);
+                            var canton=cantonessan[i];
+                            console.log("canton");
+                            console.log(canton);
                             cantones += "<option>" + canton[2] + "</option>";
                         }
+                        console.log(cantones);
                         document.getElementById("category").innerHTML = cantones;
                         break;
                     }
