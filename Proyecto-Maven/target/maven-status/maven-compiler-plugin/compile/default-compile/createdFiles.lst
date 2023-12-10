@@ -21,12 +21,14 @@ com\yire\domain\TransportePK.class
 com\yire\dao\MateriaPrimaProveedorDao.class
 com\yire\dao\ServiciosAgendadosDao.class
 com\yire\domain\ContactoTelefono.class
+com\yire\SQLStatementBuilder.class
 com\yire\dao\LocalUbicacionDao.class
 com\yire\domain\Transporte.class
 com\yire\domain\MateriaPrimaProveedorPK.class
 com\yire\ProyectoMaven.class
 com\yire\dao\PuestoDao.class
 com\yire\domain\ServicioCliente.class
+com\yire\service\CantonService.class
 com\yire\service\PuestoServiceImpl.class
 com\yire\dao\ProductoMateriaPrimaDao.class
 com\yire\domain\ServicioClientePK.class
@@ -42,6 +44,7 @@ com\yire\domain\MateriaPrimaLocalPK.class
 com\yire\dao\EmpleadoPuestoDao.class
 com\yire\domain\ServicioEmpleados.class
 com\yire\domain\ClienteDireccion.class
+com\yire\controller\CantonController.class
 com\yire\dao\FacturaDetalleDao.class
 com\yire\domain\ProductoMateriaPrima.class
 com\yire\domain\Locales.class
@@ -73,6 +76,8 @@ com\yire\dao\TransporteDao.class
 com\yire\domain\MateriaPrimaProveedor.class
 com\yire\controller\PuestoController.class
 com\yire\domain\Provincia.class
+com\yire\service\CantonServiceImpl.class
+com\yire\domain\CantonPK.class
 com\yire\domain\EmpleadoCorreoPK.class
 com\yire\domain\Empleado.class
 com\yire\dao\MateriaPrimaDao.class
@@ -82,11 +87,14 @@ com\yire\service\EmpleadoServiceImpl.class
 com\yire\dao\ClienteContactoDao.class
 com\yire\domain\EmpleadoCorreo.class
 com\yire\service\LoginService.class
+com\yire\controller\ProvinciaController.class
 com\yire\dao\ClienteDireccionDao.class
 com\yire\domain\MenuDesglose.class
 com\yire\dao\ProveedorDao.class
 com\yire\domain\Proveedor.class
 com\yire\domain\ContactoCorreoPK.class
 com\yire\domain\LocalUbicacion.class
+com\yire\service\ProvinciaServiceImpl.class
 com\yire\controller\IndexController.class
+com\yire\service\ProvinciaService.class
 com\yire\domain\ContactoCorreo.class

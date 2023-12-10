@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head th:replace="layout/plantilla :: head">
+        <title>Cantones</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"/>
+        <input type="hidden" id="cantones" th:value=${cantones}/>
+        </br>
+        </br>
+        <section th:replace="canton/fragmentos :: listado"/>
+        <section th:replace="canton/fragmentos :: listado2"/>
+        </br>
+        </br>
+        </br>
+    </div>
+</body>
+<footer th:replace="layout/plantilla :: footer"/>
+</html>

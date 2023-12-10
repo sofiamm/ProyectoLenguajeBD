@@ -9,6 +9,8 @@
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript"
+    src="..\jquery\v3.7.1\jqueryv3.7.1.min.js"></script>
     </head>
     <body>
         <header class="header" th:fragment="header" >
@@ -46,25 +48,25 @@
                             </li>
                             <li class="nav-item px-2 text-white" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a class="nav-menu-link nav-link text-white" 
-                                th:href="@{/usuario/lista}">Clientes</a>
+                                th:href="@{/provincia/lista}">Provincias</a>
                             </li>
                             <li class="nav-item px-2" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a class="nav-menu-link nav-link text-white" 
-                                th:href="@{/producto/lista}">Servicios</a>
+                                th:href="@{/canton/lista}">Cantones</a>
                             </li>
                         </ul>
                         <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto text-white">
                             <li class="nav-item mr-3">
                                 <a href="#" class="nav-link text-white">
                                     <i class="fas fa-user text-white"></i>
-                                    <span>Bievenido:</span>
+                                    <span>Bienvenido:</span>
                                     <span sec:authentication="name">Usuario</span>
                                 </a>
                             </li>
                             <li class="nav-item text-white">
                                 <form method="POST" th:action="@{/logout}">
                                     <a href="#" onclick="this.parentNode.submit();" class="nav-link text-white">
-                                        <i class="fas fa-user-times text-white"></i> [[#{plantilla.logout}]]
+                                        <i class="fas fa-user-times text-white"></i> Cerrar sesion
                                     </a>
                                 </form>
                             </li>

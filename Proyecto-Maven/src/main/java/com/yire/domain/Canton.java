@@ -12,16 +12,17 @@ public class Canton implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdCanton")
-    private long IdCanton;
-    private long IdProvincia;
+    private long idCanton;
+    @Column(name = "idProvincia")
+    private long idProvincia;
     private String nombre;
 
     public Canton() {
     }
 
     public Canton(long IdProvincia, long IdCanton, String nombre) {
-        this.IdProvincia = IdProvincia;
-        this.IdCanton = IdCanton;
+        this.idProvincia = IdProvincia;
+        this.idCanton = IdCanton;
         this.nombre = nombre;
     }
 

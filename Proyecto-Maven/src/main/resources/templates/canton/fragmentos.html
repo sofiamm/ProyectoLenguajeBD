@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Yireh </title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    </head>
+    <body>
+        <section th:fragment="listado2" id="cantones2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Cantones</h4>
+                            </div>
+                            <div th:if="${cantones != null and !cantones.empty}">
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Canton</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="canton, contador : ${cantones}">
+                                            <td>[[${canton.idCanton}]]</td>
+                                            <td>[[${canton.nombre}]]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+
+
+                            </div>
+                            <div class="text-center p-2" th:if="${cantones == null or cantones.empty}">
+                                <span>Lista vacía</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <select name="provincia" id="provincia" onChange="cambiarProvincia(this.value)">
+                <option value="" disabled selected>Seleccione</option>
+                <option th:each="provincia : ${provincias}">
+                    [[${provincia.nombre}]]
+                </option>
+            </select>
+        </section>
+        <section th:fragment="listado" id="cantones">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Cantones</h4>
+                            </div>
+                            <div th:if="${cantones != null and !cantones.empty}">
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Canton</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="canton, contador : ${cantones}">
+                                            <td>[[${canton.idCanton}]]</td>
+                                            <td>[[${canton.nombre}]]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${cantones == null or cantones.empty}">
+                                <span>Lista vacía</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </section>
+    </body>
+</html>
