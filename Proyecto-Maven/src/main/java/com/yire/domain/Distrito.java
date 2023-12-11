@@ -13,7 +13,9 @@ public class Distrito implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdDistrito")
     private long IdDistrito;
+    @Column(name = "idProvincia")
     private long IdProvincia;
+    @Column(name = "idCanton")
     private long IdCanton;
     private String nombre;
 

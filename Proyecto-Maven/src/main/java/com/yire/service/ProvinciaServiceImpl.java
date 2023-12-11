@@ -31,4 +31,9 @@ public class ProvinciaServiceImpl implements ProvinciaService {
         }
         return listaFinal;
     }
+    @Override
+    public Provincia getProvincia(Provincia provincia){
+        Provincia prov = provinciaDao.findById(provincia.getIdProvincia()).orElse(null);
+        return prov;
+    }
 }

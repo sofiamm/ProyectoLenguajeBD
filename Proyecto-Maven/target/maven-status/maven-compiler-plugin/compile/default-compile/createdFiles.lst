@@ -8,6 +8,7 @@ com\yire\domain\Distrito.class
 com\yire\domain\ClienteDireccionPK.class
 com\yire\domain\FacturaDetallePK.class
 com\yire\dao\CantonDao.class
+com\yire\service\DistritoServiceImpl.class
 com\yire\dao\ContactoCorreoDao.class
 com\yire\TemplateResolverConfiguration.class
 com\yire\domain\Activos.class
@@ -54,6 +55,7 @@ com\yire\domain\MenuDesglosePK.class
 com\yire\domain\ServicioMenu.class
 com\yire\dao\ServicioMenuDao.class
 com\yire\domain\Facturacion.class
+com\yire\service\DistritoService.class
 com\yire\dao\ContactoDao.class
 com\yire\dao\EmpleadoCorreoDao.class
 com\yire\dao\MenuDao.class

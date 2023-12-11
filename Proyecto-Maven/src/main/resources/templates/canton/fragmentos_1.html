@@ -40,41 +40,35 @@
     </head>
     <body>
         <section th:fragment="listado2" id="cantones2">
-            <input type="hidden" id="provinciasJSON" th:value="${provinciasJSON}"/>
-            <input type="hidden" id="cantonesJSON" th:value="${cantonesJSON}"/>
-            <input type="hidden" id="distritosJSON" th:value="${distritosJSON}"/>
+            <input type="hidden" id="cantonessan" th:value="${cantonessan}"/>
+            <input type="hidden" id="cantonesala" th:value="${cantonesala}"/>
+            <input type="hidden" id="cantonescar" th:value="${cantonescar}"/>
+            <input type="hidden" id="cantonesher" th:value="${cantonesher}"/>
+            <input type="hidden" id="cantonesgua" th:value="${cantonesgua}"/>
+            <input type="hidden" id="cantonespun" th:value="${cantonespun}"/>
+            <input type="hidden" id="cantoneslim" th:value="${cantoneslim}"/>
 
             
-            <select name="provincia" id="provincia" onchange="sendPost('http://localhost:8082/canton/lista/',encontrarProvincia(this.value))">
-                <option th:if="${provincia == null}" value="" disabled selected>Seleccione</option>
-                <option th:if="${provincia != null}">
-                    [[${provincia.nombre}]]
-                </option>
+            <select name="provincia" id="provincia" onChange="cambiarProvincia(this.value)">
+                <option value="" disabled selected>Seleccione</option>
                 <option th:each="provincia : ${provincias}">
                     [[${provincia.nombre}]]
                 </option>
             </select>
 
-            <select name="canton" id="canton" onchange="sendPost('http://localhost:8082/canton/lista/',encontrarProvincia(document.getElementById('provincia').value)+'/'+encontrarCanton(this.value))">
-                <option th:if="${canton == null}" value="" disabled selected>Seleccione</option>
-                <option th:if="${canton != null}">
-                    [[${canton.nombre}]]
-                </option>
-                <option th:each="canton: ${cantones}">
-                    [[${canton.nombre}]]
-                </option>
-            </select>
+            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+            <datalist id="category">
+              <option value="San Francisco">
+              <option value="New York">
+              <option value="Seattle">
+              <option value="Los Angeles">
+              <option value="Chicago">
+            </datalist>
 
-            <select name="distrito" id="distrito" onchange="sendPost('http://localhost:8082/canton/lista/',encontrarProvincia(document.getElementById('provincia').value)+'/'+encontrarCanton(document.getElementById('canton').value)+'/'+encontrarDistrito(this.value))">
-                <option th:if="${distrito == null}" value="" disabled selected>Seleccione</option>
-                <option th:if="${distrito != null}">
-                    [[${distrito.nombre}]]
-                </option>
-                <option th:each="distrito: ${distritos}">
-                    [[${distrito.nombre}]]
-                </option>
-            </select>
 
+            <select name="category" id="category">
+                <option value="" disabled selected>Seleccione una provincia</option>
+            </select>
         </section>
         <section th:fragment="listado" id="cantones">
             <div class="container">

@@ -15,67 +15,147 @@
         <input type="hidden" id="cantones" th:value=${cantones}/>
         </br>
         </br>
-        <section th:replace="canton/fragmentos :: listado"/>
         <section th:replace="canton/fragmentos :: listado2"/>
         </br>
         </br>
         </br>
         <script type="text/javascript">
 
-            var i=1;
-            var stringsan=document.getElementById("cantonessan").value;
-            var cantonesala="${cantonesala}";
-            var cantonescar="${cantonescar}";
-            var cantonesher="${cantonesher}";
-            var cantonesgua="${cantonesgua}";
-            var cantonespun="${cantonespun}";
-            var cantoneslim="${cantoneslim}";
-            console.log("StringSan::::::::::::::::");
-            console.log(stringsan);
-            console.log(stringsan.ge)
-            // Replace HTML-encoded entities with double quotes
-            var unescapedString = stringsan.replace(/&quot;/g, '"');
+            //Defining the data containers for arrays with canton based on the province
+            var provinciasJSON=crearJsonProvincia(document.getElementById("provinciasJSON").value,1);
+            var cantonesJSON=crearJsonProvincia(document.getElementById("cantonesJSON").value,2);
+            var distritosJSON=crearJsonProvincia(document.getElementById("distritosJSON").value,3);
 
-            // Parse the resulting string as JSON
-            var jsonArray = JSON.parse(unescapedString);
+            function crearJsonCanton(string){
+                // Replace HTML-encoded entities with double quotes
+                var unescapedString = string.replace(/&quot;/g, '"');
 
-            // Create a 2-level array
-            var cantonessan = [];
+                // Parse the resulting string as JSON
+                var jsonArray = JSON.parse(unescapedString);
 
-            // Iterate through the JSON array
-            for (var i = 0; i < jsonArray.length; i++) {
-                var cantonObject = jsonArray[i];
-                var cantonArray = [];
+                // Create a 2-level array
+                var finalArray = [];
 
-                // Extract the required properties
-                cantonArray.push(cantonObject.idProvincia);
-                cantonArray.push(cantonObject.idCanton);
-                cantonArray.push(cantonObject.nombre);
+                // Iterate through the JSON array
+                for (var i = 0; i < jsonArray.length; i++) {
+                    var cantonObject = jsonArray[i];
+                    var cantonArray = [];
 
-                // Add the array to the two-level array
-                cantonessan.push(cantonArray);
+                    // Extract the required properties
+                    cantonArray.push(cantonObject.idProvincia);
+                    cantonArray.push(cantonObject.idCanton);
+                    cantonArray.push(cantonObject.nombre);
+
+                    // Add the array to the two-level array
+                    finalArray.push(cantonArray);
+                }
+                return finalArray;
             }
 
+            function crearJsonProvincia(string,n){
+                // Replace HTML-encoded entities with double quotes
+                var unescapedString = string.replace(/&quot;/g, '"');
 
+                // Parse the resulting string as JSON
+                var jsonArray = JSON.parse(unescapedString);
 
-            function cambiarProvincia(value) {
-                if (value.length == 0) document.getElementById("category").innerHTML = "<option></option>";
-                else {
-                    switch (value){
-                    case "San Jose":
-                        console.log("Seleccion: "+value);
-                        var cantones = "";
-                        for (var i = 0; i < Object.keys(cantonessan).length;i++) {
-                            console.log("cantonessan");
-                            console.log(cantonessan);
-                            var canton=cantonessan[i];
-                            console.log("canton");
-                            console.log(canton);
-                            cantones += "<option>" + canton[2] + "</option>";
-                        }
-                        console.log(cantones);
-                        document.getElementById("category").innerHTML = cantones;
+                // Create a 2-level array
+                var finalArray = [];
+
+                // Iterate through the JSON array
+                for (var i = 0; i < jsonArray.length; i++) {
+                    // Add the array to the two-level array
+                    switch(n){
+                    case 1:
+                        finalArray.push(propiedadesProvincia(jsonArray[i]));
                         break;
+                    case 2:
+                        finalArray.push(propiedadesCanton(jsonArray[i]));
+                        break;
+                    case 3:
+                        finalArray.push(propiedadesDistrito(jsonArray[i]));
+                        break;
+                    }
+                }
+                return finalArray;
+            }
+
+            function propiedadesProvincia(tempObject){
+                var temp = [];
+                temp.push(tempObject.IdProvincia);
+                temp.push(tempObject.nombre);
+                return temp;
+            }
+
+            function propiedadesCanton(tempObject){
+                var temp = [];
+                temp.push(tempObject.idProvincia);
+                temp.push(tempObject.idCanton);
+                temp.push(tempObject.nombre);
+                return temp;
+            }
+
+            function propiedadesDistrito(tempObject){
+                var temp = [];
+                temp.push(tempObject.IdProvincia);
+                temp.push(tempObject.IdCanton);
+                temp.push(tempObject.IdDistrito);
+                temp.push(tempObject.nombre);
+                return temp;
+            }
+
+            function sendPost(url1,url2) {
+                var x = url1+url2;
+                window.location = x;
+            }
+
+            function encontrarProvincia(nombre){
+                
+                for (var i = 0; i < Object.keys(provinciasJSON).length;i++) {
+                    console.log("provinciasJSON");
+                    console.log(provinciasJSON);
+                    var provincia=provinciasJSON[i];
+                    console.log("provincia");
+                    console.log(provincia);
+                    if (provincia[1]==nombre){
+                        console.log("Provincia encontrada!");
+                        return provincia[0];
+                    }else{
+                        console.log("Seguimos buscando");
+                    }
+                }
+            }
+
+            function encontrarCanton(nombre){
+                
+                for (var i = 0; i < Object.keys(cantonesJSON).length;i++) {
+                    console.log("cantonesJSON");
+                    console.log(cantonesJSON);
+                    var canton=cantonesJSON[i];
+                    console.log("canton");
+                    console.log(canton);
+                    if (canton[2]==nombre){
+                        console.log("Canton encontrad!");
+                        return canton[1];
+                    }else{
+                        console.log("Seguimos buscando");
+                    }
+                }
+            }
+
+            function encontrarDistrito(nombre){
+                
+                for (var i = 0; i < Object.keys(distritosJSON).length;i++) {
+                    console.log("distritosJSON");
+                    console.log(distritosJSON);
+                    var distrito=distritosJSON[i];
+                    console.log("distrito");
+                    console.log(distrito);
+                    if (distrito[3]==nombre){
+                        console.log("Distrito encontrado!");
+                        return distrito[2];
+                    }else{
+                        console.log("Seguimos buscando");
                     }
                 }
             }

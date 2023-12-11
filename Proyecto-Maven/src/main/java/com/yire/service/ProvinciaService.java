@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface ProvinciaService {
     public List<Provincia> getProvincias();
-    
+    public Provincia getProvincia(Provincia provincia);
 }

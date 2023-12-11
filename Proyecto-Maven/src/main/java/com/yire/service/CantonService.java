@@ -5,6 +5,7 @@
 package com.yire.service;
 
 import com.yire.domain.Canton;
+import com.yire.domain.Provincia;
 import java.util.List;
 
 /**
@@ -13,5 +14,6 @@ import java.util.List;
  */
 public interface CantonService {
     public List<Canton> getCantones();
-    public List<List<Canton>> getCantones2();
+    public Canton getCanton(Canton canton,long id_provincia) ;
+    public List<Canton> getCantonesByProvincia(Provincia provincia);
 }
