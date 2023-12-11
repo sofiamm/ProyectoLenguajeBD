@@ -4,86 +4,92 @@ Create user Proyecto_Adm IDENTIFIED BY Password1;
 
 GRANT DBA TO Proyecto_Adm;
 
+--Para recrear todo el schema
+
+/*
+alter session set "_ORACLE_SCRIPT"=true;
+drop user proyecto_adm cascade;
+create user Proyecto_adm identified by Password1;
+grant dba to proyecto_adm;
+*/
 
 -- Crear las tablas iniciales
 
 CREATE TABLE Activos (Id_Activo INT NOT NULL, Descripcion varchar2(100), Id_Local INT);
 
+CREATE TABLE Canton(Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Nombre varchar2(20));
+
+CREATE TABLE Cliente(Id_Cliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(20));
+
+CREATE TABLE Contacto(Id_Contacto INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Cedula varchar2(9));
+
+CREATE TABLE Distrito(Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Id_Distrito INT NOT NULL, Nombre varchar2(20));
+
+CREATE TABLE Empleado(Id_Empleado INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Alias varchar2(30), IBAN varchar2(30), Salario NUMBER(10,2), Estado Varchar2(15), Password varchar2(30));
+
+CREATE TABLE Facturacion(Num_Factura INT NOT NULL, Fecha DATE, MetodoPago Varchar2(20), Total NUMBER(15,2));
+
+CREATE TABLE Locales (Id_Local INT NOT NULL, Nombre varchar2(30), Proposito varchar2(30));
+
+CREATE TABLE MateriaPrima(Id_MateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(10,2));
+
+CREATE TABLE Menu(Id_Menu INT NOT NULL, Precio NUMBER(10,2), Personas INT);
+
+CREATE TABLE Producto(Id_Producto INT NOT NULL, Nombre varchar2(30), Precio NUMBER(10,2), Descripcion varchar2(100), Imagen varchar2(40));
+
+CREATE TABLE Proveedor(Id_Proveedor INT NOT NULL, Nombre varchar2(30));
+
+CREATE TABLE Provincia(Id_Provincia INT NOT NULL, Nombre varchar2(20));
+
+CREATE TABLE Publicaciones(Id_Publicacion INT NOT NULL, Link Varchar2(50), Cod_Servicio INT NOT NULL, Fecha DATE);
+
+CREATE TABLE Puesto (Id_Puesto INT NOT NULL, Nombre varchar2(30), SalarioMin NUMBER(10,2) NOT NULL, SalarioMax NUMBER(10,2) NOT NULL);
+
+CREATE TABLE ServicioAgendado(Cod_Servicio INT NOT NULL, FechaHora TIMESTAMP, PersonasAAtender INT);
+
+CREATE TABLE ClienteContacto(Id_Cliente INT NOT NULL, Id_Contacto INT NOT NULL);
+
+CREATE TABLE ClienteDireccion(Id_Direccion INT NOT NULL, Id_Cliente INT NOT NULL, Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Id_Distrito INT NOT NULL, Indicaciones varchar2(200));
+
+CREATE TABLE ContactoCorreo(Id_Contacto INT NOT NULL, Correo varchar2(30));
+
+CREATE TABLE ContactoTelefono(Id_Contacto INT NOT NULL, Telefono Varchar2(8));
+
 CREATE TABLE EmpleadoCorreo (Id_Empleado INT NOT NULL, Correo varchar2(20));
 
 CREATE TABLE EmpleadoPuesto (Id_Empleado INT NOT NULL, Id_Puesto INT NOT NULL);
 
-CREATE TABLE Puesto (Id_Puesto INT NOT NULL, Nombre varchar2(30), SalarioMin NUMBER(6,2) NOT NULL, SalarioMax NUMBER(6,2) NOT NULL);
-
-CREATE TABLE Empleado(Id_Empleado INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Alias varchar2(30), IBAN varchar2(30), Salario NUMBER(6,2), Estado Varchar2(15), Password varchar2(30));
-
-CREATE TABLE Transporte(Cod_Servicio INT NOT NULL, Id_Activo INT NOT NULL);
-
-CREATE TABLE ServicioEmpleados(Cod_Servicio INT NOT NULL, Id_Empleado INT NOT NULL);
-
-CREATE TABLE Publicaciones(Id_Publicacion INT NOT NULL, Link Varchar2(50), Cod_Servicio INT NOT NULL, Fecha DATE);
-
-CREATE TABLE ContactoTelefono(Id_Contacto INT NOT NULL, Telefono Varchar2(8));
-
-CREATE TABLE ContactoCorreo(Id_Contacto INT NOT NULL, Correo varchar2(30));
-
-CREATE TABLE Contacto(Id_Contacto INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Cedula varchar2(9));
-
-CREATE TABLE ServicioMenu(Cod_Servicio INT NOT NULL, Id_Menu INT NOT NULL);
-
-CREATE TABLE ServicioAgendados(Cod_Servicio INT NOT NULL, FechaHora TIMESTAMP, PersonasAAtender INT);
-
-CREATE TABLE ServicioCliente(Cod_Servicio INT NOT NULL, Id_Cliente INT NOT NULL);
-
-CREATE TABLE Cliente(Id_Cliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(20));
-
-CREATE TABLE ClienteContacto(Id_Cliente INT NOT NULL, Id_Contacto INT NOT NULL);
-
-CREATE TABLE MenuDesglose(Id_Menu INT NOT NULL, Id_Producto INT NOT NULL, Precio NUMBER(6,2), Personas INT);
-
-CREATE TABLE Menu(Id_Menu INT NOT NULL, Precio NUMBER(6,2), Personas INT);
+CREATE TABLE FacturaDetalle(Num_Factura INT NOT NULL, Id_Menu INT NOT NULL, Cantidad INT, Subtotal NUMBER(15,2), Total NUMBER(15,2));
 
 CREATE TABLE FacturaServicio(Num_Factura INT NOT NULL, Cod_Servicio INT NOT NULL);
 
-CREATE TABLE ClienteDireccion(Id_Direccion INT NOT NULL, Id_Cliente INT NOT NULL, Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Id_Distrito INT NOT NULL, Indicaciones varchar2(200));
+CREATE TABLE LocalUbicacion(Id_Local INT NOT NULL, Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Id_Distrito INT NOT NULL, Indicaciones varchar(100));
 
-CREATE TABLE FacturaDetalle(Num_Factura INT NOT NULL, Id_Menu INT NOT NULL, Cantidad INT, Subtotal NUMBER(6,2), Total NUMBER(6,2));
+CREATE TABLE MateriaPrimaLocal(Id_MateriaPrima INT NOT NULL, Id_Local INT NOT NULL);
 
-CREATE TABLE Facturacion(Num_Factura INT NOT NULL, Fecha DATE, MetodoPago Varchar2(20), Total NUMBER(6,2));
+CREATE TABLE MateriaPrimaProveedor(Id_MateriaPrima INT NOT NULL, Id_Proveedor INT NOT NULL, Precio NUMBER(10,2));
 
-CREATE TABLE Provincia(Id_Provincia INT NOT NULL, Nombre varchar2(20));
-
-CREATE TABLE Canton(Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Nombre varchar2(20));
-
-CREATE TABLE Distrito(Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Id_Distrito INT NOT NULL, Nombre varchar2(20));
-
-CREATE TABLE Producto(Id_Producto INT NOT NULL, Nombre varchar2(30), Precio NUMBER(6,2), Descripcion varchar2(100), Imagen varchar2(40));
+CREATE TABLE MenuDesglose(Id_Menu INT NOT NULL, Id_Producto INT NOT NULL, Precio NUMBER(10,2), Personas INT);
 
 CREATE TABLE ProductoMateriaPrima(Id_Producto INT NOT NULL, Id_MateriaPrima INT NOT NULL, CantidadMateriaPrima INT);
 
-CREATE TABLE MateriaPrima(Id_MateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(6,2));
+CREATE TABLE ServicioCliente(Cod_Servicio INT NOT NULL, Id_Cliente INT NOT NULL);
 
-CREATE TABLE Locales (Id_Local INT NOT NULL, Nombre varchar2(30), Proposito varchar2(30));
+CREATE TABLE ServicioEmpleados(Cod_Servicio INT NOT NULL, Id_Empleado INT NOT NULL);
 
-CREATE TABLE LocalUbicacion(Id_Local INT NOT NULL, Id_Provincia INT NOT NULL, Id_Canton INT NOT NULL, Id_Distrito INT NOT NULL, Indicaciones varchar(100));
+CREATE TABLE ServicioMenu(Cod_Servicio INT NOT NULL, Id_Menu INT NOT NULL);
 
-CREATE TABLE Proveedor(Id_Proveedor INT NOT NULL, Nombre varchar2(30));
-
-CREATE TABLE MateriaPrimaProveedor(Id_MateriaPrima INT NOT NULL, Id_Proveedor INT NOT NULL, Precio NUMBER(6,2));
-
-CREATE TABLE MateriaPrimaLocal(Id_MateriaPrima INT NOT NULL, Id_Local INT NOT NULL);
+CREATE TABLE Transporte(Cod_Servicio INT NOT NULL, Id_Activo INT NOT NULL);
 
 -- Primary keys iniciales
 
 ALTER TABLE Menu ADD CONSTRAINT PK_Id_Menul PRIMARY KEY (Id_Menu);
 
-ALTER TABLE ProductoMateriaPrima ADD CONSTRAINT PK_Id_Producto_Id_MateriaPrima PRIMARY KEY (Id_Producto, Id_MateriaPrima);
-
 ALTER TABLE producto ADD CONSTRAINT PK_Id_Producto PRIMARY KEY (Id_Producto);
 
 ALTER TABLE Activos ADD CONSTRAINT PK_Id_Activo PRIMARY KEY (Id_Activo);
 
-ALTER TABLE ServicioAgendados ADD CONSTRAINT PK_Cod_Servicio PRIMARY KEY (Cod_Servicio);
+ALTER TABLE ServicioAgendado ADD CONSTRAINT PK_Cod_Servicio PRIMARY KEY (Cod_Servicio);
 
 ALTER TABLE Facturacion ADD CONSTRAINT PK_Num_Factura PRIMARY KEY (Num_Factura);
 
@@ -107,6 +113,8 @@ ALTER TABLE Distrito ADD CONSTRAINT PK_Id_Provincia_Id_Canton_Id_Distrito PRIMAR
 
 ALTER TABLE Publicaciones ADD CONSTRAINT PK_Id_Publicacion PRIMARY KEY (Id_Publicacion);
 
+ALTER TABLE MateriaPrima ADD CONSTRAINT PK_Id_MateriaPrima PRIMARY KEY (Id_MateriaPrima);
+
 -- Foreign keys
 
 ALTER TABLE EmpleadoCorreo ADD CONSTRAINT FK_Id_Empleado_Id_Empleado FOREIGN KEY (Id_Empleado) REFERENCES Empleado (Id_Empleado);
@@ -121,19 +129,19 @@ ALTER TABLE ContactoTelefono ADD CONSTRAINT FK_Id_Contacto FOREIGN KEY (Id_Conta
 
 ALTER TABLE ContactoCorreo ADD CONSTRAINT FK_Id_Contactos FOREIGN KEY (Id_Contacto) REFERENCES Contacto (Id_Contacto);
 
-ALTER TABLE Transporte ADD CONSTRAINT FK_Cod_Servicio FOREIGN KEY (Cod_Servicio) REFERENCES ServicioAgendados (Cod_Servicio);
+ALTER TABLE Transporte ADD CONSTRAINT FK_Cod_Servicio FOREIGN KEY (Cod_Servicio) REFERENCES ServicioAgendado (Cod_Servicio);
 
 ALTER TABLE transporte ADD CONSTRAINT FK_Id_Activo Foreign key (Id_Activo) REFERENCES Activos (Id_Activo);
 
-ALTER TABLE ServicioEmpleados ADD CONSTRAINT FK_Cod_ServicioS FOREIGN KEY (Cod_Servicio) REFERENCES ServicioAgendados (Cod_Servicio);
+ALTER TABLE ServicioEmpleados ADD CONSTRAINT FK_Cod_ServicioS FOREIGN KEY (Cod_Servicio) REFERENCES ServicioAgendado (Cod_Servicio);
 
 ALTER TABLE ServicioEmpleados ADD CONSTRAINT FK_Id_Empleados FOREIGN KEY (Id_Empleado) REFERENCES empleado (Id_Empleado);
 
-ALTER TABLE PUBLICACIONES ADD CONSTRAINT FK_Cod_ServicioSS FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADOS (Cod_Servicio);
+ALTER TABLE PUBLICACIONES ADD CONSTRAINT FK_Cod_ServicioSS FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADO (Cod_Servicio);
 
-ALTER TABLE SERVICIOMENU ADD CONSTRAINT FK_CODSERVI FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADOS (Cod_Servicio);
+ALTER TABLE SERVICIOMENU ADD CONSTRAINT FK_CODSERVI FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADO (Cod_Servicio);
 
-ALTER TABLE SERVICIOCLIENTE ADD CONSTRAINT FK_CODSERVIC FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADOS (Cod_Servicio);
+ALTER TABLE SERVICIOCLIENTE ADD CONSTRAINT FK_CODSERVIC FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADO (Cod_Servicio);
 
 ALTER TABLE SERVICIOCLIENTE ADD CONSTRAINT FK_IDCLIENT FOREIGN KEY (Id_Cliente) REFERENCES cliente (Id_Cliente);
 
@@ -143,11 +151,11 @@ ALTER TABLE CLIENTECONTACTO ADD CONSTRAINT FK_IDCONTACT FOREIGN KEY (Id_Contacto
 
 ALTER TABLE FACTURASERVICIO ADD CONSTRAINT FK_Num_Factura FOREIGN KEY (Num_Factura) REFERENCES FACTURACION (Num_Factura);
 
-ALTER TABLE FACTURASERVICIO ADD CONSTRAINT FK_CODSERVIIC FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADOS (Cod_Servicio);
+ALTER TABLE FACTURASERVICIO ADD CONSTRAINT FK_CODSERVIIC FOREIGN KEY (Cod_Servicio) REFERENCES SERVICIOAGENDADO (Cod_Servicio);
 
 ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_IDCLI FOREIGN KEY (Id_Cliente) REFERENCES CLIENTE (Id_Cliente);
 
-ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_Id_Distrito FOREIGN KEY (Id_Provincia, Id_Canton, Id_Distrito) REFERENCES distrito (Id_Provincia, Id_Canton, Id_Distrito); -- aqui hay un problema por el tipo de primary key doble o triple
+ALTER TABLE CLIENTEDIRECCION ADD CONSTRAINT FK_Id_Distrito FOREIGN KEY (Id_Provincia, Id_Canton, Id_Distrito) REFERENCES distrito (Id_Provincia, Id_Canton, Id_Distrito);
 
 ALTER TABLE FACTURADETALLE ADD CONSTRAINT FK_Num_FacturaS FOREIGN KEY (Num_Factura) REFERENCES FACTURACION (Num_Factura);
 
@@ -157,7 +165,7 @@ ALTER TABLE CANTON ADD CONSTRAINT FK_PRVINCIA FOREIGN KEY (Id_Provincia) REFEREN
 
 ALTER TABLE DISTRITO ADD CONSTRAINT FK_DISTRITO FOREIGN KEY (Id_Provincia) REFERENCES PROVINCIA (Id_Provincia);
 
-ALTER TABLE DISTRITO ADD CONSTRAINT FK_CANTON FOREIGN KEY (Id_Canton) REFERENCES CANTON (Id_Canton);
+ALTER TABLE DISTRITO ADD CONSTRAINT FK_CANTON_PROVINCIA FOREIGN KEY (Id_Canton,Id_Provincia) REFERENCES CANTON (Id_Canton,Id_Provincia);
 
 ALTER TABLE PRODUCTOMATERIAPRIMA ADD CONSTRAINT FK_IDPRODUCT FOREIGN KEY (Id_Producto) REFERENCES PRODUCTO (Id_Producto);
 
@@ -174,6 +182,8 @@ ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDMATERIPRIMA FOREIGN KEY (Id_Ma
 ALTER TABLE MATERIAPRIMALOCAL ADD CONSTRAINT FK_IDLOCA FOREIGN KEY (Id_Local) REFERENCES LOCALES (Id_Local);
 
 -- Los primary keys que quedan
+
+ALTER TABLE ProductoMateriaPrima ADD CONSTRAINT PK_Id_Producto_Id_MateriaPrima PRIMARY KEY (Id_Producto, Id_MateriaPrima);
 
 ALTER TABLE EmpleadoCorreo ADD CONSTRAINT PK_Id_Empleado PRIMARY KEY (Id_Empleado);
 
@@ -201,8 +211,6 @@ ALTER TABLE ClienteDireccion ADD CONSTRAINT PK_Id_Direccion_Id_Cliente PRIMARY K
 
 ALTER TABLE FacturaDetalle ADD CONSTRAINT PK_Num_Factura_Id_Menu PRIMARY KEY (Num_Factura, Id_Menu);
 
-ALTER TABLE MateriaPrima ADD CONSTRAINT PK_Id_MateriaPrima PRIMARY KEY (Id_MateriaPrima);
-
 ALTER TABLE LocalUbicacion ADD CONSTRAINT PK_Id_Localu PRIMARY KEY (Id_Local);
 
 ALTER TABLE MateriaPrimaProveedor ADD CONSTRAINT PK_Id_MateriaPrima_Id_Proveedor PRIMARY KEY (Id_MateriaPrima, Id_Proveedor);
@@ -219,6 +227,168 @@ CREATE TABLE AudActivos (Id_Activo INT NOT NULL, Descripcion varchar2(100), Id_L
 CREATE TABLE AudServicioEmpleados (Cod_Servicio INT NOT NULL, Id_Empleado INT NOT NULL, tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
 
 CREATE TABLE AudMateriaPrima (Id_MateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(6,2), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
+
+
+
+
+
+-- Triggers para primary keys
+
+-- Sequence
+CREATE SEQUENCE sec_activos START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_activos
+BEFORE INSERT ON Activos
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Activo := sec_activos.NEXTVAL;
+END;
+
+-- Sequence
+CREATE SEQUENCE sec_cliente START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_cliente
+BEFORE INSERT ON Cliente
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Cliente := sec_cliente.NEXTVAL;
+END;
+
+-- Sequence
+CREATE SEQUENCE sec_contacto START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_contacto
+BEFORE INSERT ON Contacto
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Contacto := sec_contacto.NEXTVAL;
+END;
+
+
+-- Sequence
+CREATE SEQUENCE sec_empleado START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_empleado
+BEFORE INSERT ON Empleado
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Empleado := sec_empleado.NEXTVAL;
+END;
+
+-- Sequence
+CREATE SEQUENCE sec_facturacion START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_facturacion
+BEFORE INSERT ON Facturacion
+FOR EACH ROW
+BEGIN
+    :NEW.Num_Factura := sec_facturacion.NEXTVAL;
+END;
+
+
+-- Sequence
+CREATE SEQUENCE sec_locales START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_locales
+BEFORE INSERT ON Locales
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Local := sec_locales.NEXTVAL;
+END;
+
+
+
+-- Sequence
+CREATE SEQUENCE sec_materia_prima START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_materia_prima
+BEFORE INSERT ON MateriaPrima
+FOR EACH ROW
+BEGIN
+    :NEW.Id_MateriaPrima := sec_materia_prima.NEXTVAL;
+END;
+
+
+-- Sequence
+CREATE SEQUENCE sec_menu START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_menu
+BEFORE INSERT ON Menu
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Menu := sec_menu.NEXTVAL;
+END;
+
+-- Sequence
+CREATE SEQUENCE sec_producto START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_producto
+BEFORE INSERT ON Producto
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Producto := sec_producto.NEXTVAL;
+END;
+
+
+-- Sequence
+CREATE SEQUENCE sec_proveedor START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_proveedor
+BEFORE INSERT ON Proveedor
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Proveedor := sec_proveedor.NEXTVAL;
+END;
+
+-- Sequence
+CREATE SEQUENCE sec_publicaciones START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_publicaciones
+BEFORE INSERT ON Publicaciones
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Publicacion := sec_publicaciones.NEXTVAL;
+END;
+
+
+-- Sequence
+CREATE SEQUENCE sec_puesto START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_puesto
+BEFORE INSERT ON Puesto
+FOR EACH ROW
+BEGIN
+    :NEW.Id_Puesto := sec_puesto.NEXTVAL;
+END;
+
+-- Sequence
+CREATE SEQUENCE sec_servicio_agendado START WITH 1;
+
+-- Trigger
+CREATE OR REPLACE TRIGGER tr_insert_servicio_agendado
+BEFORE INSERT ON ServicioAgendado
+FOR EACH ROW
+BEGIN
+    :NEW.Cod_Servicio := sec_servicio_agendado.NEXTVAL;
+END;
+
+
+
+
+
+
 
 
 -- Crear los triggers para las tablas de auditorias

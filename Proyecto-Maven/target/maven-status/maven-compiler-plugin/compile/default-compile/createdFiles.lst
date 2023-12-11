@@ -45,6 +45,7 @@ com\yire\dao\ServicioEmpleadosDao.class
 com\yire\domain\MateriaPrimaLocalPK.class
 com\yire\dao\EmpleadoPuestoDao.class
 com\yire\domain\ServicioEmpleados.class
+com\yire\controller\EmpleadoController.class
 com\yire\domain\ClienteDireccion.class
 com\yire\controller\CantonController.class
 com\yire\dao\FacturaDetalleDao.class

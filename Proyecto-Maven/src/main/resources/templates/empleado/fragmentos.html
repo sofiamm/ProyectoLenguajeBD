@@ -6,7 +6,7 @@
     </head>
     <body>
         <section th:fragment="botonesAgregar" class="py-4 mb-4 bg-light">
-            <div class="container">
+            <div sec:authorize="hasRole('ROLE_ADMIN')" class="container">
                 <div class="row">
                     <div class="col-md-3" sec:authorize="hasRole('ROLE_ADMIN')">   
                         <button 
@@ -21,40 +21,48 @@
             </div>
         </section>
 
-        <section th:fragment="listado" id="puestos">
+        <section th:fragment="listado" id="empleados">
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Puestos</h4>
+                                <h4>Empleados</h4>
                             </div>
-                            <div th:if="${puestos != null and !puestos.empty}">
+                            <div th:if="${empleados != null and !empleados.empty}">
                                 <table class="table table-stryped">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>#</th>
                                             <th>Nombre</th>
-                                            <th>Salario minimo</th>
-                                            <th>Salario maximo</th>
+                                            <th>Primer Apellido</th>
+                                            <th>Segundo Apellido</th>
+                                            <th>Alias</th>
+                                            <th>IBAN</th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')">Salario</th>
+                                            <th>Estado</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="puesto, contador : ${puestos}">
+                                        <tr th:each="empleado, contador : ${empleados}">
                                             <td>[[${contador.count}]]</td>
-                                            <td>[[${puesto.nombre}]]</td>
-                                            <td>[[${puesto.salariomin}]]</td>
-                                            <td>[[${puesto.salariomax}]]</td>
+                                            <td>[[${empleado.nombre}]]</td>
+                                            <td>[[${empleado.apellido1}]]</td>
+                                            <td>[[${empleado.apellido2}]]</td>
+                                            <th>[[${empleado.alias}]]</th>
+                                            <th>[[${empleado.iban}]]</th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.Salario}]]</th>
+                                            <th>[[${empleado.estado}]]</th>
                                             <td>
-                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/empleado/eliminar/}+${empleado.idEmpleado}"
                                                    class="btn btn-danger">
                                                     <i class="fas fa-angle-double-right"></i> Eliminar
                                                 </a>
                                             </td>
                                             <td>
-                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/puesto/modificar/}+${puesto.idPuesto}"
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/empleado/modificar/}+${empleado.idEmpleado}"
                                                    class="btn btn-success">
                                                     <i class="fas fa-angle-double-right"></i> Actualizar
                                                 </a>
@@ -63,26 +71,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="text-center p-2" th:if="${puestos == null or puestos.empty}">
+                            <div class="text-center p-2" th:if="${empleados == null or empleados.empty}">
                                 <span>Lista vacía</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center bg-danger text-white mb-3">
-                            <div class="card-body">
-                                <h3>Límite Total</h3>
-                                <h4 class="display-4">
-                                </h4>
-                            </div>
-                        </div>
-
-                        <div class="card text-center bg-success text-white mb-3">
-                            <div class="card-body">
-                                <h3>Total Puestos</h3>
-                                <h4 class="display-4">
-                                    <i class="fas fa-users"></i>
-                                </h4>
                             </div>
                         </div>
                     </div>
@@ -95,13 +85,13 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header bg-info text-white">
-                            <h5 class="modal-title">Agregar Puesto</h5>
+                            <h5 class="modal-title">Agregar Empleado</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div> 
-                        <form th:action="@{/puesto/guardar}" th:object="${puesto}"
+                        <form th:action="@{/empleado/guardar}" th:object="${empleado}"
                               method="POST" class="was-validated">
                             <div class="modal-body">
-                                <section th:replace="puesto/fragmentos :: camposForm"/>    
+                                <section th:replace="empleado/fragmentos :: camposForm"/>    
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit">Guardar</button>
@@ -118,22 +108,42 @@
                 <input type="text" class="form-control" name="nombre" required="true">
             </div>
             <div class="form-group">
-                <label for="salariomin">Salario minimo</label>
-                <input type="number" class="form-control" name="salariomin" required="true">
+                <label for="nombre">Primer Apellido</label>
+                <input type="text" class="form-control" name="apellido1" required="true">
             </div>
             <div class="form-group">
-                <label for="salariomax">Salario maximo</label>
-                <input type="number" class="form-control" name="salariomax" required="true">
+                <label for="nombre">Segundo Apellido</label>
+                <input type="text" class="form-control" name="apellido2" required="true">
+            </div>
+            <div class="form-group">
+                <label for="salariomin">Alias</label>
+                <input type="text" class="form-control" name="alias" required="true">
+            </div>
+            <div class="form-group">
+                <label for="salariomax">IBAN</label>
+                <input type="text" class="form-control" name="iban" required="true">
+            </div>
+            <div class="form-group">
+                <label for="nombre">Salario</label>
+                <input type="number" class="form-control" name="salario" required="true">
+            </div>
+            <div class="form-group">
+                <label for="nombre">Estado</label>
+                <input type="text" class="form-control" name="estado" required="true">
+            </div>
+            <div class="form-group">
+                <label for="nombre">Password</label>
+                <input type="Password" class="form-control" name="password" required="true">
             </div>
         </section>
 
         <section th:fragment="editar">            
             <form method="POST"
-                  th:action="@{/puesto/guardar}"
-                  th:object="${puesto}"
+                  th:action="@{/empleado/guardar}"
+                  th:object="${empleado}"
                   class="was-validated">
-                <input type="hidden" name="idPuesto" th:field="*{idPuesto}"/>
-                <section th:replace="puesto/fragmentos :: botonesEditar"/> 
+                <input type="hidden" name="idEmpleado" th:field="*{idEmpleado}"/>
+                <section th:replace="empleado/fragmentos :: botonesEditar"/> 
                 <div id="details">
                     <div class="container">
                         <div class="row">
@@ -143,7 +153,7 @@
                                         <h4>Actualizar</h4>
                                     </div>
                                     <div class="card-body">
-                                        <section th:replace="puesto/fragmentos :: camposForm"/>         
+                                        <section th:replace="empleado/fragmentos :: camposForm"/>         
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +168,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3">
-                            <a th:href="@{/puesto/lista}" class="btn btn-ligth btn-block">
+                            <a th:href="@{/empleado/lista}" class="btn btn-ligth btn-block">
                                 <i class="fas fa-arrow-left"></i>Regresar
                             </a>
                         </div>
@@ -168,7 +178,7 @@
                             </button>
                         </div>
                         <div class="col-md-3">
-                            <a th:href="@{/puesto/eliminar/}+${puesto.idPuesto}"
+                            <a th:href="@{/empleado/eliminar/}+${empleado.idEmpleado}"
                                class="btn btn-danger btn-block">
                                 <i class="fas fa-trash"></i>Eliminar
                             </a>
