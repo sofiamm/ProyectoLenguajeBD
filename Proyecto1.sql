@@ -581,14 +581,37 @@ DECLARE
     salario_emp EMPLEADO.SALARIO%TYPE;
 BEGIN
     OPEN c_empleados;
+    DBMS_OUTPUT.PUT_LINE('Información de todos los empleados:');
     LOOP
         FETCH c_empleados INTO id_emp, nombre_emp, apellido_emp, salario_emp;
         EXIT WHEN c_empleados%NOTFOUND;
         
         -- Puedes realizar operaciones con los datos aquí
-        DBMS_OUTPUT.PUT_LINE('ID: ' || id_emp || ', Nombre: ' || nombre_emp || ', Apellido: ' || apellido_emp || ', Salario: ' || salario_emp);
+        DBMS_OUTPUT.PUT_LINE('ID: ' || id_emp || ' Nombre: ' || nombre_emp || ' Apellido: ' || apellido_emp || ' Salario: ' || salario_emp);
     END LOOP;
     CLOSE c_empleados;
+END;
+
+    -- 2. Obtener información de todos los clientes:
+DECLARE
+    CURSOR c_clientes IS
+        SELECT ID_CLIENTE, NOMBRE, TIPO
+        FROM CLIENTE;
+        
+    id_cliente CLIENTE.ID_CLIENTE%TYPE;
+    nombre_cliente CLIENTE.NOMBRE%TYPE;
+    tipo_cliente CLIENTE.TIPO%TYPE;
+BEGIN
+    OPEN c_clientes;
+    DBMS_OUTPUT.PUT_LINE('Información de todos los clientes:');
+    LOOP
+        FETCH c_clientes INTO id_cliente, nombre_cliente, tipo_cliente;
+        EXIT WHEN c_clientes%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE('ID: ' || id_cliente || ' Nombre: ' || nombre_cliente || ' Tipo: ' || tipo_cliente);
+    END LOOP;
+    CLOSE c_clientes;
 END;
 
 --------------------------------- VISTAS ---------------------------------
