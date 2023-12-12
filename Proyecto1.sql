@@ -518,18 +518,6 @@ SELECT ultima_factura() AS "Total última factura"
        RETURN CursorList;
     END;
     -- Ejemplo:
-    INSERT INTO Producto (Id_Producto, Nombre, Precio, Descripcion, Imagen)
-    VALUES (1, 'Hamburguesa', 10.00, 'Torta de carne', 'imagen1.jpg');
-    
-    INSERT INTO Producto (Id_Producto, Nombre, Precio, Descripcion, Imagen)
-    VALUES (2, 'Batido', 15.00, 'Sabor de fresa', 'imagen2.jpg');
-    
-    INSERT INTO Menu (Id_Menu, precio, personas)
-    VALUES (1, 10.00, 2);
-    
-    INSERT INTO Menu (Id_Menu, precio, personas)
-    VALUES (2, 25.00, 1);
-
     SELECT ListaProdMenu(1) AS "Lista de productos"
     FROM dual;
     
@@ -548,25 +536,10 @@ SELECT ultima_factura() AS "Total última factura"
        RETURN CursorList;
     END;
     -- Ejemplo:
-    INSERT INTO Proveedor (Id_Proveedor, Nombre)
-    VALUES (1, 'Charlie');
-    
-    INSERT INTO Proveedor (Id_Proveedor, Nombre)
-    VALUES (2, 'Pedro');
-    
-    INSERT INTO MateriaPrima (Id_MateriaPrima, Nombre, UnidadDeMedicion)
-    VALUES (1, 'Papa', 'Unit');
-    
-    INSERT INTO MateriaPrimaProveedor (Id_MateriaPrima, Id_Proveedor, Precio)
-    VALUES (1, 1, 10.00);
-    
-    INSERT INTO MateriaPrimaProveedor (Id_MateriaPrima, Id_Proveedor, Precio)
-    VALUES (1, 2, 15.00);
-
     SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
     FROM dual;
         
-    -- 7. Obtener el nombre y el propósito de local por ID:
+    -- 7. Obtener el nombre y el propósito de local por ID: ERROR
     CREATE OR REPLACE FUNCTION InfoLocal(Id_Local INT)
     RETURN VARCHAR2
     IS
@@ -594,7 +567,30 @@ SELECT ultima_factura() AS "Total última factura"
     
        RETURN CursorList;
     END;
-    
+
+--------------------------------- CURSORES ---------------------------------
+    --1.Obtener información de todos los empleados:
+DECLARE
+    CURSOR c_empleados IS
+        SELECT ID_EMPLEADO, NOMBRE, APELLIDO1, SALARIO
+        FROM EMPLEADO;
+        
+    id_emp EMPLEADO.ID_EMPLEADO%TYPE;
+    nombre_emp EMPLEADO.NOMBRE%TYPE;
+    apellido_emp EMPLEADO.APELLIDO1%TYPE;
+    salario_emp EMPLEADO.SALARIO%TYPE;
+BEGIN
+    OPEN c_empleados;
+    LOOP
+        FETCH c_empleados INTO id_emp, nombre_emp, apellido_emp, salario_emp;
+        EXIT WHEN c_empleados%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE('ID: ' || id_emp || ', Nombre: ' || nombre_emp || ', Apellido: ' || apellido_emp || ', Salario: ' || salario_emp);
+    END LOOP;
+    CLOSE c_empleados;
+END;
+
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
