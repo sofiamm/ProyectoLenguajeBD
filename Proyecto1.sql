@@ -217,7 +217,6 @@ ALTER TABLE MateriaPrimaProveedor ADD CONSTRAINT PK_Id_MateriaPrima_Id_Proveedor
 
 ALTER TABLE MateriaPrimaLocal ADD CONSTRAINT PK_Id_MateriaPrima_Id_Local PRIMARY KEY (Id_MateriaPrima, Id_Local);
 
-
 -- Crear la tabla de auditoria para las tablas Activos, Clientes, ServicioEmpleados,  MateriaPrima
 
 CREATE TABLE AudClientes (Id_Cliente INT NOT NULL, Nombre varchar2(30), Tipo varchar2(20), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
@@ -228,12 +227,7 @@ CREATE TABLE AudServicioEmpleados (Cod_Servicio INT NOT NULL, Id_Empleado INT NO
 
 CREATE TABLE AudMateriaPrima (Id_MateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(6,2), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
 
-
-
-
-
 -- Triggers para primary keys
-
 -- Sequence
 CREATE SEQUENCE sec_activos START WITH 1;
 
@@ -267,7 +261,6 @@ BEGIN
     :NEW.Id_Contacto := sec_contacto.NEXTVAL;
 END;
 
-
 -- Sequence
 CREATE SEQUENCE sec_empleado START WITH 1;
 
@@ -290,7 +283,6 @@ BEGIN
     :NEW.Num_Factura := sec_facturacion.NEXTVAL;
 END;
 
-
 -- Sequence
 CREATE SEQUENCE sec_locales START WITH 1;
 
@@ -302,8 +294,6 @@ BEGIN
     :NEW.Id_Local := sec_locales.NEXTVAL;
 END;
 
-
-
 -- Sequence
 CREATE SEQUENCE sec_materia_prima START WITH 1;
 
@@ -314,7 +304,6 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_MateriaPrima := sec_materia_prima.NEXTVAL;
 END;
-
 
 -- Sequence
 CREATE SEQUENCE sec_menu START WITH 1;
@@ -338,7 +327,6 @@ BEGIN
     :NEW.Id_Producto := sec_producto.NEXTVAL;
 END;
 
-
 -- Sequence
 CREATE SEQUENCE sec_proveedor START WITH 1;
 
@@ -360,7 +348,6 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Publicacion := sec_publicaciones.NEXTVAL;
 END;
-
 
 -- Sequence
 CREATE SEQUENCE sec_puesto START WITH 1;
@@ -384,15 +371,7 @@ BEGIN
     :NEW.Cod_Servicio := sec_servicio_agendado.NEXTVAL;
 END;
 
-
-
-
-
-
-
-
 -- Crear los triggers para las tablas de auditorias
-
 CREATE OR REPLACE TRIGGER TGR_INSERT_AUDACTIVOS
 BEFORE INSERT ON ACTIVOS
 FOR EACH ROW
@@ -459,118 +438,71 @@ END;
 
 
 -- FUNCIONES --
-    -- 1. Obtener informaciï¿½n de un empleado:
-    CREATE OR REPLACE FUNCTION InfoEmpleado(Id_Empleado INT)
-    RETURN VARCHAR2
-    IS
-       InfoEmpleado VARCHAR2(500);
-    BEGIN
-       SELECT Nombre || ' ' || Apellido1 || ' ' || Apellido2 || ' | AKA: ' || Alias || ' | IBAN: ' || IBAN
-       INTO InfoEmpleado
-       FROM Empleado
-       WHERE Id_Empleado = Id_Empleado;
-       RETURN InfoEmpleado;
-    END;
-    -- Ejemplo:
-    INSERT INTO Empleado (Id_Empleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
-    VALUES (10, 'Juan', 'Perez', 'Gomez', 'JP', 'Mo34', 5000, 'Activo', 'psswd');
-    
-    SELECT InfoEmpleado(30) AS "Informaciï¿½n del Empleado"
-    FROM dual; --Tabla default para ejemplo
-    
-    -- 2. Lista de empleados por puesto:
-    CREATE OR REPLACE FUNCTION ListaEmpleadosPuesto(Id_Puesto INT)
-    RETURN SYS_REFCURSOR
-    IS
-       CursorList SYS_REFCURSOR;
-    BEGIN
-       OPEN CursorList FOR
-          SELECT e.Nombre, e.Apellido1, e.Apellido2
-          FROM Empleado e
-          JOIN EmpleadoPuesto ep ON e.Id_Empleado = ep.Id_Empleado
-          WHERE ep.Id_Puesto = Id_Puesto;
-          
-       RETURN CursorList;
-    END;
-    -- Ejemplo:
-    INSERT INTO Puesto (Id_Puesto, Nombre, SalarioMin, SalarioMax)
-    VALUES (1, 'Desarrollador', 5000, 8000);
-    
-    INSERT INTO EmpleadoPuesto (Id_Empleado, Id_Puesto)
-    VALUES (10, 1);
-    
-    INSERT INTO Empleado (Id_Empleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password)
-    VALUES (20, 'Sofï¿½a', 'Mora', 'Muï¿½oz', 'SOF', 'Ra24', 6000, 'Activo', 'contra');
-    
-    INSERT INTO EmpleadoPuesto (Id_Empleado, Id_Puesto)
-    VALUES (20, 1);
-    
-    SELECT ListaEmpleadosPuesto(1) AS "Lista Empleados"
+    --1.Obtener el salario promedio de los empleados:
+CREATE OR REPLACE FUNCTION promedio_salario 
+	RETURN NUMBER IS
+    salario_promedio NUMBER;
+BEGIN
+    SELECT AVG(SALARIO) INTO salario_promedio FROM Empleado;
+    RETURN salario_promedio;
+END promedio_salario;
+-- Ejemplo:
+SELECT promedio_salario() AS "Promedio de salarios"
     FROM dual;
     
-    -- 3.Calcular el total de una factura:
-    CREATE OR REPLACE FUNCTION TotalFactura(Num_Factura INT)
-    RETURN NUMBER
-    IS
-       Total NUMBER(6,2);
-    BEGIN
-       SELECT SUM(fd.Total)
-       INTO Total
-       FROM FacturaDetalle fd
-       WHERE fd.Num_Factura = Num_Factura;
-    
-       RETURN Total;
-    END;
-    -- Ejemplo:
-    INSERT INTO Facturacion (Num_Factura, Fecha, MetodoPago, Total)
-    VALUES (1, TO_DATE('2023-11-15', 'YYYY-MM-DD'), 'Tarjeta', 1000.00);
-    
-    INSERT INTO FacturaDetalle (Num_Factura, Id_Menu, Cantidad, Subtotal, Total)
-    VALUES (1, 1, 2, 50.00, 100.00);
-    
-    INSERT INTO FacturaDetalle (Num_Factura, Id_Menu, Cantidad, Subtotal, Total)
-    VALUES (1, 2, 1, 30.00, 30.00);
-    
-    SELECT TotalFactura(1) AS "Monto total"
+   --2.Cantidad de empleados:
+CREATE OR REPLACE FUNCTION cantidad_emplados
+	RETURN NUMBER IS
+    total_empleados NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_empleados FROM Empleado;
+    RETURN total_empleados;
+END cantidad_emplados;
+-- Ejemplo:
+SELECT cantidad_emplados() AS "Total empleados"
     FROM dual;
     
--- 4. Obtener nombre del cliente por la factura:
-    CREATE OR REPLACE FUNCTION NomClienteFact(Num_Factura INT)
-    RETURN VARCHAR2
-    IS
-       NombreCliente VARCHAR2(100);
-    BEGIN
-       SELECT c.Nombre
-       INTO NombreCliente
-       FROM Cliente c
-       JOIN ClienteDireccion cd ON c.Id_Cliente = cd.Id_Cliente
-       JOIN FacturaDetalle fd ON cd.Id_Direccion = fd.Id_Menu
-       WHERE fd.Num_Factura = Num_Factura;
+   --3.Cantidad de clientes:
+CREATE OR REPLACE FUNCTION cantidad_clientes
+	RETURN NUMBER IS
+    total_clientes NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_clientes FROM Empleado;
+    RETURN total_clientes;
+END cantidad_clientes;
+-- Ejemplo:
+SELECT cantidad_clientes() AS "Total clientes"
+    FROM dual;
     
-       RETURN NombreCliente;
-    END;
-    -- Ejemplo:
-    INSERT INTO Cliente (Id_Cliente, Nombre, Tipo)
-    VALUES (1, 'Valeria', 'Frecuente');
+     --4.Cantidad de locales:
+CREATE OR REPLACE FUNCTION cantidad_locales
+	RETURN NUMBER IS
+    total_locales NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_locales FROM Locales;
+    RETURN total_locales;
+END cantidad_locales;
+-- Ejemplo:
+SELECT cantidad_locales() AS "Total locales"
+    FROM dual;
     
-    INSERT INTO Provincia (Id_Provincia, Nombre) VALUES (1, 'San Jose');
-    
-    INSERT INTO Canton (Id_Provincia, Id_Canton, Nombre) VALUES (1, 1, 'Desamparados');
-    
-    INSERT INTO Distrito (Id_Provincia, Id_Canton, Id_Distrito, Nombre) VALUES (1, 1, 1, 'San Miguel');
+    --5.Ver monto de la última factura:
+CREATE OR REPLACE FUNCTION ultima_factura 
+RETURN VARCHAR2 IS
+    factura_monto VARCHAR2(25);
+BEGIN
+    SELECT Total INTO factura_monto
+    FROM Facturacion
+    WHERE ROWNUM = 1
+    ORDER BY Fecha ASC;
 
-    INSERT INTO ClienteDireccion (Id_Direccion, Id_Cliente, Id_Provincia, Id_Canton, Id_Distrito, Indicaciones)
-    VALUES (1, 1, 1, 1, 1, 'Indicaciones adicionales');
-    
-    INSERT INTO SERVICIOAGENDADOS (Cod_Servicio, FechaHora, PersonasAAtender)
-    VALUES (1, SYSTIMESTAMP, 10);
-
-    INSERT INTO FacturaServicio (Num_Factura, Cod_Servicio)
-    VALUES (1, 1);
-    
-    SELECT NomClienteFact(1) AS "Nombre del cliente"
+    RETURN factura_monto;
+END ultima_factura;
+    -- Ejemplo:
+SELECT ultima_factura() AS "Total última factura"
     FROM dual;
     
+    --------------REVISAR-------------------
     -- 5. Lista de productos de un menu: Este tiene un error a la hora de correrlo, ya le hice los cambios de la tabla menu
     CREATE OR REPLACE FUNCTION ListaProdMenu(Id_Menu INT)
     RETURN SYS_REFCURSOR
@@ -634,7 +566,7 @@ END;
     SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
     FROM dual;
         
-    -- 7. Obtener el nombre y el propï¿½sito de local por ID:
+    -- 7. Obtener el nombre y el propósito de local por ID:
     CREATE OR REPLACE FUNCTION InfoLocal(Id_Local INT)
     RETURN VARCHAR2
     IS
@@ -652,13 +584,8 @@ END;
     FROM dual;
     
     -- 8. Lista de Clientes con Detalles de Direcciï¿½n: este otro tambien tiene un error
-    CREATE OR REPLACE FUNCTION ListaClientesDireccion
-    RETURN SYS_REFCURSOR
-    IS
-       CursorList SYS_REFCURSOR;
-    BEGIN
-       OPEN CursorList FOR
-          SELECT c.*, d.*
+    CREATE OR REPLACE FUNCTION clientes_direccion
+          SELECT c.*, dt.*
           FROM Cliente c
           JOIN ClienteDireccion cd ON c.Id_Cliente = cd.Id_Cliente
           JOIN Provincia p ON cd.Id_Provincia = p.Id_Provincia
@@ -668,45 +595,87 @@ END;
        RETURN CursorList;
     END;
     
--- VISTAS --
+--------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
-    CREATE OR REPLACE VIEW VistaEmpleadosActivos AS
+    CREATE OR REPLACE VIEW empleados_activos AS
        SELECT *
        FROM Empleado
        WHERE Estado = 'Activo';
        -- Llamar a la vista:
-        SELECT * FROM VistaEmpleadosActivos;
+        SELECT * FROM empleados_activos;
 
     -- 2. Vista de Servicios Agendados hoy:
-    CREATE OR REPLACE VIEW VistaServiciosAgendados AS
+    CREATE OR REPLACE VIEW servicios_agendados AS
        SELECT *
        FROM ServicioAgendados
        WHERE TRUNC(FechaHora) = TRUNC(SYSDATE);
         -- Llamar a la vista:
-        SELECT * FROM VistaServiciosAgendados;
+        SELECT * FROM servicios_agendados;
        
-    -- 3. Vista de Detalles de Factura con Informaciï¿½n de Producto: este otro tiene un error
-    CREATE OR REPLACE VIEW VistaDetallesFactura AS
-       SELECT fd.Num_Factura, fd.Id_Menu, fd.Cantidad, fd.Subtotal, fd.Total,
-              p.Nombre AS NombreProducto
-       FROM FacturaDetalle fd
-       JOIN Menu m ON fd.Id_Menu = m.Id_Menu
-       JOIN Producto p ON m.Id_Producto = p.Id_Producto;
+    -- 3. Vista de nombres de clientes
+    CREATE OR REPLACE VIEW nombres_clientes AS
+       SELECT Nombre
+       FROM Cliente;
        -- Llamar a la vista:
-        SELECT * FROM VistaDetallesFactura;
+        SELECT * FROM nombres_clientes;
+        
+         -- 4. Vista de clientes VIP:
+    CREATE OR REPLACE VIEW clientes_vip AS
+       SELECT *
+       FROM Cliente
+       WHERE Tipo = 'VIP';
+       -- Llamar a la vista:
+        SELECT * FROM clientes_vip;
 
-       -- 4. Vista de Empleados con Detalles de Puesto:
-    CREATE OR REPLACE VIEW VistaEmpleadosPuesto AS
-       SELECT e.*, ep.Id_Puesto, p.Nombre AS NombrePuesto, p.SalarioMin, p.SalarioMax
+       -- 5. Vista de Empleados con el Puesto:
+    CREATE OR REPLACE VIEW empleados_puestos AS
+       SELECT e.Nombre, e.Apellido1, e.Apellido2, p.Nombre AS NombrePuesto, p.SalarioMin, p.SalarioMax
        FROM Empleado e
        JOIN EmpleadoPuesto ep ON e.Id_Empleado = ep.Id_Empleado
        JOIN Puesto p ON ep.Id_Puesto = p.Id_Puesto;
        -- Llamar a la vista:
-        SELECT * FROM VistaEmpleadosPuesto;
+        SELECT * FROM empleados_puestos;
+        
+         -- 6. Vista de Detalles Productos:
+    CREATE OR REPLACE VIEW nombre_productos AS
+       SELECT Nombre
+       FROM Producto;
+       -- Llamar a la vista:
+        SELECT * FROM nombre_productos;
+        
+        -- 7. Vista de Detalles Productos:
+    CREATE OR REPLACE VIEW nombre_proveedor AS
+       SELECT Nombre
+       FROM proveedor;
+       -- Llamar a la vista:
+        SELECT * FROM nombre_proveedor;
+        
+        -- 8. Vista de Provincias:
+    CREATE OR REPLACE VIEW info_provincias AS
+       SELECT *
+       FROM Provincia;
+       -- Llamar a la vista:
+        SELECT * FROM info_provincias;
+        
+        -- 9. Vista de Cantones por provincia:
+    CREATE OR REPLACE VIEW canton_por_provincia AS
+       SELECT Nombre
+       FROM canton
+       WHERE id_provincia = 1; -- cambiar id_provincia según se necesite
+       -- Llamar a la vista:
+        SELECT * FROM canton_por_provincia;
+        
+         -- 10. Vista de Locales y descripción:
+    CREATE OR REPLACE VIEW proposito_local AS
+       SELECT Nombre, Proposito
+       FROM Locales;
+       -- Llamar a la vista:
+        SELECT * FROM proposito_local;
 
---Procedimientos almacenados
---verificar la tabla de Empleado ya que tiene un fallo
-CREATE OR REPLACE PROCEDURE IngresarEmpleado(
+---------------------- PROCEDIMIENTOS ALMACENADOS --------------------------
+-- Verificar la tabla de Empleado ya que tiene un fallo****
+-- 1. Ingresar Empleado
+CREATE OR REPLACE PROCEDURE ingresar_empleado(
     p_Id_Empleado INT,
     p_Nombre VARCHAR2,
     p_Apellido1 VARCHAR2,
@@ -721,7 +690,8 @@ BEGIN
     VALUES (p_Id_Empleado, p_Nombre, p_Apellido1, p_Apellido2, p_Alias, p_IBAN, p_Salario, p_Estado, p_Password);
 END;
 
-CREATE PROCEDURE IngresarCliente(
+    -- 2. Ingresar Cliente
+CREATE PROCEDURE ingresar_cliente(
     p_Id_Cliente INT,
     p_Nombre VARCHAR2,
     p_Tipo VARCHAR2) AS
@@ -729,7 +699,8 @@ BEGIN
     INSERT INTO Cliente VALUES (p_Id_Cliente, p_Nombre, p_Tipo);
 END;
 
-CREATE PROCEDURE IngresarProducto(
+    -- 3. Ingresar Producto
+CREATE PROCEDURE ingresar_producto(
     p_Id_Producto INT,
     p_Nombre VARCHAR2,
     p_Precio NUMBER,
@@ -739,21 +710,25 @@ BEGIN
     INSERT INTO Producto VALUES (p_Id_Producto, p_Nombre, p_Precio, p_Descripcion, p_Imagen);
 END;
 
-CREATE PROCEDURE IngresarProvincia(
+    -- 4. Ingresar Provincia
+CREATE PROCEDURE ingresar_provincia(
     p_Id_Provincia INT,
     p_Nombre VARCHAR2) AS
 BEGIN
     INSERT INTO Provincia VALUES (p_Id_Provincia, p_Nombre);
 END;
 
-CREATE PROCEDURE IngresarLocal(
+    -- 5. Ingresar Local
+CREATE PROCEDURE ingresar_local(
     p_Id_Local INT,
     p_Nombre VARCHAR2,
     p_Proposito VARCHAR2) AS
 BEGIN
     INSERT INTO Locales VALUES (p_Id_Local, p_Nombre, p_Proposito);
 END;
-CREATE PROCEDURE IngresarFacturacion(
+
+    -- 6. Ingresar Factura
+CREATE PROCEDURE ingresar_facturacion(
     p_Num_Factura INT,
     p_Fecha DATE,
     p_MetodoPago VARCHAR2,
@@ -762,39 +737,43 @@ BEGIN
     INSERT INTO Facturacion VALUES (p_Num_Factura, p_Fecha, p_MetodoPago, p_Total);
 END;
 
-
-CREATE PROCEDURE BorrarEmpleado(
+    -- 7. Eliminar Empleado
+CREATE PROCEDURE borrar_empleado(
     p_Id_Empleado INT) AS
 BEGIN
     DELETE FROM Empleado WHERE Id_Empleado = p_Id_Empleado;
 END;
 
-
-CREATE PROCEDURE BorrarCliente(
+    -- 8. Eliminar Cliente
+CREATE PROCEDURE borrar_cliente(
     p_Id_Cliente INT) AS
 BEGIN
     DELETE FROM Cliente WHERE Id_Cliente = p_Id_Cliente;
 END;
 
-CREATE PROCEDURE BorrarProducto(
+    -- 9. Eliminar Producto
+CREATE PROCEDURE borrar_producto(
     p_Id_Producto INT) AS
 BEGIN
     DELETE FROM Producto WHERE Id_Producto = p_Id_Producto;
 END;
 
-CREATE PROCEDURE BorrarProvincia(
+    -- 10. Eliminar Provincia
+CREATE PROCEDURE borrar_provincia(
     p_Id_Provincia INT) AS
 BEGIN
     DELETE FROM Provincia WHERE Id_Provincia = p_Id_Provincia;
 END;
 
-CREATE PROCEDURE BorrarLocal(
+    -- 11. Elimnar Local
+CREATE PROCEDURE borrar_local(
     p_Id_Local INT) AS
 BEGIN
     DELETE FROM Locales WHERE Id_Local = p_Id_Local;
 END;
 
-CREATE PROCEDURE BorrarFacturacion(
+    -- 12. Elimnar Facturación
+CREATE PROCEDURE borrar_facturacion(
     p_Num_Factura INT) AS
 BEGIN
     DELETE FROM Facturacion WHERE Num_Factura = p_Num_Factura;
