@@ -23,10 +23,12 @@ com\yire\domain\FacturaDetalle.class
 com\yire\domain\TransportePK.class
 com\yire\dao\MateriaPrimaProveedorDao.class
 com\yire\dao\ServiciosAgendadosDao.class
+com\yire\service\MateriaPrimaService.class
 com\yire\domain\ContactoTelefono.class
 com\yire\SQLStatementBuilder.class
 com\yire\dao\LocalUbicacionDao.class
 com\yire\domain\Transporte.class
+com\yire\service\MateriaPrimaServiceImpl.class
 com\yire\domain\MateriaPrimaProveedorPK.class
 com\yire\ProyectoMaven.class
 com\yire\dao\PuestoDao.class
@@ -76,6 +78,7 @@ com\yire\dao\LocalesDao.class
 com\yire\domain\ClienteContacto.class
 com\yire\dao\ProvinciaDao.class
 com\yire\domain\Contacto.class
+com\yire\controller\MateriaPrimaController.class
 com\yire\domain\ServicioMenuPK.class
 com\yire\domain\FacturaServicio.class
 com\yire\dao\TransporteDao.class

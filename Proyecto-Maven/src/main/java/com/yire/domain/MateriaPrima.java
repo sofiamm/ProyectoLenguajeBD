@@ -6,30 +6,29 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Materiaprima",schema="PROYECTO_ADM")
-public class MateriaPrima implements Serializable {
+@Table(name = "MATERIAPRIMA")  
+public class MateriaPrima {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdMateriaPrima")
+    @Column(name = "ID_MATERIAPRIMA")
+    private Long idMateriaPrima;
 
-    private long idMateriaPrima;
+    @Column(name = "NOMBRE")
     private String nombre;
-    private String reservas;
+
+    @Column(name = "RESERVAS")
+    private Integer reservas;  // O el tipo numérico correcto
+
+    @Column(name = "UNIDADDEMEDICION")
     private String unidadDeMedicion;
+
+    @Column(name = "MARCA")
     private String marca;
-    private long costoPorUnidad;
 
-    public MateriaPrima() {
-    }
-
-    public MateriaPrima(long idMateriaPrima, String nombre, String reservas, String unidadDeMedicion, String marca, long costoPorUnidad) {
-        this.idMateriaPrima = idMateriaPrima;
-        this.nombre = nombre;
-        this.reservas = reservas;
-        this.unidadDeMedicion = unidadDeMedicion;
-        this.marca = marca;
-        this.costoPorUnidad = costoPorUnidad;
-    }
-
+    @Column(name = "COSTOPORUNIDAD")
+    private Double costoPorUnidad;  // O BigDecimal si es necesario
+    
+    // Getters y setters
 }
+
