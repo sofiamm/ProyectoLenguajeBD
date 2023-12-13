@@ -44,7 +44,7 @@ public class MateriaPrimaController {
     }
 
     @PostMapping("/actualizar")
-    public String actualizar(@ModelAttribute MateriaPrima materiaPrima) {
+    public String actualizar(@ModelAttribute("materiaPrima") MateriaPrima materiaPrima) {
         materiaPrimaService.actualizar(materiaPrima);
         return "redirect:/materiaprima/lista";
     }
