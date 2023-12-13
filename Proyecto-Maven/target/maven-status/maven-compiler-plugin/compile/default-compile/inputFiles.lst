@@ -1,4 +1,5 @@
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\Transporte.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\MateriaPrimaService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ServiciosAgendadosDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\FacturaDetalleDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ProductoMateriaPrimaPK.java
@@ -14,9 +15,11 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\do
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\ProvinciaServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\Menu.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ClienteContactoPK.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\EmpleadoNotEntity.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\CantonController.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ServicioMenuDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoServiceImpl.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\EmpleadoPuestoController.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ActivosDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ProductoMateriaPrimaDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MateriaPrimaLocalPK.java
@@ -33,6 +36,7 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\da
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\FacturaServicioPK.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MateriaPrimaProveedor.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ContactoCorreoPK.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\MateriaPrimaController.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\DistritoServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\CantonService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ClienteContacto.java
@@ -50,6 +54,7 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\do
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ContactoTelefono.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ServicioMenuPK.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\Distrito.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\MateriaPrimaServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\LocalUbicacionDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ServicioCliente.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\Canton.java

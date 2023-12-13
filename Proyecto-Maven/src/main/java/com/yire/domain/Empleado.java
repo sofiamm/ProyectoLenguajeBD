@@ -1,8 +1,12 @@
 package com.yire.domain;
 
+import com.yire.service.EmpleadoPuestoService;
+import com.yire.service.PuestoService;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @Entity
@@ -22,7 +26,7 @@ public class Empleado implements Serializable {
     private String estado;
     private String password;
     @Transient
-    private Puesto puesto;
+    private Puesto puesto;    
     
     public Empleado() {
     }
@@ -51,8 +55,8 @@ public class Empleado implements Serializable {
         this.password = password;
         this.puesto = puesto;
     }
-    
-    
+
+  
     
     
     

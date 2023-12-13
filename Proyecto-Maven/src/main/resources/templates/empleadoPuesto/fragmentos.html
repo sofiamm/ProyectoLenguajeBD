@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="layout/plantilla :: head">
+        <title>Inicio</title>
+    </head>
+    <body>
+
+        <section th:fragment="camposForm">
+            <div th:if="${empleado == null}">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required="true">
+                </div>
+        </section>
+
+        <section th:fragment="editar">            
+            <form method="POST"
+                  th:action="@{/empleadopuesto/guardar}"
+                  th:object="${empleado}"
+
+                  onsubmit="myFunction()"
+                  class="was-validated">
+                <section th:replace="empleado/fragmentos :: botonesEditar"/> 
+                <div id="details">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Actualizar</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <label>Seleccione el rol para [[${empleado.nombre}]]:</label>
+                                        <div>
+                                            <select id="puestoSeleccionado">
+                                                <option th:each="puesto : ${puestos}"
+                                                        th:value="${nombre}"
+                                                        th:text="${nombre}">
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                        <input type="submit" value="Submit"/> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section th:fragment="botonesEditar">
+            <div id="actions" class="py-4 mb-4 bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a th:href="@{/empleado/lista}" class="btn btn-ligth btn-block">
+                                <i class="fas fa-arrow-left"></i>Regresar
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-success btn-block">
+                                <i class="fas fa-check"></i>Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

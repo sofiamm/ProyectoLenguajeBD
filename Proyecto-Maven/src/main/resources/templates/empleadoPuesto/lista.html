@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head th:replace="layout/plantilla :: head">
+        <title>Empleados</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"/>
+        </br>
+        </br>
+        <section th:replace="empleado/fragmentos :: botonesAgregar"/>
+        </br>
+        </br>
+        <section th:replace="empleado/fragmentos :: listado"/>
+        <section th:replace="empleado/fragmentos :: agregar"/>
+    </div>
+</body>
+<footer th:replace="layout/plantilla :: footer"/>
+</html>

@@ -51,10 +51,10 @@
                                             <td>[[${empleado.nombre}]]</td>
                                             <td>[[${empleado.apellido1}]]</td>
                                             <td>[[${empleado.apellido2}]]</td>
-                                            <th>[[${empleado.alias}]]</th>
-                                            <th>[[${empleado.iban}]]</th>
-                                            <th sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.Salario}]]</th>
-                                            <th>[[${empleado.estado}]]</th>
+                                            <td>[[${empleado.alias}]]</td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.iban}]]</td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.Salario}]]</td>
+                                            <td>[[${empleado.estado}]]</td>
                                             <td>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/empleado/eliminar/}+${empleado.idEmpleado}"
                                                    class="btn btn-danger">
@@ -67,6 +67,12 @@
                                                     <i class="fas fa-angle-double-right"></i> Actualizar
                                                 </a>
                                             </td>
+                                            <td>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success" th:href="@{/empleadopuesto/modificar/}+${empleado.idEmpleado}">
+                                                    <i class="fas fa-angle-double-right"></i> Rol
+                                                </a>
+                                            </td>
+                                                                    
                                         </tr>
                                     </tbody>
                                 </table>
@@ -167,32 +173,9 @@
                     <input type="text" class="form-control" name="estado" required="true" th:value="${empleado.estado}">
                 </div>
                 <div class="form-group">
-                    <label for="nombre">Password</label>
+                    <label for="password">Password</label>
                     <input type="Password" class="form-control" name="password" required="true" th:value="${empleado.password}">
                 </div>
-                <div class="dropdown form-group" th:if="${empleado.puesto != null}">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        [[${empleado.puesto.nombre}]]
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li th:each="puesto, contador : ${puestos}"><a class="dropdown-item" href="#">[[${puesto.nombre}]]</a></li>
-                    </ul>
-                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <div class="dropdown form-group" th:if="${empleado.puesto == null}">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
-                        <li th:each="puesto : ${puestos}"><a class="dropdown-item" href="#">[[${puesto.nombre}]]</a></li>
-                    </ul>
-                </div>
-                <div>alo</div>
             </div>
         </section>
 
