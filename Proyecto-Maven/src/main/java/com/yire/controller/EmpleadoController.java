@@ -1,7 +1,12 @@
 package com.yire.controller;
 
 import com.yire.domain.Empleado;
+import com.yire.domain.EmpleadoPuesto;
+import com.yire.domain.Puesto;
+import com.yire.service.EmpleadoPuestoService;
 import com.yire.service.EmpleadoService;
+import com.yire.service.PuestoService;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +21,11 @@ public class EmpleadoController {
     @Autowired
     private EmpleadoService empleadoService;
     
+    @Autowired
+    private PuestoService puestoService;
+    
+    @Autowired
+    private EmpleadoPuestoService empleadoPuestoService;
 
     @GetMapping("/empleado/lista")
     public String mostrarEmpleados(Model model) {
@@ -32,7 +42,6 @@ public class EmpleadoController {
     
     @PostMapping("/empleado/guardar")
     public String guardarEmpleado(Empleado empleado) {
-        empleado.setNombre("ROLE_"+empleado.getNombre().toUpperCase());
         empleadoService.save(empleado);
         return "redirect:/empleado/lista";
     }
@@ -40,7 +49,12 @@ public class EmpleadoController {
     @GetMapping("/empleado/modificar/{idEmpleado}")
     public String modificarEmpleado(Empleado empleado, Model model) {
         empleado = empleadoService.getEmpleado(empleado);
+        EmpleadoPuesto ep=empleadoPuestoService.getPuestoByIdEmpleado(empleado.getIdEmpleado());
+        if (ep!=null){empleado.setPuesto(puestoService.getPuesto(new Puesto(ep.getIdPuesto())));
+        }else{empleado.setPuesto(null);}
+        List<Puesto> puestos= puestoService.getPuestos();
         model.addAttribute("empleado", empleado);
+        model.addAttribute("puestos", puestos);
         return "/empleado/modificar";
     }
 

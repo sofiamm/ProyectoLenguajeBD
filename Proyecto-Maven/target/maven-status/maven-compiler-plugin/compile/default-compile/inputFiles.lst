@@ -25,6 +25,7 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\do
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\LocalUbicacion.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\EmpleadoPuestoPK.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ContactoCorreoDao.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoPuestoService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\EmpleadoController.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\controller\IndexController.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\TemplateResolverConfiguration.java
@@ -100,5 +101,6 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\do
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\PuestoService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\ProvinciaService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ClienteDao.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoPuestoServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ServicioEmpleados.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\TransporteDao.java

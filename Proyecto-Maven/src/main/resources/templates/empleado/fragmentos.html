@@ -103,37 +103,96 @@
         </section>
 
         <section th:fragment="camposForm">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" required="true">
+            <div th:if="${empleado == null}">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Primer Apellido</label>
+                    <input type="text" class="form-control" name="apellido1" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Segundo Apellido</label>
+                    <input type="text" class="form-control" name="apellido2" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="salariomin">Alias</label>
+                    <input type="text" class="form-control" name="alias" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="salariomax">IBAN</label>
+                    <input type="text" class="form-control" name="iban" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Salario</label>
+                    <input type="number" class="form-control" name="salario" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Estado</label>
+                    <input type="text" class="form-control" name="estado" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Password</label>
+                    <input type="Password" class="form-control" name="password" required="true">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="nombre">Primer Apellido</label>
-                <input type="text" class="form-control" name="apellido1" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Segundo Apellido</label>
-                <input type="text" class="form-control" name="apellido2" required="true">
-            </div>
-            <div class="form-group">
-                <label for="salariomin">Alias</label>
-                <input type="text" class="form-control" name="alias" required="true">
-            </div>
-            <div class="form-group">
-                <label for="salariomax">IBAN</label>
-                <input type="text" class="form-control" name="iban" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Salario</label>
-                <input type="number" class="form-control" name="salario" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Estado</label>
-                <input type="text" class="form-control" name="estado" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Password</label>
-                <input type="Password" class="form-control" name="password" required="true">
+            <div th:if="${empleado != null}">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required="true" th:value="${empleado.nombre}">
+                </div>
+                <div class="form-group">
+                    <label for="apellido1">Primer Apellido</label>
+                    <input type="text" class="form-control" name="apellido1" required="true" th:value="${empleado.apellido1}">
+                </div>
+                <div class="form-group">
+                    <label for="apellido2">Segundo Apellido</label>
+                    <input type="text" class="form-control" name="apellido2" required="true" th:value="${empleado.apellido2}">
+                </div>
+                <div class="form-group">
+                    <label for="alias">Alias</label>
+                    <input type="text" class="form-control" name="alias" required="true" th:value="${empleado.alias}">
+                </div>
+                <div class="form-group">
+                    <label for="iban">IBAN</label>
+                    <input type="text" class="form-control" name="iban" required="true" th:value="${empleado.iban}">
+                </div>
+                <div class="form-group">
+                    <label for="salario">Salario</label>
+                    <input type="number" class="form-control" name="salario" required="true" th:value="${empleado.salario}">
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input type="text" class="form-control" name="estado" required="true" th:value="${empleado.estado}">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Password</label>
+                    <input type="Password" class="form-control" name="password" required="true" th:value="${empleado.password}">
+                </div>
+                <div class="dropdown form-group" th:if="${empleado.puesto != null}">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        [[${empleado.puesto.nombre}]]
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li th:each="puesto, contador : ${puestos}"><a class="dropdown-item" href="#">[[${puesto.nombre}]]</a></li>
+                    </ul>
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="dropdown form-group" th:if="${empleado.puesto == null}">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
+                        <li th:each="puesto : ${puestos}"><a class="dropdown-item" href="#">[[${puesto.nombre}]]</a></li>
+                    </ul>
+                </div>
+                <div>alo</div>
             </div>
         </section>
 
