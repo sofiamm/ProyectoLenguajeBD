@@ -3,8 +3,10 @@ com\yire\dao\FacturacionDao.class
 com\yire\domain\EmpleadoPuestoPK.class
 com\yire\dao\ContactoTelefonoDao.class
 com\yire\domain\FacturaServicioPK.class
+com\yire\service\ProductoServiceImpl.class
 com\yire\dao\ProductoDao.class
 com\yire\domain\Distrito.class
+com\yire\service\ProductoService.class
 com\yire\domain\ClienteDireccionPK.class
 com\yire\domain\FacturaDetallePK.class
 com\yire\dao\CantonDao.class
@@ -69,6 +71,7 @@ com\yire\dao\MenuDao.class
 com\yire\domain\Cliente.class
 com\yire\domain\EmpleadoPuesto.class
 com\yire\service\EmpleadoService.class
+com\yire\controller\ProductoController.class
 com\yire\domain\ServiciosAgendados.class
 com\yire\dao\ClienteDao.class
 com\yire\WebConfig.class

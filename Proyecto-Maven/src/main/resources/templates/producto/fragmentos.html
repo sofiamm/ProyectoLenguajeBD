@@ -17,8 +17,7 @@
                                 data-bs-target="#agregarProducto">
                                 <i class="fas fa-plus"></i> [[#{accion.agregar}]]
                             </button>
-                            <a th:href="@{/producto/Inventario}" class="btn btn-primary">
-                                <i class="fas fa-file"></i>Reporte Inventario</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -38,8 +37,8 @@
                                             <th th:text="#{producto.nombre}">Nombre</th>
                                             <th th:text="#{producto.descripcion}">Descripción</th>
                                             <th th:text="#{producto.precio}">Precio</th>
-                                            <th th:text="#{producto.existencias}">Existencias</th>
-                                            <th th:text="#{producto.activo}">Activo</th>
+                                            
+                                            
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -49,15 +48,8 @@
                                             <td>[[${producto.nombre}]]</td>
                                             <td>[[${producto.descripcion}]]</td>
                                             <td>[[${new java.text.DecimalFormat('¢#,##0.00').format(producto.precio)}]]</td>
-                                            <td>[[${producto.existencias}]]</td>
-                                            <td>
-                                                <div class="form-check" th:if="${producto.activo} == true">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
-                                                </div>
-                                                <div class="form-check" th:if="${producto.activo} != true">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
-                                                </div>
-                                            </td>
+                                            
+                                            
                                             <td>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/producto/eliminar/}+${producto.idProducto}"
                                                    class="btn btn-danger">
@@ -90,45 +82,25 @@
                             <h5 class="modal-title" th:text="#{accion.agregar}">Agregar Producto</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div> 
-                        <form th:action="@{/producto/upload}" th:object="${producto}"
-                              method="POST" class="was-validated" enctype="multipart/form-data">
+                        <form th:action="@{/producto/actualizar}" th:object="${producto}"
+                              method="POST" class="was-validated">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="nombre" th:text="#{producto.nombre}">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" required="true">
                                 </div>
-                                <div class="form-group my-1">
-                                    <div class="row">
-                                        <label for="descripcion" th:text="#{producto.marca}">Marca</label>
-                                    </div>
-                                    <div class="row col-md-4 ">
-                                        <select type="button" class="btn btn-outline-secondary dropdown-toggle text-white" name="id_marca" 
-                                                required="true" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 7%; background-color:#95999d;">Marca
-                                            <option class="btn text-white" th:each="marca : ${marca}" style="margin-left: 7%; background-color:#95999d;">[[${marca.nombre}]]</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <label for="descripcion" th:text="#{producto.descripcion}">Descripcion</label>
                                     <input type="text" class="form-control" name="descripcion" required="true">
                                 </div>
-                                <div class="form-group">
-                                    <label for="imagen" th:text="#{producto.imagen}">Imagen</label>
-                                    <input type="file" class="form-control" name="file">
-                                </div>
+                              
                                 <div class="form-group">
                                     <label for="precio" th:text="#{producto.precio}">Precio</label>
                                     <input type="number" class="form-control" name="precio" required="true">
                                 </div>
-                                <div class="form-group">
-                                    <label for="existencias" th:text="#{producto.existencias}">Existencias</label>
-                                    <input type="number" class="form-control" name="existencias" required="true" step="any">
-                                </div>
+                           
                                 <br>
-                                <div class="form-group">
-                                    <label for="activo" th:text="#{producto.activo}">Activo</label>
-                                    <input type="checkbox" class="form-check-input mt-0" name="activo">
-                                </div>
+                                
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit" th:text="#{accion.guardar}">Guardar</button>
@@ -140,12 +112,12 @@
         </section>
         <section th:fragment="editarProducto">            
             <form method="POST"
-                  th:action="@{/producto/guardar}"
+                  th:action="@{/producto/actualizar}"
                   th:object="${producto}"
                   class="was-validated">
                 <input type="hidden" name="idProducto" th:field="*{idProducto}"/>
-                <input type="hidden" name="idMarca" th:value="${producto.marca.idMarca}"/>
-                <section th:replace="producto/fragmentosProducto :: botonesEditar"/> 
+           
+                <section th:replace="producto/fragmentos :: botonesEditar"/> 
                 <div id="details">
                     <div class="container">
                         <div class="row">
@@ -155,39 +127,31 @@
                                         <h4>[[#{accion.actualizar}]]</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="nombre" th:text="#{producto.nombre}">Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" th:value="${producto.nombre}" required="true">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="descripcion" th:text="#{producto.descripcion}">Descripcion</label>
-                                            <input type="text" class="form-control" name="descripcion" th:value="${producto.descripcion}" required="true">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="imagen">Imagen</label>
-                                            <label type="file" class="form-control" name="imagen">[[${producto.imagen}]]</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="precio" th:text="#{producto.precio}">Precio</label>
-                                            <input type="number" class="form-control" name="precio" th:value="${producto.precio}" required="true">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="existencias" th:text="#{producto.existencias}">Existencias</label>
-                                            <input type="number" class="form-control" name="existencias" th:value="${producto.existencias}" required="true" step="any">
-                                        </div>
-                                        <br>
-                                        <div class="form-group">
-                                            <label for="activo" th:text="#{producto.activo}">Activo</label>
-                                            <input type="checkbox" class="form-check-input mt-0" name="activo">
-                                        </div>                    
+                                        <form method="POST" th:action="@{/producto/actualizar}" th:object="${producto}" class="was-validated">
+                                            <div class="form-group">
+                                                <label for="nombre" th:text="#{producto.nombre}">Nombre</label>
+                                                <input type="text" class="form-control" name="nombre" th:value="${producto.nombre}" required="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="descripcion" th:text="#{producto.descripcion}">Descripción</label>
+                                                <input type="text" class="form-control" name="descripcion" th:value="${producto.descripcion}" required="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="precio" th:text="#{producto.precio}">Precio</label>
+                                                <input type="number" class="form-control" name="precio" th:value="${producto.precio}" required="true">
+                                            </div>
+                                            <!-- Otros campos y botones aquí -->
+                                        </form>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-        </section>
+            </section>
+
         <section th:fragment="botonesEditar">
             <div id="actions" class="py-4 mb-4 bg-light">
                 <div class="container">
@@ -212,21 +176,6 @@
                 </div>
             </div>
         </section> 
-        <section th:fragment="searchBar">
-            <form th:action="@{/producto/busqueda}"
-                  th:object="${producto}"
-                  class="was-validated">
-                <div class="container d-flex justify-content-center col-md-5 mt-3">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Buscar" name="busqueda">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </section>
+        
     </body>
 </html>

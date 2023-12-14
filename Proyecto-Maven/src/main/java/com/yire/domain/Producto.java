@@ -12,12 +12,17 @@ public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdProducto")
-    
     private long IdProducto;
+    
     private String nombre;
-    private int precio;
+    
+    // Cambié el tipo de int a double para el precio
+    @Column(name = "PRECIO")
+    private double precio;
+    
     private String descripcion;
     private String imagen;
+
 
     public Producto() {
     }
@@ -30,8 +35,5 @@ public class Producto implements Serializable {
         this.imagen = imagen;
     }
 
-
-    
-    
 
 }

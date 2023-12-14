@@ -114,4 +114,15 @@ public class TemplateResolverConfiguration {
         templateResolver.setCheckExistence(true);
         return templateResolver;
     }
+    @Bean
+    public SpringResourceTemplateResolver TemplateResolver_9() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setPrefix("/templates/producto");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setOrder(8);
+        templateResolver.setCheckExistence(true);
+        return templateResolver;
+    }
 }
