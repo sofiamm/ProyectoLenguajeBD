@@ -94,8 +94,6 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         Connection con = SQLStatementBuilder.BuilderSQL();
         Statement stmt = SQLStatementBuilder.ListenerSQL(con);
         ResultSet rows = null;
-
-
         try {
             //Ejecutando query
             if (empleado.getIdEmpleado() == 0) {
@@ -114,45 +112,23 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-//                sql = "execute proyecto_adm.ingresar_empleado("
-//                        + +",'"
-//                        + empleado.getNombre()+"', '"
-//                        + empleado.getApellido1()+"', '"
-//                        + empleado.getApellido2()+"', '"
-//                        + empleado.getAlias()+"', '"
-//                        + empleado.getIban()+"', "
-//                        + empleado.getSalario()+", '"
-//                        + empleado.getEstado()+"', '"
-//                        + empleado.getPassword()+"');";
-//                stmt.executeQuery(sql);
                 return;
             }
-            sql = "update proyecto_adm.empleado set "
-                    + " nombre = '" + empleado.getNombre()
-                    + "', apellido1 = '" + empleado.getApellido1()
-                    + "', apellido2 = '" + empleado.getApellido2()
-                    + "', alias = '" + empleado.getAlias()
-                    + "', iban = '" + empleado.getIban()
-                    + "', salario = " + empleado.getSalario()
-                    + ", estado = '" + empleado.getEstado()
-                    + "', password = '" + empleado.getPassword()
-                    + "' where id_empleado = "
-                    + empleado.getIdEmpleado();
-
-            rows = stmt.executeQuery(sql);
+            CallableStatement storedProc = con.prepareCall("{call proyecto_adm.actualizar_empleado(?,?,?,?,?,?,?,?,?)}");
+                    storedProc.setString(1, Long.toString(empleado.getIdEmpleado()));
+                    storedProc.setString(2, empleado.getNombre());
+                    storedProc.setString(3, empleado.getApellido1());
+                    storedProc.setString(4, empleado.getApellido2());
+                    storedProc.setString(5, empleado.getAlias());
+                    storedProc.setString(6, empleado.getIban());
+                    storedProc.setString(7, Long.toString(empleado.getSalario()));
+                    storedProc.setString(8, empleado.getEstado());
+                    storedProc.setString(9, empleado.getPassword());
+                    storedProc.execute();
         }catch(Exception e){
             System.err.println(e);
         }
-//        try{
-//            sql = "update proyecto_adm.empleadopuesto set id_puesto = " + empleado.getPuesto().getIdPuesto() + " where id_empleado = " + empleado.getIdEmpleado();
-//            ResultSet puestoEmpleado = stmt.executeQuery(sql);
-//
-//        } catch (Exception e) {
-//            System.err.println("Exception:" + e.getMessage());
-//        }
-//        System.out.println("==========================================================================================" + rows.toString());
-        try {
-            con.close();
+        try {con.close();
         } catch (Exception e) {
         }
     }
