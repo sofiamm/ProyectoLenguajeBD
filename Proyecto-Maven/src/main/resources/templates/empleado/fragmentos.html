@@ -51,10 +51,10 @@
                                             <td>[[${empleado.nombre}]]</td>
                                             <td>[[${empleado.apellido1}]]</td>
                                             <td>[[${empleado.apellido2}]]</td>
-                                            <th>[[${empleado.alias}]]</th>
-                                            <th>[[${empleado.iban}]]</th>
-                                            <th sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.Salario}]]</th>
-                                            <th>[[${empleado.estado}]]</th>
+                                            <td>[[${empleado.alias}]]</td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.iban}]]</td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">[[${empleado.Salario}]]</td>
+                                            <td>[[${empleado.estado}]]</td>
                                             <td>
                                                 <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/empleado/eliminar/}+${empleado.idEmpleado}"
                                                    class="btn btn-danger">
@@ -67,6 +67,12 @@
                                                     <i class="fas fa-angle-double-right"></i> Actualizar
                                                 </a>
                                             </td>
+                                            <td>
+                                                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success" th:href="@{/empleadopuesto/modificar/}+${empleado.idEmpleado}">
+                                                    <i class="fas fa-angle-double-right"></i> Rol
+                                                </a>
+                                            </td>
+                                                                    
                                         </tr>
                                     </tbody>
                                 </table>
@@ -103,37 +109,73 @@
         </section>
 
         <section th:fragment="camposForm">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" required="true">
+            <div th:if="${empleado == null}">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Primer Apellido</label>
+                    <input type="text" class="form-control" name="apellido1" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Segundo Apellido</label>
+                    <input type="text" class="form-control" name="apellido2" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="salariomin">Alias</label>
+                    <input type="text" class="form-control" name="alias" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="salariomax">IBAN</label>
+                    <input type="text" class="form-control" name="iban" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Salario</label>
+                    <input type="number" class="form-control" name="salario" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Estado</label>
+                    <input type="text" class="form-control" name="estado" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Password</label>
+                    <input type="Password" class="form-control" name="password" required="true">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="nombre">Primer Apellido</label>
-                <input type="text" class="form-control" name="apellido1" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Segundo Apellido</label>
-                <input type="text" class="form-control" name="apellido2" required="true">
-            </div>
-            <div class="form-group">
-                <label for="salariomin">Alias</label>
-                <input type="text" class="form-control" name="alias" required="true">
-            </div>
-            <div class="form-group">
-                <label for="salariomax">IBAN</label>
-                <input type="text" class="form-control" name="iban" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Salario</label>
-                <input type="number" class="form-control" name="salario" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Estado</label>
-                <input type="text" class="form-control" name="estado" required="true">
-            </div>
-            <div class="form-group">
-                <label for="nombre">Password</label>
-                <input type="Password" class="form-control" name="password" required="true">
+            <div th:if="${empleado != null}">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required="true" th:value="${empleado.nombre}">
+                </div>
+                <div class="form-group">
+                    <label for="apellido1">Primer Apellido</label>
+                    <input type="text" class="form-control" name="apellido1" required="true" th:value="${empleado.apellido1}">
+                </div>
+                <div class="form-group">
+                    <label for="apellido2">Segundo Apellido</label>
+                    <input type="text" class="form-control" name="apellido2" required="true" th:value="${empleado.apellido2}">
+                </div>
+                <div class="form-group">
+                    <label for="alias">Alias</label>
+                    <input type="text" class="form-control" name="alias" required="true" th:value="${empleado.alias}">
+                </div>
+                <div class="form-group">
+                    <label for="iban">IBAN</label>
+                    <input type="text" class="form-control" name="iban" required="true" th:value="${empleado.iban}">
+                </div>
+                <div class="form-group">
+                    <label for="salario">Salario</label>
+                    <input type="number" class="form-control" name="salario" required="true" th:value="${empleado.salario}">
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input type="text" class="form-control" name="estado" required="true" th:value="${empleado.estado}">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="Password" class="form-control" name="password" required="true" th:value="${empleado.password}">
+                </div>
             </div>
         </section>
 

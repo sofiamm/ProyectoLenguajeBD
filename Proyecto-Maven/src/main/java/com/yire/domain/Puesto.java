@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Puesto",schema="PROYECTO_ADM")
-public class Puesto implements Serializable{
-    
+@Table(name = "Puesto", schema = "PROYECTO_ADM")
+public class Puesto implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPuesto")
@@ -26,5 +26,9 @@ public class Puesto implements Serializable{
         this.salariomin = salarioMin;
         this.salariomax = salarioMax;
     }
-    
+
+    public Puesto(long idPuesto) {
+        this.idPuesto = idPuesto;
+    }
+
 }
