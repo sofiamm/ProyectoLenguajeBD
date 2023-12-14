@@ -628,7 +628,7 @@ BEGIN
         EXIT WHEN c_empleados%NOTFOUND;
         
         -- Puedes realizar operaciones con los datos aquí
-        DBMS_OUTPUT.PUT_LINE('ID: ' || id_emp || ' Nombre: ' || nombre_emp || ' Apellido: ' || apellido_emp || ' Salario: ' || salario_emp);
+        DBMS_OUTPUT.PUT_LINE(id_emp || ' Nombre: ' || nombre_emp || ' Apellido: ' || apellido_emp || ' Salario: ' || salario_emp);
     END LOOP;
     CLOSE c_empleados;
 END;
@@ -650,12 +650,12 @@ BEGIN
         EXIT WHEN c_clientes%NOTFOUND;
         
         -- Puedes realizar operaciones con los datos aquí
-        DBMS_OUTPUT.PUT_LINE('ID: ' || id_cliente || ' Nombre: ' || nombre_cliente || ' Tipo: ' || tipo_cliente);
+        DBMS_OUTPUT.PUT_LINE(id_cliente || ' Nombre: ' || nombre_cliente || ' Tipo: ' || tipo_cliente);
     END LOOP;
     CLOSE c_clientes;
 END;
 
-    -- 3. Obtener información de todos los clientes:
+    -- 3. Obtener información de todos los locales:
 DECLARE
     CURSOR c_local IS
         SELECT ID_LOCAL, NOMBRE, PROPOSITO
@@ -675,6 +675,50 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE(id_local || '. ' || nombre_local || ' es un local dedicado a ' || proposito_local);
     END LOOP;
     CLOSE c_local;
+END;
+
+    -- 4. Obtener información de todos los productos:
+DECLARE
+    CURSOR c_producto IS
+        SELECT ID_PRODUCTO, NOMBRE, PRECIO, DESCRIPCION
+        FROM PRODUCTO;
+        
+    id_producto PRODUCTO.ID_PRODUCTO%TYPE;
+    nombre_producto PRODUCTO.NOMBRE%TYPE;
+    precio_producto PRODUCTO.PRECIO%TYPE;
+    descripcion_producto PRODUCTO.DESCRIPCION%TYPE;
+BEGIN
+    OPEN c_producto;
+    DBMS_OUTPUT.PUT_LINE('Datos de los productos:');
+    LOOP
+        FETCH c_producto INTO id_producto, nombre_producto, precio_producto, descripcion_producto;
+        EXIT WHEN c_producto%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_producto || '. ' || nombre_producto || ': ' || descripcion_producto || ' -  Precio: ' || precio_producto);
+    END LOOP;
+    CLOSE c_producto;
+END;
+
+    -- 5. Obtener información de todas las provincias:
+DECLARE
+    CURSOR c_provincia IS
+        SELECT ID_PROVINCIA, NOMBRE
+        FROM PROVINCIA;
+        
+    id_provincia PROVINCIA.ID_PROVINCIA%TYPE;
+    nombre_provincia PROVINCIA.NOMBRE%TYPE;
+BEGIN
+    OPEN c_provincia;
+    DBMS_OUTPUT.PUT_LINE('Provincias:');
+    LOOP
+        FETCH c_provincia INTO id_provincia, nombre_provincia;
+        EXIT WHEN c_provincia%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_provincia || '. ' || nombre_provincia);
+    END LOOP;
+    CLOSE c_provincia;
 END;
 
 --------------------------------- VISTAS ---------------------------------
