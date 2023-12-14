@@ -436,8 +436,7 @@ INSERT INTO AUDMateriaPrima (Id_MateriaPrima, Nombre, Reservas, UnidadDeMedicion
 VALUES (:old.Id_MateriaPrima, :old.Nombre, :old.Reservas, :old.unidaddemedicion, :old.marca, :old.costoporunidad, 'Insercion', SYSDATE, user);
 END;
 
-
--- FUNCIONES --
+---------------------------------- FUNCIONES ----------------------------------
     --1.Obtener el salario promedio de los empleados:
 CREATE OR REPLACE FUNCTION promedio_salario 
 	RETURN NUMBER IS
@@ -451,15 +450,15 @@ SELECT promedio_salario() AS "Promedio de salarios"
     FROM dual;
     
    --2.Cantidad de empleados:
-CREATE OR REPLACE FUNCTION cantidad_emplados
+CREATE OR REPLACE FUNCTION cantidad_empleados
 	RETURN NUMBER IS
     total_empleados NUMBER;
 BEGIN
     SELECT COUNT(*) INTO total_empleados FROM Empleado;
     RETURN total_empleados;
-END cantidad_emplados;
+END cantidad_empleados;
 -- Ejemplo:
-SELECT cantidad_emplados() AS "Total empleados"
+SELECT cantidad_empleados() AS "Total empleados"
     FROM dual;
     
    --3.Cantidad de clientes:
@@ -487,8 +486,8 @@ SELECT cantidad_locales() AS "Total locales"
     FROM dual;
     
     --5.Ver monto de la última factura:
-CREATE OR REPLACE FUNCTION ultima_factura 
-RETURN VARCHAR2 IS
+CREATE OR REPLACE FUNCTION monto_ultima_factura 
+    RETURN VARCHAR2 IS
     factura_monto VARCHAR2(25);
 BEGIN
     SELECT Total INTO factura_monto
@@ -497,77 +496,119 @@ BEGIN
     ORDER BY Fecha ASC;
 
     RETURN factura_monto;
-END ultima_factura;
+END monto_ultima_factura;
     -- Ejemplo:
-SELECT ultima_factura() AS "Total última factura"
+SELECT monto_ultima_factura() AS "Total última factura"
     FROM dual;
     
-    --------------REVISAR-------------------
-    -- 5. Lista de productos de un menu: Este tiene un error a la hora de correrlo, ya le hice los cambios de la tabla menu
-    CREATE OR REPLACE FUNCTION ListaProdMenu(Id_Menu INT)
-    RETURN SYS_REFCURSOR
-    IS
-       CursorList SYS_REFCURSOR;
-    BEGIN
-       OPEN CursorList FOR
-          SELECT p.Nombre, p.Precio
-          FROM Producto p
-          JOIN Menu m ON p.Id_Producto = m.Id_Producto
-          WHERE m.Id_Menu = Id_Menu;
-    
-       RETURN CursorList;
-    END;
-    -- Ejemplo:
-    SELECT ListaProdMenu(1) AS "Lista de productos"
-    FROM dual;
-    
-    -- 6. Obtener proveedores de una materia prima:
-    CREATE OR REPLACE FUNCTION ProveedorMateriaPrima(Id_MateriaPrima INT)
-    RETURN SYS_REFCURSOR
-    IS
-       CursorList SYS_REFCURSOR;
-    BEGIN
-       OPEN CursorList FOR
-          SELECT pr.Nombre, mp.Precio
-          FROM MateriaPrimaProveedor mp
-          JOIN Proveedor pr ON mp.Id_Proveedor = pr.Id_Proveedor
-          WHERE mp.Id_MateriaPrima = Id_MateriaPrima;
-    
-       RETURN CursorList;
-    END;
-    -- Ejemplo:
-    SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
+    -- 6. Obtener cantidad de proveedores de una materia prima:
+CREATE OR REPLACE FUNCTION cantidad_proveedores
+	RETURN NUMBER IS
+    total_proveedores NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_proveedores FROM Proveedor;
+    RETURN total_proveedores;
+END cantidad_proveedores;
+-- Ejemplo:
+SELECT cantidad_proveedores() AS "Total proveedores"
     FROM dual;
         
-    -- 7. Obtener el nombre y el propósito de local por ID: ERROR
-    CREATE OR REPLACE FUNCTION InfoLocal(Id_Local INT)
-    RETURN VARCHAR2
-    IS
-       InfoLocal VARCHAR2(100);
-    BEGIN
-       SELECT Nombre || ': ' || Proposito
-       INTO InfoLocal
-       FROM Locales
-       WHERE Id_Local = Id_Local;
-    
-       RETURN InfoLocal;
-    END;
+    -- 7. Obtener el nombre y el propósito de local por ID
+CREATE OR REPLACE FUNCTION info_local(local_id INT)
+    RETURN VARCHAR2 IS
+       var_local VARCHAR2(100);
+BEGIN
+       SELECT Nombre || ': ' || Proposito INTO var_local FROM Locales WHERE Id_Local = local_id;
+       RETURN var_local;
+END info_local;
     -- Ejemplo:
-    SELECT InfoLocal(1) AS "Lista de productos"
+SELECT info_local(1) AS "Local con el id suministrado"
     FROM dual;
     
-    -- 8. Lista de Clientes con Detalles de Direcciï¿½n: este otro tambien tiene un error
-    CREATE OR REPLACE FUNCTION clientes_direccion
-          SELECT c.*, dt.*
-          FROM Cliente c
-          JOIN ClienteDireccion cd ON c.Id_Cliente = cd.Id_Cliente
-          JOIN Provincia p ON cd.Id_Provincia = p.Id_Provincia
-          JOIN Canton cn ON cd.Id_Canton = cn.Id_Canton
-          JOIN Distrito dt ON cd.Id_Distrito = dt.Id_Distrito;
-    
-       RETURN CursorList;
-    END;
+    -- 8. Cantidad de cantones por ID provincia
+CREATE OR REPLACE FUNCTION total_cantones_provincia(provincia_id INT)
+    RETURN NUMBER IS
+    total_cantones NUMBER;
+BEGIN
+       SELECT COUNT(*) INTO total_cantones FROM Canton WHERE Id_Provincia = provincia_id;
+       RETURN total_cantones;
+END total_cantones_provincia;
+    -- Ejemplo:
+SELECT total_cantones_provincia(1) AS "Cantidad de cantones del id suministrado" -- ID = 1 - San José
+    FROM dual;
 
+    -- 9. Obtener cantidad de correos:
+CREATE OR REPLACE FUNCTION cantidad_correos
+	RETURN NUMBER IS
+    total_correos NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_correos FROM EmpleadoCorreo;
+    RETURN total_correos;
+END cantidad_correos;
+-- Ejemplo:
+SELECT cantidad_correos() AS "Total correos"
+    FROM dual;
+    
+    -- 10. Obtener correo por ID:
+CREATE OR REPLACE FUNCTION correo_nombre(empleado_id INT)
+	RETURN VARCHAR2 IS
+    empleado_correo VARCHAR2(100);
+BEGIN
+    SELECT Correo INTO empleado_correo FROM EmpleadoCorreo WHERE Id_Empleado = empleado_id;
+    RETURN empleado_correo;
+END correo_nombre;
+-- Ejemplo:
+SELECT correo_nombre(1) AS "Correo del empleado seleccionado"
+    FROM dual;
+    
+    -- 11. Cantidad de empleados activos:
+CREATE OR REPLACE FUNCTION cantidad_emplados_activos
+	RETURN NUMBER IS
+    total_empleados NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_empleados FROM Empleado WHERE Estado = 'Activo';
+    RETURN total_empleados;
+END cantidad_emplados_activos;
+-- Ejemplo:
+SELECT cantidad_emplados_activos() AS "Total empleados activos"
+    FROM dual;
+    
+    -- 12. Cantidad de empleados inactivos:
+CREATE OR REPLACE FUNCTION cantidad_emplados_inactivos
+	RETURN NUMBER IS
+    total_empleados NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_empleados FROM Empleado WHERE Estado = 'Inactivo';
+    RETURN total_empleados;
+END cantidad_emplados_inactivos;
+-- Ejemplo:
+SELECT cantidad_emplados_inactivos() AS "Total empleados inactivos"
+    FROM dual;
+    
+    --13.Obtener método de pago de la última factura que se realizo:
+CREATE OR REPLACE FUNCTION metodo_pago_ultima_factura 
+	RETURN VARCHAR2 IS
+       ultimafactura VARCHAR2(25);
+BEGIN
+    SELECT MetodoPago INTO ultimafactura FROM Facturacion WHERE ROWNUM = 1 ORDER BY Fecha DESC;
+    RETURN ultimafactura;
+END metodo_pago_ultima_factura;
+-- Ejemplo:
+SELECT metodo_pago_ultima_factura() AS "Método de pago de última factura"
+    FROM dual;
+    
+    --14.Obtener fecha de la última factura que se realizo:
+CREATE OR REPLACE FUNCTION fecha_ultima_factura 
+	RETURN VARCHAR2 IS
+       ultimafactura VARCHAR2(25);
+BEGIN
+    SELECT Fecha INTO ultimafactura FROM Facturacion WHERE ROWNUM = 1 ORDER BY Fecha DESC;
+    RETURN ultimafactura;
+END fecha_ultima_factura;
+-- Ejemplo:
+SELECT fecha_ultima_factura() AS "Método de pago de última factura"
+    FROM dual;
+    
 --------------------------------- CURSORES ---------------------------------
     --1.Obtener información de todos los empleados:
 DECLARE
@@ -614,6 +655,27 @@ BEGIN
     CLOSE c_clientes;
 END;
 
+    -- 3. Obtener información de todos los clientes:
+DECLARE
+    CURSOR c_local IS
+        SELECT ID_LOCAL, NOMBRE, PROPOSITO
+        FROM LOCALES;
+        
+    id_local LOCALES.ID_LOCAL%TYPE;
+    nombre_local LOCALES.NOMBRE%TYPE;
+    proposito_local LOCALES.PROPOSITO%TYPE;
+BEGIN
+    OPEN c_local;
+    DBMS_OUTPUT.PUT_LINE('Datos de los locales:');
+    LOOP
+        FETCH c_local INTO id_local, nombre_local, proposito_local;
+        EXIT WHEN c_local%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_local || '. ' || nombre_local || ' es un local dedicado a ' || proposito_local);
+    END LOOP;
+    CLOSE c_local;
+END;
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
