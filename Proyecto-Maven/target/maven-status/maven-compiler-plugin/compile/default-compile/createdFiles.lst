@@ -20,6 +20,7 @@ com\yire\service\PuestoService.class
 com\yire\dao\ServicioClienteDao.class
 com\yire\dao\DistritoDao.class
 com\yire\Json.class
+com\yire\service\EmpleadoCorreoService.class
 com\yire\domain\FacturaDetalle.class
 com\yire\domain\TransportePK.class
 com\yire\dao\MateriaPrimaProveedorDao.class
@@ -56,6 +57,7 @@ com\yire\controller\EmpleadoController.class
 com\yire\domain\ClienteDireccion.class
 com\yire\controller\CantonController.class
 com\yire\dao\FacturaDetalleDao.class
+com\yire\service\EmpleadoCorreoServiceImpl.class
 com\yire\domain\ProductoMateriaPrima.class
 com\yire\domain\Locales.class
 com\yire\SecurityConfig.class

@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Empleados</h4>
+                                <h4>Correos asociados a [[${empleado.nombre}]]</h4>
                             </div>
                             <div th:if="${empleados != null and !empleados.empty}">
                                 <table class="table table-stryped">
@@ -101,7 +101,7 @@
                         <form th:action="@{/empleado/guardar}" th:object="${empleado}"
                               method="POST" class="was-validated">
                             <div class="modal-body">
-                                <section th:replace="empleado/fragmentos :: camposForm"/>    
+                                <section th:replace="empleadoCorreo/fragmentos :: camposForm"/>    
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit">Guardar</button>
@@ -118,67 +118,11 @@
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" name="nombre" required="true">
                 </div>
-                <div class="form-group">
-                    <label for="nombre">Primer Apellido</label>
-                    <input type="text" class="form-control" name="apellido1" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Segundo Apellido</label>
-                    <input type="text" class="form-control" name="apellido2" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="salariomin">Alias</label>
-                    <input type="text" class="form-control" name="alias" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="salariomax">IBAN</label>
-                    <input type="text" class="form-control" name="iban" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Salario</label>
-                    <input type="number" class="form-control" name="salario" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Estado</label>
-                    <input type="text" class="form-control" name="estado" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Password</label>
-                    <input type="Password" class="form-control" name="password" required="true">
-                </div>
             </div>
-            <div th:if="${empleado != null}">
+            <div th:if="${empleado == null}">
                 <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" required="true" th:value="${empleado.nombre}">
-                </div>
-                <div class="form-group">
-                    <label for="apellido1">Primer Apellido</label>
-                    <input type="text" class="form-control" name="apellido1" required="true" th:value="${empleado.apellido1}">
-                </div>
-                <div class="form-group">
-                    <label for="apellido2">Segundo Apellido</label>
-                    <input type="text" class="form-control" name="apellido2" required="true" th:value="${empleado.apellido2}">
-                </div>
-                <div class="form-group">
-                    <label for="alias">Alias</label>
-                    <input type="text" class="form-control" name="alias" required="true" th:value="${empleado.alias}">
-                </div>
-                <div class="form-group">
-                    <label for="iban">IBAN</label>
-                    <input type="text" class="form-control" name="iban" required="true" th:value="${empleado.iban}">
-                </div>
-                <div class="form-group">
-                    <label for="salario">Salario</label>
-                    <input type="number" class="form-control" name="salario" required="true" th:value="${empleado.salario}">
-                </div>
-                <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="text" class="form-control" name="estado" required="true" th:value="${empleado.estado}">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="Password" class="form-control" name="password" required="true" th:value="${empleado.password}">
+                    <label for="nombre">Correo</label>
+                    <input type="text" class="form-control" name="nombre" required="true" th:value="${correo.nombre}">
                 </div>
             </div>
         </section>
@@ -189,7 +133,7 @@
                   th:object="${empleado}"
                   class="was-validated">
                 <input type="hidden" name="idEmpleado" th:field="*{idEmpleado}"/>
-                <section th:replace="empleado/fragmentos :: botonesEditar"/> 
+                <section th:replace="empleadoCorreo/fragmentos :: botonesEditar"/> 
                 <div id="details">
                     <div class="container">
                         <div class="row">
@@ -199,7 +143,7 @@
                                         <h4>Actualizar</h4>
                                     </div>
                                     <div class="card-body">
-                                        <section th:replace="empleado/fragmentos :: camposForm"/>         
+                                        <section th:replace="empleadoCorreo/fragmentos :: camposForm"/>         
                                     </div>
                                 </div>
                             </div>

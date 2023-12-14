@@ -40,6 +40,7 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\co
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\DistritoServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\CantonService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\ClienteContacto.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoCorreoService.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\PuestoDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\FacturaServicio.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\TransportePK.java
@@ -78,6 +79,7 @@ C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\da
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\FacturaServicioDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\domain\MateriaPrima.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\MenuDao.java
+C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\service\EmpleadoCorreoServiceImpl.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ClienteContactoDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\ProvinciaDao.java
 C:\Progra\MyProjects\ProyectoLenguajeBD\Proyecto-Maven\src\main\java\com\yire\dao\MateriaPrimaDao.java

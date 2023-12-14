@@ -4,10 +4,10 @@
  */
 package com.yire.service;
 
-/**
- *
- * @author antho
- */
+import com.yire.domain.Empleado;
+import com.yire.domain.EmpleadoCorreo;
+import java.util.List;
+
 public interface EmpleadoCorreoService {
-    
+    public List<EmpleadoCorreo> getCorreosByEmpleado(Empleado empleado);
 }
