@@ -238,6 +238,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Activo := sec_activos.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_cliente START WITH 1;
@@ -249,6 +250,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Cliente := sec_cliente.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_contacto START WITH 1;
@@ -260,6 +262,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Contacto := sec_contacto.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_empleado START WITH 1;
@@ -271,6 +274,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Empleado := sec_empleado.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_facturacion START WITH 1;
@@ -282,6 +286,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Num_Factura := sec_facturacion.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_locales START WITH 1;
@@ -293,6 +298,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Local := sec_locales.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_materia_prima START WITH 1;
@@ -304,6 +310,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_MateriaPrima := sec_materia_prima.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_menu START WITH 1;
@@ -315,6 +322,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Menu := sec_menu.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_producto START WITH 1;
@@ -326,6 +334,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Producto := sec_producto.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_proveedor START WITH 1;
@@ -337,6 +346,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Proveedor := sec_proveedor.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_publicaciones START WITH 1;
@@ -348,6 +358,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Publicacion := sec_publicaciones.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_puesto START WITH 1;
@@ -359,6 +370,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Id_Puesto := sec_puesto.NEXTVAL;
 END;
+/
 
 -- Sequence
 CREATE SEQUENCE sec_servicio_agendado START WITH 1;
@@ -370,6 +382,7 @@ FOR EACH ROW
 BEGIN
     :NEW.Cod_Servicio := sec_servicio_agendado.NEXTVAL;
 END;
+/
 
 -- Crear los triggers para las tablas de auditorias
 CREATE OR REPLACE TRIGGER TGR_INSERT_AUDACTIVOS
@@ -379,6 +392,7 @@ BEGIN
 INSERT INTO AudActivos (Id_Activo, DESCRIPCION, Id_Local, tipoMovimiento, fechaMovimiento, usuariomovimiento)
 VALUES (:new.Id_Activo, :new.descripcion, :new.Id_Local, 'Insercion', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_DELETE_AUDACTIVOS
 BEFORE DELETE ON ACTIVOS
@@ -387,6 +401,7 @@ BEGIN
 INSERT INTO AudActivos (Id_Activo, DESCRIPCION, Id_Local, tipoMovimiento, fechaMovimiento, usuariomovimiento)
 VALUES (:old.Id_Activo, :old.descripcion, :old.Id_Local, 'ELIMINADO', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_INSERT_AUDClientes
 BEFORE INSERT ON Cliente
@@ -395,6 +410,7 @@ BEGIN
 INSERT INTO AudClientes (Id_Cliente, Nombre, Tipo, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:new.Id_Cliente, :new.nombre, :new.tipo, 'Insercion', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_DELETE_AUDClientes
 BEFORE DELETE ON Cliente
@@ -403,6 +419,7 @@ BEGIN
 INSERT INTO AudClientes (Id_Cliente, Nombre, Tipo, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:old.Id_Cliente, :old.nombre, :old.tipo, 'Insercion', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_INSERT_AUDServicioEmpleados
 BEFORE INSERT ON ServicioEmpleados
@@ -411,6 +428,7 @@ BEGIN
 INSERT INTO AUDServicioEmpleados (Cod_Servicio, Id_Empleado, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:new.Cod_Servicio, :new.Id_Empleado, 'Insercion', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_DELETE_AUDServicioEmpleados
 BEFORE DELETE ON ServicioEmpleados
@@ -419,6 +437,7 @@ BEGIN
 INSERT INTO AUDServicioEmpleados (Cod_Servicio, Id_Empleado, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:old.Cod_Servicio, :old.Id_Empleado, 'Insercion', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_INSERT_AUDMateriaPrima
 BEFORE INSERT ON MateriaPrima
@@ -427,6 +446,7 @@ BEGIN
 INSERT INTO AUDMateriaPrima (Id_MateriaPrima, Nombre, Reservas, UnidadDeMedicion, Marca, CostoPorUnidad, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:new.Id_MateriaPrima, :new.Nombre, :new.Reservas, :new.unidaddemedicion, :new.marca, :new.costoporunidad, 'Insercion', SYSDATE, user);
 END;
+/
 
 CREATE OR REPLACE TRIGGER TGR_DELETE_AUDMateriaPrima
 BEFORE DELETE ON MateriaPrima
@@ -435,6 +455,7 @@ BEGIN
 INSERT INTO AUDMateriaPrima (Id_MateriaPrima, Nombre, Reservas, UnidadDeMedicion, Marca, CostoPorUnidad, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:old.Id_MateriaPrima, :old.Nombre, :old.Reservas, :old.unidaddemedicion, :old.marca, :old.costoporunidad, 'Insercion', SYSDATE, user);
 END;
+/
 
 ---------------------------------- FUNCIONES ----------------------------------
     --1.Obtener el salario promedio de los empleados:
@@ -445,6 +466,7 @@ BEGIN
     SELECT AVG(SALARIO) INTO salario_promedio FROM Empleado;
     RETURN salario_promedio;
 END promedio_salario;
+/
 -- Ejemplo:
 SELECT promedio_salario() AS "Promedio de salarios"
     FROM dual;
@@ -457,6 +479,7 @@ BEGIN
     SELECT COUNT(*) INTO total_empleados FROM Empleado;
     RETURN total_empleados;
 END cantidad_empleados;
+/
 -- Ejemplo:
 SELECT cantidad_empleados() AS "Total empleados"
     FROM dual;
@@ -469,6 +492,7 @@ BEGIN
     SELECT COUNT(*) INTO total_clientes FROM Empleado;
     RETURN total_clientes;
 END cantidad_clientes;
+/
 -- Ejemplo:
 SELECT cantidad_clientes() AS "Total clientes"
     FROM dual;
@@ -481,6 +505,7 @@ BEGIN
     SELECT COUNT(*) INTO total_locales FROM Locales;
     RETURN total_locales;
 END cantidad_locales;
+/
 -- Ejemplo:
 SELECT cantidad_locales() AS "Total locales"
     FROM dual;
@@ -497,6 +522,7 @@ BEGIN
 
     RETURN factura_monto;
 END monto_ultima_factura;
+/
     -- Ejemplo:
 SELECT monto_ultima_factura() AS "Total última factura"
     FROM dual;
@@ -509,6 +535,7 @@ BEGIN
     SELECT COUNT(*) INTO total_proveedores FROM Proveedor;
     RETURN total_proveedores;
 END cantidad_proveedores;
+/
 -- Ejemplo:
 SELECT cantidad_proveedores() AS "Total proveedores"
     FROM dual;
@@ -521,6 +548,7 @@ BEGIN
        SELECT Nombre || ': ' || Proposito INTO var_local FROM Locales WHERE Id_Local = local_id;
        RETURN var_local;
 END info_local;
+/
     -- Ejemplo:
 SELECT info_local(1) AS "Local con el id suministrado"
     FROM dual;
@@ -533,6 +561,7 @@ BEGIN
        SELECT COUNT(*) INTO total_cantones FROM Canton WHERE Id_Provincia = provincia_id;
        RETURN total_cantones;
 END total_cantones_provincia;
+/
     -- Ejemplo:
 SELECT total_cantones_provincia(1) AS "Cantidad de cantones del id suministrado" -- ID = 1 - San José
     FROM dual;
@@ -545,6 +574,7 @@ BEGIN
     SELECT COUNT(*) INTO total_correos FROM EmpleadoCorreo;
     RETURN total_correos;
 END cantidad_correos;
+/
 -- Ejemplo:
 SELECT cantidad_correos() AS "Total correos"
     FROM dual;
@@ -557,6 +587,7 @@ BEGIN
     SELECT Correo INTO empleado_correo FROM EmpleadoCorreo WHERE Id_Empleado = empleado_id;
     RETURN empleado_correo;
 END correo_nombre;
+/
 -- Ejemplo:
 SELECT correo_nombre(1) AS "Correo del empleado seleccionado"
     FROM dual;
@@ -569,6 +600,7 @@ BEGIN
     SELECT COUNT(*) INTO total_empleados FROM Empleado WHERE Estado = 'Activo';
     RETURN total_empleados;
 END cantidad_emplados_activos;
+/
 -- Ejemplo:
 SELECT cantidad_emplados_activos() AS "Total empleados activos"
     FROM dual;
@@ -581,6 +613,7 @@ BEGIN
     SELECT COUNT(*) INTO total_empleados FROM Empleado WHERE Estado = 'Inactivo';
     RETURN total_empleados;
 END cantidad_emplados_inactivos;
+/
 -- Ejemplo:
 SELECT cantidad_emplados_inactivos() AS "Total empleados inactivos"
     FROM dual;
@@ -593,6 +626,7 @@ BEGIN
     SELECT MetodoPago INTO ultimafactura FROM Facturacion WHERE ROWNUM = 1 ORDER BY Fecha DESC;
     RETURN ultimafactura;
 END metodo_pago_ultima_factura;
+/
 -- Ejemplo:
 SELECT metodo_pago_ultima_factura() AS "Método de pago de última factura"
     FROM dual;
@@ -605,6 +639,7 @@ BEGIN
     SELECT Fecha INTO ultimafactura FROM Facturacion WHERE ROWNUM = 1 ORDER BY Fecha DESC;
     RETURN ultimafactura;
 END fecha_ultima_factura;
+/
 -- Ejemplo:
 SELECT fecha_ultima_factura() AS "Método de pago de última factura"
     FROM dual;
@@ -632,6 +667,7 @@ BEGIN
     END LOOP;
     CLOSE c_empleados;
 END;
+/
 
     -- 2. Obtener información de todos los clientes:
 DECLARE
@@ -654,6 +690,7 @@ BEGIN
     END LOOP;
     CLOSE c_clientes;
 END;
+/
 
     -- 3. Obtener información de todos los clientes:
 DECLARE
@@ -676,37 +713,46 @@ BEGIN
     END LOOP;
     CLOSE c_local;
 END;
+/
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
        SELECT *
        FROM Empleado
        WHERE Estado = 'Activo';
+	   /
        -- Llamar a la vista:
         SELECT * FROM empleados_activos;
+		/
 
     -- 2. Vista de Servicios Agendados hoy:
     CREATE OR REPLACE VIEW servicios_agendados AS
        SELECT *
-       FROM ServicioAgendados
+       FROM ServicioAgendado
        WHERE TRUNC(FechaHora) = TRUNC(SYSDATE);
+	   /
         -- Llamar a la vista:
         SELECT * FROM servicios_agendados;
+		/
        
     -- 3. Vista de nombres de clientes
     CREATE OR REPLACE VIEW nombres_clientes AS
        SELECT Nombre
        FROM Cliente;
+	   /
        -- Llamar a la vista:
         SELECT * FROM nombres_clientes;
+		/
         
          -- 4. Vista de clientes VIP:
     CREATE OR REPLACE VIEW clientes_vip AS
        SELECT *
        FROM Cliente
        WHERE Tipo = 'VIP';
+	   /
        -- Llamar a la vista:
         SELECT * FROM clientes_vip;
+		/
 
        -- 5. Vista de Empleados con el Puesto:
     CREATE OR REPLACE VIEW empleados_puestos AS
@@ -714,44 +760,56 @@ END;
        FROM Empleado e
        JOIN EmpleadoPuesto ep ON e.Id_Empleado = ep.Id_Empleado
        JOIN Puesto p ON ep.Id_Puesto = p.Id_Puesto;
+	   /
        -- Llamar a la vista:
         SELECT * FROM empleados_puestos;
+		/
         
          -- 6. Vista de Detalles Productos:
     CREATE OR REPLACE VIEW nombre_productos AS
        SELECT Nombre
        FROM Producto;
+	   /
        -- Llamar a la vista:
         SELECT * FROM nombre_productos;
+		/
         
         -- 7. Vista de Detalles Productos:
     CREATE OR REPLACE VIEW nombre_proveedor AS
        SELECT Nombre
        FROM proveedor;
+	   /
        -- Llamar a la vista:
         SELECT * FROM nombre_proveedor;
+		/
         
         -- 8. Vista de Provincias:
     CREATE OR REPLACE VIEW info_provincias AS
        SELECT *
        FROM Provincia;
+	   /
        -- Llamar a la vista:
         SELECT * FROM info_provincias;
+		/
         
         -- 9. Vista de Cantones por provincia:
     CREATE OR REPLACE VIEW canton_por_provincia AS
        SELECT Nombre
        FROM canton
        WHERE id_provincia = 1; -- cambiar id_provincia según se necesite
+	   /
        -- Llamar a la vista:
         SELECT * FROM canton_por_provincia;
+		/
         
          -- 10. Vista de Locales y descripción:
     CREATE OR REPLACE VIEW proposito_local AS
        SELECT Nombre, Proposito
        FROM Locales;
+	   /
        -- Llamar a la vista:
         SELECT * FROM proposito_local;
+		/
 
 ---------------------- PROCEDIMIENTOS ALMACENADOS --------------------------
 -- Verificar la tabla de Empleado ya que tiene un fallo****
@@ -770,6 +828,7 @@ BEGIN
     INSERT INTO Empleado (Id_Empleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, "Password")
     VALUES (p_Id_Empleado, p_Nombre, p_Apellido1, p_Apellido2, p_Alias, p_IBAN, p_Salario, p_Estado, p_Password);
 END;
+/
 
     -- 2. Ingresar Cliente
 CREATE PROCEDURE ingresar_cliente(
@@ -779,6 +838,7 @@ CREATE PROCEDURE ingresar_cliente(
 BEGIN
     INSERT INTO Cliente VALUES (p_Id_Cliente, p_Nombre, p_Tipo);
 END;
+/
 
     -- 3. Ingresar Producto
 CREATE PROCEDURE ingresar_producto(
@@ -790,6 +850,7 @@ CREATE PROCEDURE ingresar_producto(
 BEGIN
     INSERT INTO Producto VALUES (p_Id_Producto, p_Nombre, p_Precio, p_Descripcion, p_Imagen);
 END;
+/
 
     -- 4. Ingresar Provincia
 CREATE PROCEDURE ingresar_provincia(
@@ -798,6 +859,7 @@ CREATE PROCEDURE ingresar_provincia(
 BEGIN
     INSERT INTO Provincia VALUES (p_Id_Provincia, p_Nombre);
 END;
+/
 
     -- 5. Ingresar Local
 CREATE PROCEDURE ingresar_local(
@@ -807,6 +869,7 @@ CREATE PROCEDURE ingresar_local(
 BEGIN
     INSERT INTO Locales VALUES (p_Id_Local, p_Nombre, p_Proposito);
 END;
+/
 
     -- 6. Ingresar Factura
 CREATE PROCEDURE ingresar_facturacion(
@@ -817,6 +880,7 @@ CREATE PROCEDURE ingresar_facturacion(
 BEGIN
     INSERT INTO Facturacion VALUES (p_Num_Factura, p_Fecha, p_MetodoPago, p_Total);
 END;
+/
 
     -- 7. Eliminar Empleado
 CREATE PROCEDURE borrar_empleado(
@@ -824,6 +888,7 @@ CREATE PROCEDURE borrar_empleado(
 BEGIN
     DELETE FROM Empleado WHERE Id_Empleado = p_Id_Empleado;
 END;
+/
 
     -- 8. Eliminar Cliente
 CREATE PROCEDURE borrar_cliente(
@@ -831,6 +896,7 @@ CREATE PROCEDURE borrar_cliente(
 BEGIN
     DELETE FROM Cliente WHERE Id_Cliente = p_Id_Cliente;
 END;
+/
 
     -- 9. Eliminar Producto
 CREATE PROCEDURE borrar_producto(
@@ -838,6 +904,7 @@ CREATE PROCEDURE borrar_producto(
 BEGIN
     DELETE FROM Producto WHERE Id_Producto = p_Id_Producto;
 END;
+/
 
     -- 10. Eliminar Provincia
 CREATE PROCEDURE borrar_provincia(
@@ -845,6 +912,7 @@ CREATE PROCEDURE borrar_provincia(
 BEGIN
     DELETE FROM Provincia WHERE Id_Provincia = p_Id_Provincia;
 END;
+/
 
     -- 11. Elimnar Local
 CREATE PROCEDURE borrar_local(
@@ -852,6 +920,7 @@ CREATE PROCEDURE borrar_local(
 BEGIN
     DELETE FROM Locales WHERE Id_Local = p_Id_Local;
 END;
+/
 
     -- 12. Elimnar Facturación
 CREATE PROCEDURE borrar_facturacion(
@@ -859,3 +928,4 @@ CREATE PROCEDURE borrar_facturacion(
 BEGIN
     DELETE FROM Facturacion WHERE Num_Factura = p_Num_Factura;
 END;
+/
