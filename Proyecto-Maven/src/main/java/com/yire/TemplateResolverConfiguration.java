@@ -117,11 +117,19 @@ public class TemplateResolverConfiguration {
     @Bean
     public SpringResourceTemplateResolver TemplateResolver_9() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+<<<<<<< HEAD
         templateResolver.setPrefix("/templates/producto");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setOrder(8);
+=======
+        templateResolver.setPrefix("/templates/empleadoCorreo");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setOrder(9);
+>>>>>>> 29a96658fb758113ac413b17419382df2927203c
         templateResolver.setCheckExistence(true);
         return templateResolver;
     }

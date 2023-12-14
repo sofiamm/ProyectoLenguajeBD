@@ -628,7 +628,7 @@ BEGIN
         EXIT WHEN c_empleados%NOTFOUND;
         
         -- Puedes realizar operaciones con los datos aquí
-        DBMS_OUTPUT.PUT_LINE('ID: ' || id_emp || ' Nombre: ' || nombre_emp || ' Apellido: ' || apellido_emp || ' Salario: ' || salario_emp);
+        DBMS_OUTPUT.PUT_LINE(id_emp || ' Nombre: ' || nombre_emp || ' Apellido: ' || apellido_emp || ' Salario: ' || salario_emp);
     END LOOP;
     CLOSE c_empleados;
 END;
@@ -650,12 +650,12 @@ BEGIN
         EXIT WHEN c_clientes%NOTFOUND;
         
         -- Puedes realizar operaciones con los datos aquí
-        DBMS_OUTPUT.PUT_LINE('ID: ' || id_cliente || ' Nombre: ' || nombre_cliente || ' Tipo: ' || tipo_cliente);
+        DBMS_OUTPUT.PUT_LINE(id_cliente || ' Nombre: ' || nombre_cliente || ' Tipo: ' || tipo_cliente);
     END LOOP;
     CLOSE c_clientes;
 END;
 
-    -- 3. Obtener información de todos los clientes:
+    -- 3. Obtener información de todos los locales:
 DECLARE
     CURSOR c_local IS
         SELECT ID_LOCAL, NOMBRE, PROPOSITO
@@ -677,6 +677,50 @@ BEGIN
     CLOSE c_local;
 END;
 
+    -- 4. Obtener información de todos los productos:
+DECLARE
+    CURSOR c_producto IS
+        SELECT ID_PRODUCTO, NOMBRE, PRECIO, DESCRIPCION
+        FROM PRODUCTO;
+        
+    id_producto PRODUCTO.ID_PRODUCTO%TYPE;
+    nombre_producto PRODUCTO.NOMBRE%TYPE;
+    precio_producto PRODUCTO.PRECIO%TYPE;
+    descripcion_producto PRODUCTO.DESCRIPCION%TYPE;
+BEGIN
+    OPEN c_producto;
+    DBMS_OUTPUT.PUT_LINE('Datos de los productos:');
+    LOOP
+        FETCH c_producto INTO id_producto, nombre_producto, precio_producto, descripcion_producto;
+        EXIT WHEN c_producto%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_producto || '. ' || nombre_producto || ': ' || descripcion_producto || ' -  Precio: ' || precio_producto);
+    END LOOP;
+    CLOSE c_producto;
+END;
+
+    -- 5. Obtener información de todas las provincias:
+DECLARE
+    CURSOR c_provincia IS
+        SELECT ID_PROVINCIA, NOMBRE
+        FROM PROVINCIA;
+        
+    id_provincia PROVINCIA.ID_PROVINCIA%TYPE;
+    nombre_provincia PROVINCIA.NOMBRE%TYPE;
+BEGIN
+    OPEN c_provincia;
+    DBMS_OUTPUT.PUT_LINE('Provincias:');
+    LOOP
+        FETCH c_provincia INTO id_provincia, nombre_provincia;
+        EXIT WHEN c_provincia%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_provincia || '. ' || nombre_provincia);
+    END LOOP;
+    CLOSE c_provincia;
+END;
+
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
@@ -689,7 +733,7 @@ END;
     -- 2. Vista de Servicios Agendados hoy:
     CREATE OR REPLACE VIEW servicios_agendados AS
        SELECT *
-       FROM ServicioAgendados
+       FROM ServicioAgendado
        WHERE TRUNC(FechaHora) = TRUNC(SYSDATE);
         -- Llamar a la vista:
         SELECT * FROM servicios_agendados;
@@ -957,4 +1001,64 @@ BEGIN
         MetodoPago = p_MetodoPago,
         Total = p_Total
     WHERE Num_Factura = p_Num_Factura;
+END;
+
+    -- 19. Actualizar Estado Empleado
+CREATE OR REPLACE PROCEDURE actualizar_estado_empleado(
+    p_Id_Empleado INT,
+    p_Estado VARCHAR2) AS
+BEGIN
+    UPDATE Empleado
+    SET
+        Estado = p_Estado
+    WHERE Id_Empleado = p_Id_Empleado;
+END;
+
+    -- 20. Actualizar Salario
+CREATE OR REPLACE PROCEDURE actualizar_salario_empleado(
+    p_Id_Empleado INT,
+    p_Salario NUMBER) AS
+BEGIN
+    UPDATE Empleado
+    SET
+        Salario = p_Salario
+    WHERE Id_Empleado = p_Id_Empleado;
+END;
+
+    -- 21. Actualizar Precio Producto
+CREATE OR REPLACE PROCEDURE actualizar_precio_producto(
+    p_Id_Producto INT,
+    p_Precio NUMBER) AS
+BEGIN
+    UPDATE Producto
+    SET
+        Id_Producto = p_Id_Producto,
+        Precio = p_Precio
+    WHERE Id_Producto = p_Id_Producto;
+END;
+    
+    -- 22. Ingresar Imagen
+CREATE OR REPLACE PROCEDURE ingresar_correo_contacto(
+    p_Id_Contacto INT,
+    p_Correo VARCHAR2) AS
+BEGIN
+    INSERT INTO ContactoCorreo VALUES (p_Id_Contacto, p_Correo);
+END;
+    -- 23. Eliminar Correo
+CREATE OR REPLACE PROCEDURE borrar_correo_contacto(
+    p_Id_Contacto INT) AS
+BEGIN
+    DELETE FROM ContactoCorreo WHERE Id_Contacto = p_Id_Contacto;
+END;
+
+    -- 24. Actualizar Correo
+CREATE OR REPLACE PROCEDURE actualizar_correo_contacto(
+    p_Id_Contacto INT,
+    p_Correo VARCHAR2) AS
+BEGIN
+    UPDATE ContactoCorreo
+    SET
+        Id_Contacto = p_Id_Contacto,
+        Correo = p_Correo
+    WHERE Id_Contacto = p_Id_Contacto;
 END;
