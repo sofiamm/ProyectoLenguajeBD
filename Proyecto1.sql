@@ -436,7 +436,6 @@ INSERT INTO AUDMateriaPrima (Id_MateriaPrima, Nombre, Reservas, UnidadDeMedicion
 VALUES (:old.Id_MateriaPrima, :old.Nombre, :old.Reservas, :old.unidaddemedicion, :old.marca, :old.costoporunidad, 'Insercion', SYSDATE, user);
 END;
 
-
 ---------------------------------- FUNCIONES ----------------------------------
     --1.Obtener el salario promedio de los empleados:
 CREATE OR REPLACE FUNCTION promedio_salario 
@@ -487,7 +486,7 @@ SELECT cantidad_locales() AS "Total locales"
     FROM dual;
     
     --5.Ver monto de la última factura:
-CREATE OR REPLACE FUNCTION ultima_factura 
+CREATE OR REPLACE FUNCTION monto_ultima_factura 
     RETURN VARCHAR2 IS
     factura_monto VARCHAR2(25);
 BEGIN
@@ -497,9 +496,9 @@ BEGIN
     ORDER BY Fecha ASC;
 
     RETURN factura_monto;
-END ultima_factura;
+END monto_ultima_factura;
     -- Ejemplo:
-SELECT ultima_factura() AS "Total última factura"
+SELECT monto_ultima_factura() AS "Total última factura"
     FROM dual;
     
     -- 6. Obtener cantidad de proveedores de una materia prima:
@@ -527,15 +526,15 @@ SELECT info_local(1) AS "Local con el id suministrado"
     FROM dual;
     
     -- 8. Cantidad de cantones por ID provincia
-CREATE OR REPLACE FUNCTION info_local(provincia_id INT)
+CREATE OR REPLACE FUNCTION total_cantones_provincia(provincia_id INT)
     RETURN NUMBER IS
     total_cantones NUMBER;
 BEGIN
        SELECT COUNT(*) INTO total_cantones FROM Canton WHERE Id_Provincia = provincia_id;
        RETURN total_cantones;
-END info_local;
+END total_cantones_provincia;
     -- Ejemplo:
-SELECT info_local(1) AS "Cantidad de cantones del id suministrado" -- ID = 1 - San José
+SELECT total_cantones_provincia(1) AS "Cantidad de cantones del id suministrado" -- ID = 1 - San José
     FROM dual;
 
     -- 9. Obtener cantidad de correos:
