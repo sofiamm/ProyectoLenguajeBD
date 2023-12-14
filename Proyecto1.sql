@@ -676,6 +676,7 @@ BEGIN
     END LOOP;
     CLOSE c_local;
 END;
+
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
@@ -754,7 +755,6 @@ END;
         SELECT * FROM proposito_local;
 
 ---------------------- PROCEDIMIENTOS ALMACENADOS --------------------------
--- Verificar la tabla de Empleado ya que tiene un fallo****
 -- 1. Ingresar Empleado
 CREATE OR REPLACE PROCEDURE ingresar_empleado(
     p_Id_Empleado INT,
@@ -767,12 +767,12 @@ CREATE OR REPLACE PROCEDURE ingresar_empleado(
     p_Estado VARCHAR2,
     p_Password VARCHAR2) AS
 BEGIN
-    INSERT INTO Empleado (Id_Empleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, "Password")
+    INSERT INTO Empleado 
     VALUES (p_Id_Empleado, p_Nombre, p_Apellido1, p_Apellido2, p_Alias, p_IBAN, p_Salario, p_Estado, p_Password);
 END;
 
     -- 2. Ingresar Cliente
-CREATE PROCEDURE ingresar_cliente(
+CREATE OR REPLACE PROCEDURE ingresar_cliente(
     p_Id_Cliente INT,
     p_Nombre VARCHAR2,
     p_Tipo VARCHAR2) AS
@@ -781,7 +781,7 @@ BEGIN
 END;
 
     -- 3. Ingresar Producto
-CREATE PROCEDURE ingresar_producto(
+CREATE OR REPLACE PROCEDURE ingresar_producto(
     p_Id_Producto INT,
     p_Nombre VARCHAR2,
     p_Precio NUMBER,
@@ -792,7 +792,7 @@ BEGIN
 END;
 
     -- 4. Ingresar Provincia
-CREATE PROCEDURE ingresar_provincia(
+CREATE OR REPLACE PROCEDURE ingresar_provincia(
     p_Id_Provincia INT,
     p_Nombre VARCHAR2) AS
 BEGIN
@@ -800,7 +800,7 @@ BEGIN
 END;
 
     -- 5. Ingresar Local
-CREATE PROCEDURE ingresar_local(
+CREATE OR REPLACE PROCEDURE ingresar_local(
     p_Id_Local INT,
     p_Nombre VARCHAR2,
     p_Proposito VARCHAR2) AS
@@ -809,7 +809,7 @@ BEGIN
 END;
 
     -- 6. Ingresar Factura
-CREATE PROCEDURE ingresar_facturacion(
+CREATE OR REPLACE PROCEDURE ingresar_facturacion(
     p_Num_Factura INT,
     p_Fecha DATE,
     p_MetodoPago VARCHAR2,
@@ -819,43 +819,142 @@ BEGIN
 END;
 
     -- 7. Eliminar Empleado
-CREATE PROCEDURE borrar_empleado(
+CREATE OR REPLACE PROCEDURE borrar_empleado(
     p_Id_Empleado INT) AS
 BEGIN
     DELETE FROM Empleado WHERE Id_Empleado = p_Id_Empleado;
 END;
 
     -- 8. Eliminar Cliente
-CREATE PROCEDURE borrar_cliente(
+CREATE OR REPLACE PROCEDURE borrar_cliente(
     p_Id_Cliente INT) AS
 BEGIN
     DELETE FROM Cliente WHERE Id_Cliente = p_Id_Cliente;
 END;
 
     -- 9. Eliminar Producto
-CREATE PROCEDURE borrar_producto(
+CREATE OR REPLACE PROCEDURE borrar_producto(
     p_Id_Producto INT) AS
 BEGIN
     DELETE FROM Producto WHERE Id_Producto = p_Id_Producto;
 END;
 
     -- 10. Eliminar Provincia
-CREATE PROCEDURE borrar_provincia(
+CREATE OR REPLACE PROCEDURE borrar_provincia(
     p_Id_Provincia INT) AS
 BEGIN
     DELETE FROM Provincia WHERE Id_Provincia = p_Id_Provincia;
 END;
 
     -- 11. Elimnar Local
-CREATE PROCEDURE borrar_local(
+CREATE OR REPLACE PROCEDURE borrar_local(
     p_Id_Local INT) AS
 BEGIN
     DELETE FROM Locales WHERE Id_Local = p_Id_Local;
 END;
 
     -- 12. Elimnar Facturación
-CREATE PROCEDURE borrar_facturacion(
+CREATE OR REPLACE PROCEDURE borrar_facturacion(
     p_Num_Factura INT) AS
 BEGIN
     DELETE FROM Facturacion WHERE Num_Factura = p_Num_Factura;
+END;
+
+    -- 13. Actualizar Empleado
+CREATE OR REPLACE PROCEDURE actualizar_empleado(
+    p_Id_Empleado INT,
+    p_Nombre VARCHAR2,
+    p_Apellido1 VARCHAR2,
+    p_Apellido2 VARCHAR2,
+    p_Alias VARCHAR2,
+    p_IBAN VARCHAR2,
+    p_Salario NUMBER,
+    p_Estado VARCHAR2,
+    p_Password VARCHAR2) AS
+BEGIN
+    UPDATE Empleado
+    SET
+        Nombre = p_Nombre,
+        Apellido1 = p_Apellido1,
+        Apellido2 = p_Apellido2,
+        Alias = p_Alias,
+        IBAN = p_IBAN,
+        Salario = p_Salario,
+        Estado = p_Estado,
+        Password = p_Password
+    WHERE Id_Empleado = p_Id_Empleado;
+END;
+
+    -- 14. Actualizar Cliente
+CREATE OR REPLACE PROCEDURE actualizar_cliente(
+    p_Id_Cliente INT,
+    p_Nombre VARCHAR2,
+    p_Tipo VARCHAR2) AS
+BEGIN
+    UPDATE Cliente
+    SET
+        Id_Cliente = p_Id_Cliente,
+        Nombre = p_Nombre,
+        Tipo = p_Tipo
+    WHERE Id_Cliente = p_Id_Cliente;
+END;
+
+    -- 15. Actualizar Producto
+CREATE OR REPLACE PROCEDURE actualizar_producto(
+    p_Id_Producto INT,
+    p_Nombre VARCHAR2,
+    p_Precio NUMBER,
+    p_Descripcion VARCHAR2,
+    p_Imagen VARCHAR2) AS
+BEGIN
+    UPDATE Producto
+    SET
+        Id_Producto = p_Id_Producto,
+        Nombre = p_Nombre,
+        Precio = p_Precio,
+        Descripcion = p_Descripcion,
+        Imagen = p_Imagen
+    WHERE Id_Producto = p_Id_Producto;
+END;
+
+    -- 16. Actualizar Provincia
+CREATE OR REPLACE PROCEDURE actualizar_provincia(
+    p_Id_Provincia INT,
+    p_Nombre VARCHAR2) AS
+BEGIN
+    UPDATE Provincia
+    SET
+        Id_Provincia = p_Id_Provincia,
+        Nombre = p_Nombre
+    WHERE Id_Provincia = p_Id_Provincia;
+END;
+
+    -- 17. Actualizar Local
+CREATE OR REPLACE PROCEDURE actualizar_local(
+    p_Id_Local INT,
+    p_Nombre VARCHAR2,
+    p_Proposito VARCHAR2) AS
+BEGIN
+    UPDATE Locales
+    SET
+        Id_Local = p_Id_Local,
+        Nombre = p_Nombre,
+        Proposito = p_Proposito
+    WHERE Id_Local = p_Id_Local;
+END;
+
+    -- 18. Actualizar Factura
+CREATE OR REPLACE PROCEDURE actualizar_facturacion(
+    p_Num_Factura INT,
+    p_Fecha DATE,
+    p_MetodoPago VARCHAR2,
+    p_Total NUMBER) AS
+BEGIN
+    UPDATE Facturacion
+    SET
+        Num_Factura = p_Num_Factura,
+        Fecha = p_Fecha,
+        MetodoPago = p_MetodoPago,
+        Total = p_Total
+    WHERE Num_Factura = p_Num_Factura;
 END;
