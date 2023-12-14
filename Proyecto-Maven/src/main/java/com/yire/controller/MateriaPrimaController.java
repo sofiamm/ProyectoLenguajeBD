@@ -6,12 +6,14 @@ package com.yire.controller;
 
 import com.yire.domain.MateriaPrima;
 import com.yire.service.MateriaPrimaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Slf4j
 @RequestMapping("/materiaprima")
 public class MateriaPrimaController {
 
@@ -36,11 +38,12 @@ public class MateriaPrimaController {
         return "redirect:/materiaprima/lista";
     }
 
-    @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        MateriaPrima materiaPrima = materiaPrimaService.obtenerPorId(id);
+    @GetMapping("/modificar/{idMateriaPrima}")
+    public String mostrarFormularioEditar(MateriaPrima materiaPrima, Model model) {
+//        MateriaPrima materiaPrima = materiaPrimaService.obtenerPorId(id);materiaPrima
+        materiaPrima=materiaPrimaService.obtenerPorId(materiaPrima.getIdMateriaPrima());
         model.addAttribute("materiaPrima", materiaPrima);
-        return "materiaprima/modificar";
+        return "/materiaprima/modificar";
     }
 
     @PostMapping("/actualizar")

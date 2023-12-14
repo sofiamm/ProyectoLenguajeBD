@@ -104,13 +104,13 @@ public class TemplateResolverConfiguration {
         return templateResolver;
     }
     @Bean
-    public SpringResourceTemplateResolver TemplateResolver_6() {
+    public SpringResourceTemplateResolver TemplateResolver_8() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setPrefix("/templates/MateriaPrima");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setOrder(1);
+        templateResolver.setOrder(8);
         templateResolver.setCheckExistence(true);
         return templateResolver;
     }

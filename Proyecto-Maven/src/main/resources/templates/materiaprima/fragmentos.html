@@ -117,25 +117,49 @@
     </section>
 
     <section th:fragment="camposForm">
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="nombre" required="true">
+        <div th:if="${materiaPrima == null}">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" required="true">
+            </div>
+            <div class="form-group">
+                <label for="reservas">Reservas</label>
+                <input type="text" class="form-control" name="reservas" required="true">
+            </div>
+            <div class="form-group">
+                <label for="unidadDeMedicion">Unidad de Medición</label>
+                <input type="text" class="form-control" name="unidadDeMedicion" required="true">
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca</label>
+                <input type="text" class="form-control" name="marca" required="true">
+            </div>
+            <div class="form-group">
+                <label for="costoPorUnidad">Costo por Unidad</label>
+                <input type="text" class="form-control" name="costoPorUnidad" required="true">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="reservas">Reservas</label>
-            <input type="text" class="form-control" name="reservas" required="true">
-        </div>
-        <div class="form-group">
-            <label for="unidadDeMedicion">Unidad de Medición</label>
-            <input type="text" class="form-control" name="unidadDeMedicion" required="true">
-        </div>
-        <div class="form-group">
-            <label for="marca">Marca</label>
-            <input type="text" class="form-control" name="marca" required="true">
-        </div>
-        <div class="form-group">
-            <label for="costoPorUnidad">Costo por Unidad</label>
-            <input type="text" class="form-control" name="costoPorUnidad" required="true">
+        <div th:if="${materiaPrima != null}">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" required="true" th:value="${materiaPrima.nombre}">
+            </div>
+            <div class="form-group">
+                <label for="reservas">Reservas</label>
+                <input type="text" class="form-control" name="reservas" required="true" th:value="${materiaPrima.reservas}">
+            </div>
+            <div class="form-group">
+                <label for="unidadDeMedicion">Unidad de Medición</label>
+                <input type="text" class="form-control" name="unidadDeMedicion" required="true" th:value="${materiaPrima.unidadDeMedicion}">
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca</label>
+                <input type="text" class="form-control" name="marca" required="true" th:value="${materiaPrima.marca}">
+            </div>
+            <div class="form-group">
+                <label for="costoPorUnidad">Costo por Unidad</label>
+                <input type="text" class="form-control" name="costoPorUnidad" required="true" th:value="${materiaPrima.costoPorUnidad}">
+            </div>
         </div>
     </section>
 
