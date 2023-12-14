@@ -451,15 +451,15 @@ SELECT promedio_salario() AS "Promedio de salarios"
     FROM dual;
     
    --2.Cantidad de empleados:
-CREATE OR REPLACE FUNCTION cantidad_emplados
+CREATE OR REPLACE FUNCTION cantidad_empleados
 	RETURN NUMBER IS
     total_empleados NUMBER;
 BEGIN
     SELECT COUNT(*) INTO total_empleados FROM Empleado;
     RETURN total_empleados;
-END cantidad_emplados;
+END cantidad_empleados;
 -- Ejemplo:
-SELECT cantidad_emplados() AS "Total empleados"
+SELECT cantidad_empleados() AS "Total empleados"
     FROM dual;
     
    --3.Cantidad de clientes:
@@ -560,6 +560,54 @@ BEGIN
 END correo_nombre;
 -- Ejemplo:
 SELECT correo_nombre(1) AS "Correo del empleado seleccionado"
+    FROM dual;
+    
+    -- 11. Cantidad de empleados activos:
+CREATE OR REPLACE FUNCTION cantidad_emplados_activos
+	RETURN NUMBER IS
+    total_empleados NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_empleados FROM Empleado WHERE Estado = 'Activo';
+    RETURN total_empleados;
+END cantidad_emplados_activos;
+-- Ejemplo:
+SELECT cantidad_emplados_activos() AS "Total empleados activos"
+    FROM dual;
+    
+    -- 12. Cantidad de empleados inactivos:
+CREATE OR REPLACE FUNCTION cantidad_emplados_inactivos
+	RETURN NUMBER IS
+    total_empleados NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_empleados FROM Empleado WHERE Estado = 'Inactivo';
+    RETURN total_empleados;
+END cantidad_emplados_inactivos;
+-- Ejemplo:
+SELECT cantidad_emplados_inactivos() AS "Total empleados inactivos"
+    FROM dual;
+    
+    --13.Obtener método de pago de la última factura que se realizo:
+CREATE OR REPLACE FUNCTION metodo_pago_ultima_factura 
+	RETURN VARCHAR2 IS
+       ultimafactura VARCHAR2(25);
+BEGIN
+    SELECT MetodoPago INTO ultimafactura FROM Facturacion WHERE ROWNUM = 1 ORDER BY Fecha DESC;
+    RETURN ultimafactura;
+END metodo_pago_ultima_factura;
+-- Ejemplo:
+SELECT metodo_pago_ultima_factura() AS "Método de pago de última factura"
+    FROM dual;
+    
+    --14.Obtener fecha de la última factura que se realizo:
+CREATE OR REPLACE FUNCTION fecha_ultima_factura 
+	RETURN VARCHAR2 IS
+       ultimafactura VARCHAR2(25);
+BEGIN
+    SELECT Fecha INTO ultimafactura FROM Facturacion WHERE ROWNUM = 1 ORDER BY Fecha DESC;
+    RETURN ultimafactura;
+END fecha_ultima_factura;
+-- Ejemplo:
+SELECT fecha_ultima_factura() AS "Método de pago de última factura"
     FROM dual;
 --------------------------------- CURSORES ---------------------------------
     --1.Obtener información de todos los empleados:
