@@ -785,6 +785,48 @@ BEGIN
     CLOSE c_activos;
 END;
 
+    -- 9. Obtener cantidad de personas por menú:
+DECLARE
+    CURSOR c_menu IS
+        SELECT ID_MENU, PERSONAS
+        FROM MENU;
+        
+    id_menu MENU.ID_MENU%TYPE;
+    personas MENU.PERSONAS%TYPE;
+BEGIN
+    OPEN c_menu;
+    DBMS_OUTPUT.PUT_LINE('Lista de personas por menú:');
+    LOOP
+        FETCH c_menu INTO id_menu, personas;
+        EXIT WHEN c_menu%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE('El menú número ' || id_menu || ' es para ' || personas || ' personas');
+    END LOOP;
+    CLOSE c_menu;
+END;
+
+    -- 10. Obtener lista de proveedores:
+DECLARE
+    CURSOR c_proveedor IS
+        SELECT ID_PROVEEDOR, NOMBRE
+        FROM PROVEEDOR;
+        
+    id_proveedor PROVEEDOR.ID_PROVEEDOR%TYPE;
+    nombre PROVEEDOR.NOMBRE%TYPE;
+BEGIN
+    OPEN c_proveedor;
+    DBMS_OUTPUT.PUT_LINE('Lista de proveedores:');
+    LOOP
+        FETCH c_proveedor INTO id_proveedor, nombre;
+        EXIT WHEN c_proveedor%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_proveedor || '. ' || nombre);
+    END LOOP;
+    CLOSE c_proveedor;
+END;
+
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
