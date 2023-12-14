@@ -827,6 +827,48 @@ BEGIN
     CLOSE c_proveedor;
 END;
 
+
+    -- 11. Obtener lista de publicaciones:
+DECLARE
+    CURSOR c_publicaciones IS
+        SELECT ID_PUBLICACION, LINK
+        FROM PUBLICACIONES;
+        
+    id_publicacion PUBLICACIONES.ID_PUBLICACION%TYPE;
+    link PUBLICACIONES.LINK%TYPE;
+BEGIN
+    OPEN c_publicaciones;
+    DBMS_OUTPUT.PUT_LINE('Lista de publicaciones:');
+    LOOP
+        FETCH c_publicaciones INTO id_publicacion, link;
+        EXIT WHEN c_publicaciones%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_publicacion || '. URL: ' || link);
+    END LOOP;
+    CLOSE c_publicaciones;
+END;
+
+    -- 12. Obtener lista de distrito:
+DECLARE
+    CURSOR c_distrito IS
+        SELECT ID_DISTRITO, NOMBRE
+        FROM DISTRITO;
+        
+    id_distrito DISTRITO.ID_DISTRITO%TYPE;
+    nombre DISTRITO.NOMBRE%TYPE;
+BEGIN
+    OPEN c_distrito;
+    DBMS_OUTPUT.PUT_LINE('Lista de distritos:');
+    LOOP
+        FETCH c_distrito INTO id_distrito, nombre;
+        EXIT WHEN c_distrito%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_distrito || '. ' || nombre);
+    END LOOP;
+    CLOSE c_distrito;
+END;
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
