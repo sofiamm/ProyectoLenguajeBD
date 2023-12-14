@@ -721,6 +721,70 @@ BEGIN
     CLOSE c_provincia;
 END;
 
+    -- 6. Obtener correo de los empleados:
+DECLARE
+    CURSOR c_correo IS
+        SELECT ID_EMPLEADO, CORREO, NOMBRE
+        FROM EMPLEADOCORREO JOIN EMPLEADO ON ID_EMPLEADO = ID_EMPLEADO;
+        
+    id_correo EMPLEADOCORREO.ID_EMPLEADO%TYPE;
+    correo EMPLEADOCORREO.CORREO%TYPE;
+    nombre EMPLEADO.NOMBRE%TYPE;
+BEGIN
+    OPEN c_correo;
+    DBMS_OUTPUT.PUT_LINE('Correo de empleados:');
+    LOOP
+        FETCH c_correo INTO id_correo, nombre, correo;
+        EXIT WHEN c_correo%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(nombre || ': ' || correo);
+    END LOOP;
+    CLOSE c_correo;
+END;
+
+    -- 7. Obtener lista de materia prima:
+DECLARE
+    CURSOR c_materia_prima IS
+        SELECT ID_MATERIAPRIMA, NOMBRE
+        FROM MATERIAPRIMA;
+        
+    id_materia MATERIAPRIMA.ID_MATERIAPRIMA%TYPE;
+    nombre MATERIAPRIMA.NOMBRE%TYPE;
+BEGIN
+    OPEN c_materia_prima;
+    DBMS_OUTPUT.PUT_LINE('Lista de materia prima:');
+    LOOP
+        FETCH c_materia_prima INTO id_materia, nombre;
+        EXIT WHEN c_materia_prima%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_materia || '. ' || nombre);
+    END LOOP;
+    CLOSE c_materia_prima;
+END;
+
+    -- 8. Obtener lista de activos:
+DECLARE
+    CURSOR c_activos IS
+        SELECT ID_ACTIVO, DESCRIPCION
+        FROM ACTIVOS;
+        
+    id_activos ACTIVOS.ID_ACTIVO%TYPE;
+    descripcion ACTIVOS.DESCRIPCION%TYPE;
+BEGIN
+    OPEN c_activos;
+    DBMS_OUTPUT.PUT_LINE('Lista de activos:');
+    LOOP
+        FETCH c_activos INTO id_activos, descripcion;
+        EXIT WHEN c_activos%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_activos || '. ' || descripcion);
+    END LOOP;
+    CLOSE c_activos;
+END;
+
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
