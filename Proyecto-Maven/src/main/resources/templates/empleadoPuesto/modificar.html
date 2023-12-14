@@ -7,7 +7,109 @@
     </head>
     <body>
         <header th:replace="layout/plantilla :: header" />
-        <section th:replace="empleadopuesto/fragmentos :: editar"/> 
+        <div id="actions" class="py-4 mb-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a th:href="@{/empleado/lista}" class="btn btn-ligth btn-block">
+                            <i class="fas fa-arrow-left"></i>Regresar
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <button onClick="sendForm(document.getElementById('puestoSeleccionado').value)" type="submit" class="btn btn-success btn-block">
+                            <i class="fas fa-check"></i>Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" th:value="${empleado.idEmpleado}" id="empleado"></input>
+        <div id="details">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Actualizar</h4>
+                            </div>
+                            <div class="card-body">
+                                <label>Seleccione el rol para [[${empleado.nombre}]]:</label>
+                                <div>
+                                    <select id="puestoSeleccionado" th:value="${empleado.puesto.nombre}">
+                                    <select id="puestoSeleccionado"> 
+                                        <option th:each="puesto : ${puestos}"
+                                                th:value="${puesto.nombre}"
+                                                th:text="${puesto.nombre}" 
+                                                 >
+                                                <input type="hidden" th:field="${puesto.idPuesto}" th:value="${puesto.idPuesto}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" th:value="${puestosJSON}" id="puestosJSON"></input>
+        <script type="text/javascript">
+
+            //Defining the data containers for arrays with canton based on the province
+            var puestosJSON=crearJson(document.getElementById("puestosJSON").value);
+
+            function sendForm(nombre){
+                var resultado=encontrarPuesto(nombre);
+                sendPost("/empleadopuesto/guardar/",document.getElementById("empleado").value,resultado);
+            }
+
+            function crearJson(string){
+                // Replace HTML-encoded entities with double quotes
+                var unescapedString = string.replace(/&quot;/g, '"');
+
+                // Parse the resulting string as JSON
+                var jsonArray = JSON.parse(unescapedString);
+
+                // Create a 2-level array
+                var finalArray = [];
+
+                // Iterate through the JSON array
+                for (var i = 0; i < jsonArray.length; i++) {
+                    // Add the array to the two-level array
+                    finalArray.push(propiedadesProvincia(jsonArray[i]));
+                }
+                return finalArray;
+            }
+
+            function propiedadesProvincia(tempObject){
+                var temp = [];
+                temp.push(tempObject.idPuesto);
+                temp.push(tempObject.nombre);
+                return temp;
+            }
+
+            function encontrarPuesto(nombre){
+                
+                for (var i = 0; i < Object.keys(puestosJSON).length;i++) {
+                    console.log("puestosJSON");
+                    console.log(puestosJSON);
+                    var puesto=puestosJSON[i];
+                    console.log("puesto");
+                    console.log(puesto);
+                    if (puesto[1]==nombre){
+                        console.log("Provincia encontrada!");
+                        return puesto[0];
+                    }else{
+                        console.log("Seguimos buscando");
+                    }
+                }
+            }
+
+            function sendPost(url1,url2,url3) {
+                var x = url1+url2+"/"+url3;
+                window.location = x;
+            }
+
+        </script>
         <footer th:replace="layout/plantilla :: footer" />
     </body>
 </html>

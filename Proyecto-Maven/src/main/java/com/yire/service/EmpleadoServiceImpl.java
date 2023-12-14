@@ -88,7 +88,10 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Override
     public void save(Empleado empleado) {
-
+        if(empleado.getIdEmpleado()==0){
+            empleadoDao.save(empleado);
+            return;
+        }
         String sql = "update proyecto_adm.empleado set "
                 + " nombre = '" + empleado.getNombre()
                 + "', apellido1 = '" + empleado.getApellido1()
@@ -108,13 +111,16 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             //Ejecutando query
 
             rows = stmt.executeQuery(sql);
-
-            sql = "update proyecto_adm.empleadopuesto set id_puesto = " + empleado.getPuesto().getIdPuesto() + " where id_empleado = " + empleado.getIdEmpleado();
-            ResultSet puestoEmpleado = stmt.executeQuery(sql);
-
-        } catch (Exception e) {
-            System.err.println("Exception:" + e.getMessage());
+        }catch(Exception e){
+            System.err.println(e);
         }
+//        try{
+//            sql = "update proyecto_adm.empleadopuesto set id_puesto = " + empleado.getPuesto().getIdPuesto() + " where id_empleado = " + empleado.getIdEmpleado();
+//            ResultSet puestoEmpleado = stmt.executeQuery(sql);
+//
+//        } catch (Exception e) {
+//            System.err.println("Exception:" + e.getMessage());
+//        }
         System.out.println("==========================================================================================" + rows.toString());
         try {
             con.close();
@@ -137,16 +143,6 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
             rows = stmt.executeQuery(sql);
             rows.next();
-            System.out.println(rows.toString());
-            System.out.println(Long.valueOf(rows.getString("id_empleado")));
-            System.out.println(rows.getString("nombre"));
-            System.out.println(rows.getString("apellido1"));
-            System.out.println(rows.getString("apellido2"));
-            System.out.println(rows.getString("alias"));
-            System.out.println(rows.getString("iban"));
-            System.out.println(rows.getString("salario"));
-            System.out.println(rows.getString("estado"));
-            System.out.println(rows.getString("password"));
             temp = new Empleado(
                     Long.valueOf(rows.getString("id_empleado")),
                     rows.getString("nombre"),
@@ -157,16 +153,6 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                     Long.valueOf(rows.getString("salario")),
                     rows.getString("estado"),
                     rows.getString("password"));
-            System.out.println(rows.toString());
-            System.out.println(Long.parseLong(rows.getString("id_empleado")));
-            System.out.println(rows.getString("nombre"));
-            System.out.println(rows.getString("apellido1"));
-            System.out.println(rows.getString("apellido2"));
-            System.out.println(rows.getString("alias"));
-            System.out.println(rows.getString("iban"));
-            System.out.println(rows.getString("salario"));
-            System.out.println(rows.getString("estado"));
-            System.out.println(rows.getString("password"));
 
             sql = "select * from proyecto_adm.empleadoPuesto where id_empleado = " + temp.getIdEmpleado();
             ResultSet puestoEmpleado = stmt.executeQuery(sql);
@@ -189,6 +175,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Override
     public void delete(Empleado empleado) {
+        epService.delete(empleado);
         empleadoDao.delete(empleado);
     }
 }

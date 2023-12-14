@@ -4,6 +4,7 @@
  */
 package com.yire.service;
 
+import com.yire.domain.Empleado;
 import com.yire.domain.EmpleadoPuesto;
 
 /**
@@ -12,5 +13,6 @@ import com.yire.domain.EmpleadoPuesto;
  */
 public interface EmpleadoPuestoService {
     public EmpleadoPuesto getPuestoByIdEmpleado(long idEmpleado);
-    
+    public void guardar(long idEmpleado, long idPuesto);
+    public void delete(Empleado empleado);
 }

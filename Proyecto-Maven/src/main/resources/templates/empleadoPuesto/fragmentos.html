@@ -16,12 +16,8 @@
 
         <section th:fragment="editar">            
             <form method="POST"
-                  th:action="@{/empleadopuesto/guardar}"
-                  th:object="${empleado}"
-
-                  onsubmit="myFunction()"
                   class="was-validated">
-                <section th:replace="empleado/fragmentos :: botonesEditar"/> 
+                <section th:replace="empleadopuesto/fragmentos :: botonesEditar"/> 
                 <div id="details">
                     <div class="container">
                         <div class="row">
@@ -33,10 +29,12 @@
                                     <div class="card-body">
                                         <label>Seleccione el rol para [[${empleado.nombre}]]:</label>
                                         <div>
-                                            <select id="puestoSeleccionado">
+                                            <select id="puestoSeleccionado" th:field="*{idPuesto}">
                                                 <option th:each="puesto : ${puestos}"
-                                                        th:value="${nombre}"
-                                                        th:text="${nombre}">
+                                                        th:value="${puesto.nombre}"
+                                                        th:text="${puesto.nombre}" 
+                                                         >
+                                                        <input type="hidden" th:field="${puesto.idPuesto}" th:value="${puesto.idPuesto}">
                                                 </option>
                                             </select>
                                         </div>
