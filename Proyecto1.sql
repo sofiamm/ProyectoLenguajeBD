@@ -608,6 +608,7 @@ END fecha_ultima_factura;
 -- Ejemplo:
 SELECT fecha_ultima_factura() AS "Método de pago de última factura"
     FROM dual;
+    
 --------------------------------- CURSORES ---------------------------------
     --1.Obtener información de todos los empleados:
 DECLARE
@@ -654,22 +655,27 @@ BEGIN
     CLOSE c_clientes;
 END;
 
-CREATE OR REPLACE FUNCTION ProveedorMateriaPrima(Id_MateriaPrima INT)
-    RETURN SYS_REFCURSOR
-    IS
-       CursorList SYS_REFCURSOR;
-    BEGIN
-       OPEN CursorList FOR
-          SELECT pr.Nombre, mp.Precio
-          FROM MateriaPrimaProveedor mp
-          JOIN Proveedor pr ON mp.Id_Proveedor = pr.Id_Proveedor
-          WHERE mp.Id_MateriaPrima = Id_MateriaPrima;
-    
-       RETURN CursorList;
-    END;
-    -- Ejemplo:
-    SELECT ProveedorMateriaPrima(1) AS "Lista de productos"
-    FROM dual;
+    -- 3. Obtener información de todos los clientes:
+DECLARE
+    CURSOR c_local IS
+        SELECT ID_LOCAL, NOMBRE, PROPOSITO
+        FROM LOCALES;
+        
+    id_local LOCALES.ID_LOCAL%TYPE;
+    nombre_local LOCALES.NOMBRE%TYPE;
+    proposito_local LOCALES.PROPOSITO%TYPE;
+BEGIN
+    OPEN c_local;
+    DBMS_OUTPUT.PUT_LINE('Datos de los locales:');
+    LOOP
+        FETCH c_local INTO id_local, nombre_local, proposito_local;
+        EXIT WHEN c_local%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_local || '. ' || nombre_local || ' es un local dedicado a ' || proposito_local);
+    END LOOP;
+    CLOSE c_local;
+END;
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
