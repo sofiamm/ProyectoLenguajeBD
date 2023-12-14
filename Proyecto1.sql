@@ -958,3 +958,63 @@ BEGIN
         Total = p_Total
     WHERE Num_Factura = p_Num_Factura;
 END;
+
+    -- 19. Actualizar Estado Empleado
+CREATE OR REPLACE PROCEDURE actualizar_estado_empleado(
+    p_Id_Empleado INT,
+    p_Estado VARCHAR2) AS
+BEGIN
+    UPDATE Empleado
+    SET
+        Estado = p_Estado
+    WHERE Id_Empleado = p_Id_Empleado;
+END;
+
+    -- 20. Actualizar Salario
+CREATE OR REPLACE PROCEDURE actualizar_salario_empleado(
+    p_Id_Empleado INT,
+    p_Salario NUMBER) AS
+BEGIN
+    UPDATE Empleado
+    SET
+        Salario = p_Salario
+    WHERE Id_Empleado = p_Id_Empleado;
+END;
+
+    -- 21. Actualizar Precio Producto
+CREATE OR REPLACE PROCEDURE actualizar_precio_producto(
+    p_Id_Producto INT,
+    p_Precio NUMBER) AS
+BEGIN
+    UPDATE Producto
+    SET
+        Id_Producto = p_Id_Producto,
+        Precio = p_Precio
+    WHERE Id_Producto = p_Id_Producto;
+END;
+    
+    -- 22. Ingresar Imagen
+CREATE OR REPLACE PROCEDURE ingresar_correo_contacto(
+    p_Id_Contacto INT,
+    p_Correo VARCHAR2) AS
+BEGIN
+    INSERT INTO ContactoCorreo VALUES (p_Id_Contacto, p_Correo);
+END;
+    -- 23. Eliminar Correo
+CREATE OR REPLACE PROCEDURE borrar_correo_contacto(
+    p_Id_Contacto INT) AS
+BEGIN
+    DELETE FROM ContactoCorreo WHERE Id_Contacto = p_Id_Contacto;
+END;
+
+    -- 24. Actualizar Correo
+CREATE OR REPLACE PROCEDURE actualizar_correo_contacto(
+    p_Id_Contacto INT,
+    p_Correo VARCHAR2) AS
+BEGIN
+    UPDATE ContactoCorreo
+    SET
+        Id_Contacto = p_Id_Contacto,
+        Correo = p_Correo
+    WHERE Id_Contacto = p_Id_Contacto;
+END;
