@@ -689,7 +689,7 @@ END;
     -- 2. Vista de Servicios Agendados hoy:
     CREATE OR REPLACE VIEW servicios_agendados AS
        SELECT *
-       FROM ServicioAgendados
+       FROM ServicioAgendado
        WHERE TRUNC(FechaHora) = TRUNC(SYSDATE);
         -- Llamar a la vista:
         SELECT * FROM servicios_agendados;
