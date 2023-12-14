@@ -39,6 +39,7 @@ com\yire\service\CantonService.class
 com\yire\service\PuestoServiceImpl.class
 com\yire\dao\ProductoMateriaPrimaDao.class
 com\yire\service\EmpleadoPuestoService.class
+com\yire\controller\EmpleadoCorreoController.class
 com\yire\domain\ServicioClientePK.class
 com\yire\domain\ServicioEmpleadosPK.class
 com\yire\domain\Puesto.class

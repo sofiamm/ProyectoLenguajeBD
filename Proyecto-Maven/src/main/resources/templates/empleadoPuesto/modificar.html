@@ -35,8 +35,11 @@
                             <div class="card-body">
                                 <label>Seleccione el rol para [[${empleado.nombre}]]:</label>
                                 <div>
-                                    <select id="puestoSeleccionado" th:value="${empleado.puesto.nombre}">
                                     <select id="puestoSeleccionado"> 
+                                        <option th:if="${empleado.puesto == null}" value="" disabled selected>Seleccione</option>
+                                        <option th:if="${empleado.puesto != null}">
+                                            [[${empleado.puesto.nombre}]]
+                                        </option>
                                         <option th:each="puesto : ${puestos}"
                                                 th:value="${puesto.nombre}"
                                                 th:text="${puesto.nombre}" 
