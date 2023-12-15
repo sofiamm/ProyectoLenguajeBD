@@ -227,6 +227,9 @@ CREATE TABLE AudServicioEmpleados (Cod_Servicio INT NOT NULL, Id_Empleado INT NO
 
 CREATE TABLE AudMateriaPrima (Id_MateriaPrima INT NOT NULL, Nombre varchar2(30), Reservas varchar2(30), UnidadDeMedicion Varchar2(4), Marca varchar2(30), CostoPorUnidad NUMBER(6,2), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
 
+CREATE TABLE AUDEmpleado(Id_Empleado INT NOT NULL, Nombre varchar2(30), Apellido1 varchar2(30), Apellido2 varchar2(30), Alias varchar2(30), IBAN varchar2(30), Salario NUMBER(10,2), Estado Varchar2(15), Password varchar2(30), tipoMovimiento varchar2(20), FechaMovimiento DATE, UsuarioMovimiento VARCHAR2(30));
+
+
 -- Triggers para primary keys
 -- Sequence
 CREATE SEQUENCE sec_activos START WITH 1;
@@ -435,6 +438,23 @@ BEGIN
 INSERT INTO AUDMateriaPrima (Id_MateriaPrima, Nombre, Reservas, UnidadDeMedicion, Marca, CostoPorUnidad, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
 VALUES (:old.Id_MateriaPrima, :old.Nombre, :old.Reservas, :old.unidaddemedicion, :old.marca, :old.costoporunidad, 'Insercion', SYSDATE, user);
 END;
+
+CREATE OR REPLACE TRIGGER TGR_INSERT_AUDEmpleados
+BEFORE INSERT ON Empleado
+FOR EACH ROW
+BEGIN
+INSERT INTO AUDEmpleado (Id_Empleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:new.Id_Empleado, :new.Nombre, :new.Apellido1, :new.Apellido2, :new.Alias, :new.IBAN, :new.Salario, :new.Estado, :new.Password, 'Insercion', SYSDATE, user);
+END;
+/
+CREATE OR REPLACE TRIGGER TGR_DELETE_AUDEmpleados
+BEFORE DELETE ON Empleado
+FOR EACH ROW
+BEGIN
+INSERT INTO AUDEmpleado (Id_Empleado, Nombre, Apellido1, Apellido2, Alias, IBAN, Salario, Estado, Password, tipoMovimiento, FechaMovimiento, UsuarioMovimiento)
+VALUES (:old.Id_Empleado, :old.Nombre, :old.Apellido1, :old.Apellido2, :old.Alias, :old.IBAN, :old.Salario, :old.Estado, :old.Password, 'Insercion', SYSDATE, user);
+END;
+/
 
 ---------------------------------- FUNCIONES ----------------------------------
     --1.Obtener el salario promedio de los empleados:
