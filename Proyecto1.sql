@@ -626,9 +626,20 @@ BEGIN
     RETURN ultimafactura;
 END fecha_ultima_factura;
 -- Ejemplo:
-SELECT fecha_ultima_factura() AS "Método de pago de última factura"
+SELECT fecha_ultima_factura() AS "Fecha de última factura"
     FROM dual;
     
+    --15.Obtener cantidad de clientes VIPs:
+CREATE OR REPLACE FUNCTION cantidad_tipo_clientes
+	RETURN NUMBER IS
+    tipo_clientes NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO tipo_clientes FROM Cliente WHERE Tipo = 'VIP';
+    RETURN tipo_clientes;
+END cantidad_tipo_clientes;
+-- Ejemplo:
+SELECT cantidad_tipo_clientes() AS "Total clientes VIP"
+    FROM dual;
 --------------------------------- CURSORES ---------------------------------
     --1.Obtener información de todos los empleados:
 DECLARE
