@@ -942,6 +942,27 @@ BEGIN
     END LOOP;
     CLOSE c_telefono;
 END;
+
+    -- 15. Obtener lista de cantón:
+DECLARE
+    CURSOR c_canton IS
+        SELECT ID_CANTON, NOMBRE
+        FROM CANTON;
+        
+    id_canton CANTON.ID_CANTON%TYPE;
+    nombre CANTON.NOMBRE%TYPE;
+BEGIN
+    OPEN c_canton;
+    DBMS_OUTPUT.PUT_LINE('Lista de cantones:');
+    LOOP
+        FETCH c_canton INTO id_canton, nombre;
+        EXIT WHEN c_canton%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_canton || '. ' || nombre);
+    END LOOP;
+    CLOSE c_canton;
+END;
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
