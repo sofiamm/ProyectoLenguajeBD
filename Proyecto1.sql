@@ -869,6 +869,48 @@ BEGIN
     END LOOP;
     CLOSE c_distrito;
 END;
+
+    -- 13. Obtener lista de contacto:
+DECLARE
+    CURSOR c_contacto IS
+        SELECT ID_CONTACTO, NOMBRE
+        FROM CONTACTO;
+        
+    id_contacto CONTACTO.ID_CONTACTO%TYPE;
+    nombre CONTACTO.NOMBRE%TYPE;
+BEGIN
+    OPEN c_contacto;
+    DBMS_OUTPUT.PUT_LINE('Lista de contactos:');
+    LOOP
+        FETCH c_contacto INTO id_contacto, nombre;
+        EXIT WHEN c_contacto%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_contacto || '. ' || nombre);
+    END LOOP;
+    CLOSE c_contacto;
+END;
+
+    -- 14. Obtener lista de telefono:
+DECLARE
+    CURSOR c_telefono IS
+        SELECT ID_CONTACTO, TELEFONO
+        FROM CONTACTOTELEFONO;
+        
+    id_contacto CONTACTOTELEFONO.ID_CONTACTO%TYPE;
+    telefono CONTACTOTELEFONO.TELEFONO%TYPE;
+BEGIN
+    OPEN c_telefono;
+    DBMS_OUTPUT.PUT_LINE('Lista de distritos:');
+    LOOP
+        FETCH c_telefono INTO id_contacto, telefono;
+        EXIT WHEN c_telefono%NOTFOUND;
+        
+        -- Puedes realizar operaciones con los datos aquí
+        DBMS_OUTPUT.PUT_LINE(id_contacto || '. ' || telefono);
+    END LOOP;
+    CLOSE c_telefono;
+END;
 --------------------------------- VISTAS ---------------------------------
     -- 1. Vista de Empleados Activos:
     CREATE OR REPLACE VIEW empleados_activos AS
